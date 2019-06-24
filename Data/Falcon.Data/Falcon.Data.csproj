@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <AssemblyName>Falcon.Data</AssemblyName>
+        <RootNamespace>Falcon.Data</RootNamespace>
+    </PropertyGroup>
+
+</Project>
