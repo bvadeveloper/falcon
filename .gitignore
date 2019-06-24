@@ -1,0 +1,11 @@
+*.cache
+*.iml
+*.assets.json
+*.packagespec.json
+*.csproj.nuget.g.props
+*.csproj.nuget.g.targets
+*.xml
+*.name
+bin
+obj
+packages
