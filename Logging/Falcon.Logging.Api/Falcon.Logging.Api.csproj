@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Utils\Extensions\Extensions.csproj" />
+      <ProjectReference Include="..\Falcon.Logging.Serilog\Falcon.Logging.Serilog.csproj" />
+      <ProjectReference Include="..\Falcon.Logging\Falcon.Logging.csproj" />
+    </ItemGroup>
+
+</Project>
