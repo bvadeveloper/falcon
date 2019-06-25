@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Falcon.Logging;
 using StackExchange.Redis;
-using Utils.Serialization;
+using Util.Serialization;
 
 namespace Falcon.Cache.Redis
 {

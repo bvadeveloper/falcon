@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using Autofac;
-using Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Core;
 using Serilog.Sinks.RabbitMQ;
 using Serilog.Sinks.RabbitMQ.Sinks.RabbitMQ;
-using Utils.Serialization;
+using Util.Extensions;
+using Util.Serialization;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 using ISerilogLogger = Serilog.ILogger;
 

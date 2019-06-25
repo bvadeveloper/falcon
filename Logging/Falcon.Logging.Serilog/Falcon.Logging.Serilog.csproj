@@ -15,7 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Utils\Extensions\Extensions.csproj" />
+      <ProjectReference Include="..\..\Utils\Util.Extensions\Util.Extensions.csproj" />
       <ProjectReference Include="..\Falcon.Logging\Falcon.Logging.csproj" />
     </ItemGroup>
     

@@ -24,9 +24,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Scanner", "Scanners\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Scripts", "Scripts\Falcon.Scripts\Falcon.Scripts.csproj", "{A2AF49E3-AF0F-414E-913E-C5FDC655ACF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extensions", "Utils\Extensions\Extensions.csproj", "{79BECAF3-D0F5-457D-BE5A-03B8488C98A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Util.Extensions", "Utils\Util.Extensions\Util.Extensions.csproj", "{79BECAF3-D0F5-457D-BE5A-03B8488C98A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils.Serialization", "Utils\Utils.Serialization\Utils.Serialization.csproj", "{F9F3F6D2-A3A7-4FAD-A8ED-8215BEB3EB39}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Util.Serialization", "Utils\Util.Serialization\Util.Serialization.csproj", "{F9F3F6D2-A3A7-4FAD-A8ED-8215BEB3EB39}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{48FFD131-D5B4-4F4B-8EDB-604E771CE58C}"
 EndProject

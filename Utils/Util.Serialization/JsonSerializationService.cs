@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace Utils.Serialization
+namespace Util.Serialization
 {
     public class JsonSerializationService : ISerializationService
     {

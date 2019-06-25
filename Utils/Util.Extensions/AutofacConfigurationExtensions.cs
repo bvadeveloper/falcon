@@ -2,7 +2,7 @@ using Autofac;
 using Autofac.Builder;
 using Microsoft.Extensions.Configuration;
 
-namespace Extensions
+namespace Util.Extensions
 {
     public static class AutofacConfigurationExtensions
     {

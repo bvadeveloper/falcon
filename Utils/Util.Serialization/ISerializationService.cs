@@ -1,4 +1,4 @@
-namespace Utils.Serialization
+namespace Util.Serialization
 {
     public interface ISerializationService
     {

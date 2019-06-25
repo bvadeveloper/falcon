@@ -1,6 +1,6 @@
 using System;
 using Microsoft.Extensions.Logging;
-using Utils.Serialization;
+using Util.Serialization;
 
 namespace Falcon.Logging
 {

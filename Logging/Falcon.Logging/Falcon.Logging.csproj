@@ -7,9 +7,9 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.2" />
     </ItemGroup>
-    
+
     <ItemGroup>
-      <ProjectReference Include="..\..\Utils\Utils.Serialization\Utils.Serialization.csproj" />
+      <ProjectReference Include="..\..\Utils\Util.Serialization\Util.Serialization.csproj" />
     </ItemGroup>
 
 </Project>

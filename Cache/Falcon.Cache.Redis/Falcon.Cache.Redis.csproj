@@ -12,8 +12,8 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Logging\Falcon.Logging\Falcon.Logging.csproj" />
-      <ProjectReference Include="..\..\Utils\Extensions\Extensions.csproj" />
-      <ProjectReference Include="..\..\Utils\Utils.Serialization\Utils.Serialization.csproj" />
+      <ProjectReference Include="..\..\Utils\Util.Extensions\Util.Extensions.csproj" />
+      <ProjectReference Include="..\..\Utils\Util.Serialization\Util.Serialization.csproj" />
       <ProjectReference Include="..\Falcon.Cache\Falcon.Cache.csproj" />
     </ItemGroup>
 

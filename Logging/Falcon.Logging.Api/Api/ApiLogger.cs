@@ -1,4 +1,4 @@
-using Utils.Serialization;
+using Util.Serialization;
 
 namespace Falcon.Logging.Api.Api
 {

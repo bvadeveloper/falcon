@@ -1,7 +1,7 @@
 using System;
 using System.Net;
 using Microsoft.Extensions.Logging;
-using Utils.Serialization;
+using Util.Serialization;
 
 namespace Falcon.Logging.Api.ApiCall
 {

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Autofac;
-using Extensions;
 using Falcon.Cache.Redis.Configuration;
 using Falcon.Logging;
 using StackExchange.Redis;
+using Util.Extensions;
 
 namespace Falcon.Cache.Redis.Module
 {
