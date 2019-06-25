@@ -32,7 +32,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{48
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Abstractions", "Services\Falcon.Abstractions\Falcon.Abstractions.csproj", "{C7F1E379-339C-46B6-8177-B65526F1E4BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Sorter", "Sorters\Falcon.Sorter\Falcon.Sorter.csproj", "{3421184C-8A38-42D5-9FEC-B89FAC4615C8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Scanners", "Scanners\Falcon.Sorter\Falcon.Sorter.csproj", "{3421184C-8A38-42D5-9FEC-B89FAC4615C8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logging", "Logging", "{12B501D5-FA06-4EC9-88D8-5DA2D1C8F84E}"
 EndProject
