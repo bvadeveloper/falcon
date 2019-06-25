@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Falcon.Api
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
@@ -13,7 +13,7 @@ namespace Falcon.Api
                 .Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+        private static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .ConfigureLogging(builder => builder.ClearProviders());

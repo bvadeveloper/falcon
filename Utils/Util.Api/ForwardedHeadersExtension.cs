@@ -9,12 +9,16 @@ namespace Util.Api
         // As a general rule, Forwarded Headers Middleware should run before other middleware except diagnostics and error handling middleware.
         // This ordering ensures that the middleware relying on forwarded headers information can consume the header values for processing.
         // https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/linux-nginx?tabs=aspnetcore2x&view=aspnetcore-2.2#use-a-reverse-proxy-server
-        public static void SetForwardedHeaders(this IApplicationBuilder builder)
+        public static IApplicationBuilder SetupForwardedHeaders(this IApplicationBuilder builder)
         {
-            builder.UseForwardedHeaders(new ForwardedHeadersOptions
+            var option = new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            });
+            };
+
+            builder.UseForwardedHeaders(option);
+
+            return builder;
         }
     }
 }

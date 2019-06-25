@@ -5,7 +5,6 @@ using Util.Serialization;
 
 namespace Falcon.Logging.Api.ApiCall
 {
-    /// <inheritdoc cref="IApiCallLogger" />
     public class ApiCallLogger<TApiCall> : JsonLogger<TApiCall, ApiCallLogEntry>, IApiCallLogger<TApiCall>
         where TApiCall : class
     {
@@ -17,10 +16,8 @@ namespace Falcon.Logging.Api.ApiCall
 
         private void LogRequest(ApiCallLogEntry logEntry)
         {
-            // if (!logEntry.RequestUrl.StartsWith("/swagger/"))
-            {
+            if (!logEntry.RequestUrl.StartsWith("/swagger/"))
                 Log(logEntry, LogLevel.Information);
-            }
         }
 
         /// <summary>

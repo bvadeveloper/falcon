@@ -27,10 +27,10 @@ namespace Falcon.Logging.Serilog.Module
                 })
                 .AsSelf()
                 .SingleInstance();
-            
+
             // registration of elk settings
             builder.RegisterModel<ElkRabbitSettings>("ElkRabbit");
-            
+
             // registration of rmq client
             builder.Register(c =>
                 {
@@ -55,7 +55,7 @@ namespace Falcon.Logging.Serilog.Module
                 })
                 .AsSelf()
                 .SingleInstance();
-            
+
             builder.Register(c =>
                 {
                     var settings = c.Resolve<LogSettings>();
@@ -82,7 +82,7 @@ namespace Falcon.Logging.Serilog.Module
                 })
                 .AsSelf()
                 .SingleInstance();
-            
+
             builder.Register(c =>
                 {
                     var loggerConfiguration = c.Resolve<LoggerConfiguration>();
@@ -98,6 +98,7 @@ namespace Falcon.Logging.Serilog.Module
             builder.RegisterType<InterceptionLogger>().As<IInterceptionWriter>();
             builder.RegisterType<LoggingLevelSwitch>().AsSelf().SingleInstance();
             builder.RegisterType<JsonSerializationService>().As<ISerializationService>().SingleInstance();
+            builder.RegisterType<GlobalExecutionContext>().As<IGlobalExecutionContext>();
         }
     }
 }
