@@ -36,21 +36,21 @@ namespace Util.Api
                 try
                 {
                     stopwatch.Start();
-                    using (var memStream = new MemoryStream())
+                    using (var stream = new MemoryStream())
                     {
-                        context.Response.Body = memStream;
+                        context.Response.Body = stream;
 
                         await _next.Invoke(context);
 
-                        memStream.Position = 0;
-                        responseBody = new StreamReader(memStream).ReadToEnd();
+                        stream.Position = 0;
+                        responseBody = new StreamReader(stream).ReadToEnd();
 
-                        memStream.Position = 0;
+                        stream.Position = 0;
 
                         if (context.Response.StatusCode != (int) HttpStatusCode.NoContent
                             && context.Response.StatusCode != (int) HttpStatusCode.NotModified)
                         {
-                            await memStream.CopyToAsync(originalResponseBody);
+                            await stream.CopyToAsync(originalResponseBody);
                         }
                     }
                 }
