@@ -37,7 +37,6 @@ namespace Falcon.Logging.Api.ApiCall
             string response, //
             string responseContentType,
             string userName, //
-            string apiVersion, //
             string controller, //
             string action, //
             Exception exception) =>
@@ -53,7 +52,6 @@ namespace Falcon.Logging.Api.ApiCall
                     RequestUrl = requestUrl,
                     UserName = userName,
                     ResponseCode = Enum.GetName(typeof(HttpStatusCode), code),
-                    ApiVersion = apiVersion,
                     ActionName = action,
                     ControllerName = controller,
                     Exception = exception

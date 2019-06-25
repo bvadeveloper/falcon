@@ -22,7 +22,6 @@ namespace Falcon.Logging.Api.ApiCall
         /// <param name="response"></param>
         /// <param name="responseContentType"></param>
         /// <param name="userName"></param>
-        /// <param name="apiVersion"></param>
         /// <param name="controller"></param>
         /// <param name="action"></param>
         /// <param name="exception"></param>
@@ -37,7 +36,6 @@ namespace Falcon.Logging.Api.ApiCall
             string response,
             string responseContentType,
             string userName,
-            string apiVersion,
             string controller,
             string action,
             Exception exception);
