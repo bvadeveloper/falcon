@@ -39,18 +39,20 @@ namespace Falcon.Api
 
 
             services.AddSwagger();
+            
+            services.AddHsts(options =>
+            {
+                options.Preload = true;
+                options.IncludeSubDomains = true;
+                options.MaxAge = TimeSpan.FromDays(60);
+            });
 
             // Create the container builder.
             var builder = new ContainerBuilder();
             builder.Populate(services);
-            ConfigureContainer(builder);
+            builder.RegisterModule<ApiLoggerModule>();
 
             return new AutofacServiceProvider(builder.Build());
-        }
-
-        private void ConfigureContainer(ContainerBuilder builder)
-        {
-            builder.RegisterModule<ApiLoggerModule>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,7 +60,7 @@ namespace Falcon.Api
         {
             app.SetupForwardedHeaders();
             app.SetupSwagger();
-            app.UseMiddleware<ApiTrackingMiddleware>();
+            app.UseMiddleware<ApiLoggingMiddleware>();
 
             if (env.IsDevelopment())
             {

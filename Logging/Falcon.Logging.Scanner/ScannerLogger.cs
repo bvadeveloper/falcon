@@ -8,7 +8,7 @@ namespace Falcon.Logging.Scanner
         where T : class
     {
         public ScannerLogger(
-            IGlobalExecutionContext globalContext,
+            IGlobalContext globalContext,
             IInterceptionWriter logWriter,
             ISerializationService serializationService)
             : base(logWriter, globalContext, serializationService, LogRoute.Scanner) { }

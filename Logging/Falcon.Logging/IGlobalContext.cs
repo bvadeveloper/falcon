@@ -5,7 +5,7 @@ namespace Falcon.Logging
     /// <summary>
     /// Global context
     /// </summary>
-    public interface IGlobalExecutionContext
+    public interface IGlobalContext
     {
         /// <summary>
         /// Global Id 

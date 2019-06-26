@@ -11,19 +11,19 @@ using Microsoft.AspNetCore.Routing;
 
 namespace Util.Api
 {
-    public class ApiTrackingMiddleware
+    public class ApiLoggingMiddleware
     {
         private readonly RequestDelegate _next;
 
-        public ApiTrackingMiddleware(RequestDelegate next)
+        public ApiLoggingMiddleware(RequestDelegate next)
         {
             _next = next;
         }
 
         public async Task Invoke(
             HttpContext context,
-            IApiCallLogger<ApiTrackingMiddleware> apiCallLogger,
-            IGlobalExecutionContext executionContext)
+            IApiCallLogger<ApiLoggingMiddleware> apiCallLogger,
+            IGlobalContext executionContext)
         {
             //   if (!context.Request.Path.StartsWithSegments("/status"))
             {

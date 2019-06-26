@@ -1,12 +1,22 @@
-﻿using System;
+﻿using System.Threading.Tasks;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Falcon.Logging.Sorter.Module;
+using Falcon.Services;
+using Microsoft.Extensions.Hosting;
 
 namespace Falcon.Sorter
 {
-    class Program
+    static class Program
     {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Hello World!");
-        }
+        private static async Task Main() =>
+            await new HostBuilder()
+                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                .ConfigureContainer<ContainerBuilder>(builder =>
+                {
+                    builder.RegisterModule<SorterLoggerModule>();
+                    builder.RegisterType<OrchestrationService>().As<IHostedService>();
+                })
+                .RunConsoleAsync();
     }
 }

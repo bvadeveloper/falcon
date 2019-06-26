@@ -98,7 +98,7 @@ namespace Falcon.Logging.Serilog.Module
             builder.RegisterType<InterceptionLogger>().As<IInterceptionWriter>();
             builder.RegisterType<LoggingLevelSwitch>().AsSelf().SingleInstance();
             builder.RegisterType<JsonSerializationService>().As<ISerializationService>().SingleInstance();
-            builder.RegisterType<GlobalExecutionContext>().As<IGlobalExecutionContext>();
+            builder.RegisterType<GlobalContext>().As<IGlobalContext>();
         }
     }
 }

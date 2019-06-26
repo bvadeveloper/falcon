@@ -9,7 +9,7 @@ namespace Falcon.Logging.Api.ApiCall
         where TApiCall : class
     {
         public ApiCallLogger(
-            IGlobalExecutionContext globalExecutionContext,
+            IGlobalContext globalExecutionContext,
             IInterceptionWriter logWriter,
             ISerializationService serializationService)
             : base(logWriter, globalExecutionContext, serializationService, LogRoute.Api) { }

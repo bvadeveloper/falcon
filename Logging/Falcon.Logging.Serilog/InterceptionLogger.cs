@@ -15,7 +15,7 @@ namespace Falcon.Logging.Serilog
         protected string SourceContext { get; set; }
 
         protected readonly ISerializationService SerializationService;
-        protected readonly IGlobalExecutionContext GlobalExecutionContext;
+        protected readonly IGlobalContext GlobalExecutionContext;
 
         private readonly LogSettings _settings;
 
@@ -27,7 +27,7 @@ namespace Falcon.Logging.Serilog
         public InterceptionLogger(
             LogSettings settings,
             ISerializationService serializationService,
-            IGlobalExecutionContext globalExecutionContext,
+            IGlobalContext globalExecutionContext,
             ISerilogLogger logger)
         {
             _settings = settings;
@@ -97,7 +97,7 @@ namespace Falcon.Logging.Serilog
         public InterceptionLogger(
             LogSettings settings,
             ISerializationService serializationService,
-            IGlobalExecutionContext globalExecutionContext,
+            IGlobalContext globalExecutionContext,
             ISerilogLogger logger)
             : base(settings, serializationService, globalExecutionContext, logger)
         {

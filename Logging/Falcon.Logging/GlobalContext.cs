@@ -5,7 +5,7 @@ namespace Falcon.Logging
     /// <summary>
     /// Global context
     /// </summary>
-    public class GlobalExecutionContext : IGlobalExecutionContext
+    public class GlobalContext : IGlobalContext
     {
         /// <inheritdoc />
         public Guid Id { get; set; }

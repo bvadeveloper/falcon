@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 
 namespace Util.Api
 {
-    public static class ForwardedHeadersExtension
+    public static class HeadersExtension
     {
         // Any component that depends on the scheme, such as authentication, link generation, redirects, and geolocation, must be placed after invoking the Forwarded Headers Middleware.
         // As a general rule, Forwarded Headers Middleware should run before other middleware except diagnostics and error handling middleware.

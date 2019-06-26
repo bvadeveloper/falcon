@@ -2,8 +2,6 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
-        <AssemblyName>Falcon.Scripts</AssemblyName>
-        <RootNamespace>Falcon.Scripts</RootNamespace>
     </PropertyGroup>
 
 </Project>

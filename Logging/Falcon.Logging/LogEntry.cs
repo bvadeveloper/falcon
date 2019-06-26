@@ -10,7 +10,7 @@ namespace Falcon.Logging
     {
         public DateTime CallTime { get; set; }
 
-        public IGlobalExecutionContext GlobalContext { get; set; }
+        public IGlobalContext GlobalContext { get; set; }
 
         public LogRoute LogRoute { get; set; }
 

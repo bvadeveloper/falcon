@@ -8,7 +8,7 @@ namespace Falcon.Logging.Sorter
         where T : class
     {
         public SorterLogger(
-            IGlobalExecutionContext globalContext,
+            IGlobalContext globalContext,
             IInterceptionWriter logWriter,
             ISerializationService serializationService)
             : base(logWriter, globalContext, serializationService, LogRoute.Scanner) { }

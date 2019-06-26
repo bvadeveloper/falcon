@@ -13,7 +13,7 @@ namespace Falcon.Logging
         where TEntry : LogEntry, new()
         where TSource : class
     {
-        protected IGlobalExecutionContext GlobalExecutionContext;
+        protected IGlobalContext GlobalExecutionContext;
 
         /// <summary>
         /// Log route
@@ -45,7 +45,7 @@ namespace Falcon.Logging
 
         protected JsonLogger(
             IInterceptionWriter interceptionWriter,
-            IGlobalExecutionContext globalContext,
+            IGlobalContext globalContext,
             ISerializationService serializationService,
             LogRoute logRoute)
         {

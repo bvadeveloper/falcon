@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Util.Extensions
 {
-    public static class AutofacConfigurationExtensions
+    public static class AutofacExtensions
     {
         public static IRegistrationBuilder<TModel, SimpleActivatorData, SingleRegistrationStyle> RegisterModel<TModel>(
             this ContainerBuilder builder, string section)

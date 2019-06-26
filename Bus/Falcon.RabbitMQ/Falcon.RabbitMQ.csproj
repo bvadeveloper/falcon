@@ -2,8 +2,11 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
-        <AssemblyName>Falcon.RabittMQ</AssemblyName>
-        <RootNamespace>Falcon.RabittMQ</RootNamespace>
     </PropertyGroup>
+
+    
+    <ItemGroup>
+      <ProjectReference Include="..\..\Utils\Util.Autofac\Util.Autofac.csproj" />
+    </ItemGroup>
 
 </Project>

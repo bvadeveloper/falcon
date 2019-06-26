@@ -7,7 +7,7 @@ namespace Falcon.Logging.Api.Api
         where TApi : class
     {
         public ApiLogger(
-            IGlobalExecutionContext globalExecutionContext,
+            IGlobalContext globalExecutionContext,
             IInterceptionWriter logWriter,
             ISerializationService serializationService)
             : base(logWriter, globalExecutionContext, serializationService, LogRoute.Api) { }
