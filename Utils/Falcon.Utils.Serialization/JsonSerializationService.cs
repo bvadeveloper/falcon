@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace Util.Serialization
+namespace Falcon.Utils.Serialization
 {
     public class JsonSerializationService : ISerializationService
     {

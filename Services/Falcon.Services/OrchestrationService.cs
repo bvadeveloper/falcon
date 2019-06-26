@@ -1,29 +1,29 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Falcon.Logging.Scanner;
+using Falcon.Logging;
 using Microsoft.Extensions.Hosting;
 
 namespace Falcon.Services
 {
     public class OrchestrationService : IHostedService
     {
-        private readonly IScannerLogger _scannerLogger;
+        private readonly IJsonLogger _logger;
 
-        public OrchestrationService(IScannerLogger<OrchestrationService> scannerLogger)
+        public OrchestrationService(IJsonLogger<OrchestrationService> logger)
         {
-            _scannerLogger = scannerLogger;
+            _logger = logger;
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             await Task.Yield();
-            _scannerLogger.Information("Start");
+            _logger.Information("Start");
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
             await Task.Yield();
-            _scannerLogger.Information("Stop");
+            _logger.Information("Stop");
         }
     }
 }

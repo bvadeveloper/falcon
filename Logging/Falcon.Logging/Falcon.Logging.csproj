@@ -9,7 +9,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Utils\Util.Serialization\Util.Serialization.csproj" />
+      <ProjectReference Include="..\..\Utils\Falcon.Utils.Serialization\Falcon.Utils.Serialization.csproj" />
     </ItemGroup>
 
 </Project>

@@ -7,6 +7,6 @@
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="2.2.0" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\..\Logging\Falcon.Logging.Scanner\Falcon.Logging.Scanner.csproj" />
+      <ProjectReference Include="..\..\Logging\Falcon.Logging\Falcon.Logging.csproj" />
     </ItemGroup>
 </Project>

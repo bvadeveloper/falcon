@@ -2,9 +2,9 @@ using Autofac;
 using Autofac.Builder;
 using Microsoft.Extensions.Configuration;
 
-namespace Util.Extensions
+namespace Falcon.Utils.Autofac
 {
-    public static class AutofacExtensions
+    public static class AutofacExtension
     {
         public static IRegistrationBuilder<TModel, SimpleActivatorData, SingleRegistrationStyle> RegisterModel<TModel>(
             this ContainerBuilder builder, string section)

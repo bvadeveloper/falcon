@@ -15,7 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Utils\Util.Autofac\Util.Autofac.csproj" />
+      <ProjectReference Include="..\..\Utils\Falcon.Utils.Autofac\Falcon.Utils.Autofac.csproj" />
       <ProjectReference Include="..\Falcon.Logging\Falcon.Logging.csproj" />
     </ItemGroup>
     

@@ -20,6 +20,6 @@ namespace Falcon.Logging.Sorter
             Exception exception);
     }
 
-    public interface ISorterLogger<out TTcpServer> : ISorterLogger, IJsonLogger<TTcpServer>
-        where TTcpServer : class { }
+    public interface ISorterLogger<out TSorter> : ISorterLogger, IJsonLogger<TSorter>
+        where TSorter : class { }
 }

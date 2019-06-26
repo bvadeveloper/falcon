@@ -6,8 +6,8 @@ using Serilog;
 using Serilog.Core;
 using Serilog.Sinks.RabbitMQ;
 using Serilog.Sinks.RabbitMQ.Sinks.RabbitMQ;
-using Util.Extensions;
-using Util.Serialization;
+using Falcon.Utils.Autofac;
+using Falcon.Utils.Serialization;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 using ISerilogLogger = Serilog.ILogger;
 

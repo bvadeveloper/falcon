@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Util.Serialization;
+using Falcon.Utils.Serialization;
 
 namespace Falcon.Logging
 {

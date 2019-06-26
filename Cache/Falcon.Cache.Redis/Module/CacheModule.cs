@@ -3,7 +3,7 @@ using Autofac;
 using Falcon.Cache.Redis.Configuration;
 using Falcon.Logging;
 using StackExchange.Redis;
-using Util.Extensions;
+using Falcon.Utils.Autofac;
 
 namespace Falcon.Cache.Redis.Module
 {

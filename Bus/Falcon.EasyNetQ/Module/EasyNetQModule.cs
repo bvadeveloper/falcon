@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using EasyNetQ;
-using Util.Extensions;
+using Falcon.Utils.Autofac;
 
 namespace Falcon.EasyNetQ.Module
 {

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
 
-namespace Util.Api
+namespace Falcon.Utils.Api
 {
     public static class HeadersExtension
     {

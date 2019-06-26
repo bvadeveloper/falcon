@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Utils\Util.Autofac\Util.Autofac.csproj" />
+      <ProjectReference Include="..\..\Utils\Falcon.Utils.Autofac\Falcon.Utils.Autofac.csproj" />
       <ProjectReference Include="..\Falcon.Logging.Serilog\Falcon.Logging.Serilog.csproj" />
       <ProjectReference Include="..\Falcon.Logging\Falcon.Logging.csproj" />
     </ItemGroup>

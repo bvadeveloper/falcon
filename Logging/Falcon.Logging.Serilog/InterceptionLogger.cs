@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.Logging;
-using Util.Serialization;
+using Falcon.Utils.Serialization;
 using ISerilogLogger = Serilog.ILogger;
 
 namespace Falcon.Logging.Serilog

@@ -9,7 +9,7 @@ using Falcon.Logging.Api.ApiCall;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
-namespace Util.Api
+namespace Falcon.Utils.Api
 {
     public class ApiLoggingMiddleware
     {

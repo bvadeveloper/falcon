@@ -14,7 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Utils\Util.Api\Util.Api.csproj" />
+      <ProjectReference Include="..\Utils\Falcon.Utils.Api\Falcon.Utils.Api.csproj" />
     </ItemGroup>
 
 </Project>

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Falcon.Cache
+namespace Falcon.Cache.Redis
 {
     public interface ICacheDataService
     {

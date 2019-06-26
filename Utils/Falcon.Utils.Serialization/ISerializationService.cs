@@ -1,4 +1,4 @@
-namespace Util.Serialization
+namespace Falcon.Utils.Serialization
 {
     public interface ISerializationService
     {
