@@ -1,0 +1,23 @@
+{
+  "profiles": {
+    "Falcon.Scanner": {
+      "commandName": "Project",
+      "environmentVariables": {
+       
+        "RabbitMQ:Host": "localhost",
+        "RabbitMQ:Username": "admin",
+        "RabbitMQ:Password": "admin",
+        "RabbitMQ:MaxPriority": "5",
+        "RabbitMQ:PrefetchCount": "20",
+        
+        "Database:ConnectionString": "Server=.;Database=RegistrarEngine;Trusted_Connection=true;MultipleActiveResultSets=True;",
+        
+        "Logging:LogLevel:Microsoft": "Information",
+        "Logging:LogLevel:System": "Information",
+        "Logging:LogLevel:Default": "Trace",
+        "Logging:BatchSizeLimit": "10",
+        "Logging:Period": "1000"
+      }
+    }
+  }
+}

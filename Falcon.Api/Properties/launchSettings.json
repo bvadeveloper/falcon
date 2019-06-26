@@ -7,7 +7,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Production",
 
-        "Database:ConnectionString": "********",
+        "Database:ConnectionString": "Server=.;Database=RegistrarEngine;Trusted_Connection=true;MultipleActiveResultSets=True;",
 
         "RabbitMQ:Host": "localhost",
         "RabbitMQ:Username": "rmquser",

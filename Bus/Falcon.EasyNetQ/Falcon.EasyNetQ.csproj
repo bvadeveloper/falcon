@@ -1,18 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
     </PropertyGroup>
-
-    
     <ItemGroup>
-      <ProjectReference Include="..\..\Utils\Util.Autofac\Util.Autofac.csproj" />
+        <ProjectReference Include="..\..\Utils\Util.Autofac\Util.Autofac.csproj"/>
     </ItemGroup>
-
-    
     <ItemGroup>
-      <PackageReference Include="EasyNetQ" Version="3.5.1" />
-      <PackageReference Include="EasyNetQ.DI.Autofac" Version="3.5.1" />
+        <PackageReference Include="EasyNetQ" Version="3.5.1"/>
     </ItemGroup>
-
 </Project>

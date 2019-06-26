@@ -1,5 +1,4 @@
-﻿using System;
-using Autofac;
+﻿using Autofac;
 using EasyNetQ;
 using Util.Extensions;
 
@@ -9,8 +8,6 @@ namespace Falcon.EasyNetQ.Module
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterEasyNetQ("");
-
             builder.RegisterModel<ConnectionConfiguration>("RabbitMQ");
 
             builder.Register(c =>
