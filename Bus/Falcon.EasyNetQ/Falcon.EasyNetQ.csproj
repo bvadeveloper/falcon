@@ -9,4 +9,10 @@
       <ProjectReference Include="..\..\Utils\Util.Autofac\Util.Autofac.csproj" />
     </ItemGroup>
 
+    
+    <ItemGroup>
+      <PackageReference Include="EasyNetQ" Version="3.5.1" />
+      <PackageReference Include="EasyNetQ.DI.Autofac" Version="3.5.1" />
+    </ItemGroup>
+
 </Project>
