@@ -28,7 +28,8 @@ namespace Falcon.Services.Scanning
             await Task.Yield();
             _logger.Information("Start");
 
-            _bus.Subscribe<Script>(string.Empty, async script => await _requestHandler.ProcessAsync(script));
+            _bus.SubscribeAsync<Script>(string.Empty, // todo: set id
+                async script => await _requestHandler.ProcessAsync(script));
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
