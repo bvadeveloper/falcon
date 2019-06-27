@@ -1,7 +1,10 @@
 ﻿using System;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Falcon.Bus.EasyNetQ.Module;
 using Falcon.Logging.Api.Module;
+using Falcon.Services.RequestProcessing;
+using Falcon.Services.Scanning;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -10,13 +13,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
-using Swashbuckle.AspNetCore.Swagger;
 using Falcon.Utils.Api;
+using Falcon.Utils.Autofac;
 
 namespace Falcon.Api
 {
     public class Startup
     {
+        private const string ApiName = "FalconApi";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -37,9 +42,6 @@ namespace Falcon.Api
                     })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-
-            services.AddSwagger();
-            
             services.AddHsts(options =>
             {
                 options.Preload = true;
@@ -47,20 +49,26 @@ namespace Falcon.Api
                 options.MaxAge = TimeSpan.FromDays(60);
             });
 
-            // Create the container builder.
-            var builder = new ContainerBuilder();
-            builder.Populate(services);
-            builder.RegisterModule<ApiLoggerModule>();
+            services.AddSwagger(ApiName);
 
-            return new AutofacServiceProvider(builder.Build());
+            return AutofacContainerBuilder
+                .Create()
+                .Register(builder =>
+                {
+                    builder.Populate(services);
+                    builder.RegisterModule<ApiLoggerModule>();
+                    builder.RegisterModule<EasyNetQModule>();
+                    builder.RegisterType<RequestProcessingService>().As<IRequestProcessingService>();
+                })
+                .MakeProvider();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.SetupForwardedHeaders();
-            app.SetupSwagger();
-            app.UseMiddleware<ApiLoggingMiddleware>();
+            app.UseCustomForwardedHeaders();
+            app.UseSwagger(ApiName);
+            app.UseApiLoggingMiddleware();
 
             if (env.IsDevelopment())
             {

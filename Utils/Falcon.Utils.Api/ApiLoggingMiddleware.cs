@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Falcon.Logging;
 using Falcon.Logging.Api.ApiCall;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
@@ -96,6 +97,14 @@ namespace Falcon.Utils.Api
                 await stream.CopyToAsync(ms);
                 return Encoding.UTF8.GetString(ms.ToArray()); // returns base64 encoded string JSON result
             }
+        }
+    }
+
+    public static class ApiLoggingMiddlewareExtension
+    {
+        public static IApplicationBuilder UseApiLoggingMiddleware(this IApplicationBuilder app)
+        {
+            return app.UseMiddleware<ApiLoggingMiddleware>();
         }
     }
 }

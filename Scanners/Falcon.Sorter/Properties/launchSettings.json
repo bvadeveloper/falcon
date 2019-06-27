@@ -3,12 +3,8 @@
     "Falcon.Sorter": {
       "commandName": "Project",
       "environmentVariables": {
-       
-        "RabbitMQ:Host": "localhost",
-        "RabbitMQ:Username": "admin",
-        "RabbitMQ:Password": "admin",
-        "RabbitMQ:MaxPriority": "5",
-        "RabbitMQ:PrefetchCount": "20",
+
+        "ConnectionStrings:RabbitMQ": "host=localhost;virtualHost=/;username=rmquser;password=rmquser;prefetchcount=1",
         
         "Logging:LogLevel:Microsoft": "Information",
         "Logging:LogLevel:System": "Information",

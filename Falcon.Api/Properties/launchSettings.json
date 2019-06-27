@@ -6,16 +6,14 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Production",
-
-        "Database:ConnectionString": "Server=.;Database=RegistrarEngine;Trusted_Connection=true;MultipleActiveResultSets=True;",
-
-        "RabbitMQ:Host": "localhost",
-        "RabbitMQ:Username": "rmquser",
-        "RabbitMQ:Password": "rmquser",
-        "RabbitMQ:Timeout": "15",
-        "RabbitMQ:Port": "5672",
-        "RabbitMQ:VirtualHost": "/",
-        "RabbitMQ:PacketExpiration": "50"
+     
+        "ConnectionStrings:RabbitMQ": "host=localhost;virtualHost=/;username=rmquser;password=rmquser;prefetchcount=1",
+        "ConnectionStrings:Database": "Server=.;Database=RegistrarEngine;Trusted_Connection=true;MultipleActiveResultSets=True;",
+    
+        "CacheRedis:Endpoint": "localhost:6379",
+        "CacheRedis:Password": "5EZT8ONc",
+        "CacheRedis:ClientName": "RE",
+        "CacheRedis:TimeoutSeconds": "120"
       },
       "applicationUrl": "http://localhost:7890"
     }

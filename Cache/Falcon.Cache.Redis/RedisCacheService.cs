@@ -8,7 +8,7 @@ using Falcon.Utils.Serialization;
 
 namespace Falcon.Cache.Redis
 {
-    public class CacheDataService : ICacheDataService
+    public class RedisCacheService : ICacheService
     {
         private const int SaddMaxValuesChunkSize = 32;
         private readonly IJsonLogger _logger;
@@ -22,10 +22,10 @@ namespace Falcon.Cache.Redis
         // Increasing this param would force redis to scan more entities before respond to client that current page is empty
         private const int ScanKeysPageSize = 10000;
 
-        public CacheDataService(
+        public RedisCacheService(
             IDatabase database,
             IServer server,
-            IJsonLogger<CacheDataService> logger,
+            IJsonLogger<RedisCacheService> logger,
             ISerializationService serializationService)
         {
             _database = database;
@@ -34,7 +34,7 @@ namespace Falcon.Cache.Redis
             _serializationService = serializationService;
         }
 
-        public ICacheDataService Flush()
+        public ICacheService Flush()
         {
             _database.Execute("FLUSHDB");
             return this;

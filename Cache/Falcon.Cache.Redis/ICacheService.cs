@@ -4,14 +4,14 @@ using System.Threading.Tasks;
 
 namespace Falcon.Cache.Redis
 {
-    public interface ICacheDataService
+    public interface ICacheService
     {
 
         /// <summary>
         /// Delete all the keys from the DB.
         /// </summary>
         /// <returns></returns>
-        ICacheDataService Flush();
+        ICacheService Flush();
 
         /// <summary>
         /// Sets expiration time to key

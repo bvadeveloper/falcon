@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using Falcon.EasyNetQ.Module;
+using Falcon.Bus.EasyNetQ.Module;
 using Falcon.Logging.Sorter.Module;
-using Falcon.Services;
+using Falcon.Services.Scanning;
 using Microsoft.Extensions.Hosting;
 
 namespace Falcon.Sorter
@@ -17,7 +17,7 @@ namespace Falcon.Sorter
                 {
                     builder.RegisterModule<SorterLoggerModule>();
                     builder.RegisterModule<EasyNetQModule>();
-                    builder.RegisterType<OrchestrationService>().As<IHostedService>();
+                    builder.RegisterType<HostedService>().As<IHostedService>();
                 })
                 .RunConsoleAsync();
     }
