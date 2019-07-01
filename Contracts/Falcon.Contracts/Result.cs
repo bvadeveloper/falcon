@@ -35,12 +35,18 @@ namespace Falcon.Contracts
             return this;
         }
     }
-    
+
     public static class ResultExtensions
     {
-        public static async Task<T> ExtractValue<T>(this Task<Result<T>> task)
+        public static async Task<T> Extract<T>(this Task<Result<T>> task)
         {
             return (await task).Value;
+        }
+
+        public static Result<T> SetResult1<T>(this Result<T> @this, T value)
+        {
+            @this.Value = value;
+            return @this;
         }
     }
 }

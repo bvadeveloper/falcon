@@ -8,11 +8,11 @@ namespace Falcon.Api.Controllers
 {
     [Route("api/scan")]
     [ApiController]
-    public class EmailsController : ControllerBase
+    public class EmailController : ControllerBase
     {
         private readonly IRequestProcessingService _processingService;
 
-        public EmailsController(IRequestProcessingService processingService)
+        public EmailController(IRequestProcessingService processingService)
         {
             _processingService = processingService;
         }
@@ -21,7 +21,7 @@ namespace Falcon.Api.Controllers
         [HttpPost("emails")]
         public async Task<string> ScanEmails([FromBody] List<string> emails)
         {
-            return await _processingService.ScanEmailsAsync(emails).ExtractValue();
+            return await _processingService.ScanEmailsAsync(emails).Extract();
         }
     }
 }

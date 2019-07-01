@@ -50,7 +50,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Logging.Tool", "Logg
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Utils.Api", "Utils\Falcon.Utils.Api\Falcon.Utils.Api.csproj", "{961F8FFD-1181-43C4-9827-67174FFD80E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Services.Scanning", "Services\Falcon.Services.Scanning\Falcon.Services.Scanning.csproj", "{9734CFBB-D89E-45D0-B6BF-060BECD7DE04}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Services.Scan", "Services\Falcon.Services.Scan\Falcon.Services.Scan.csproj", "{9734CFBB-D89E-45D0-B6BF-060BECD7DE04}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Services.RequestProcessing", "Services\Falcon.Services.RequestProcessing\Falcon.Services.RequestProcessing.csproj", "{B650E90F-02B4-4EF8-9F76-698666D1E586}"
 EndProject

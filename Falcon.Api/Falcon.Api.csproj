@@ -16,7 +16,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Bus\Falcon.Bus.EasyNetQ\Falcon.Bus.EasyNetQ.csproj" />
       <ProjectReference Include="..\Services\Falcon.Services.RequestProcessing\Falcon.Services.RequestProcessing.csproj" />
-      <ProjectReference Include="..\Services\Falcon.Services.Scanning\Falcon.Services.Scanning.csproj" />
+      <ProjectReference Include="..\Services\Falcon.Services.Scan\Falcon.Services.Scan.csproj" />
       <ProjectReference Include="..\Utils\Falcon.Utils.Api\Falcon.Utils.Api.csproj" />
     </ItemGroup>
 

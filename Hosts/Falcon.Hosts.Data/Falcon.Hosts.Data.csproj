@@ -10,7 +10,7 @@
         <ProjectReference Include="..\..\Bus\Falcon.Bus.EasyNetQ\Falcon.Bus.EasyNetQ.csproj" />
         <ProjectReference Include="..\..\Logging\Falcon.Logging.Data\Falcon.Logging.Data.csproj" />
         <ProjectReference Include="..\..\Logging\Falcon.Logging.Scanner\Falcon.Logging.Scanner.csproj" />
-        <ProjectReference Include="..\..\Services\Falcon.Services.Scanning\Falcon.Services.Scanning.csproj" />
+        <ProjectReference Include="..\..\Services\Falcon.Services.Scan\Falcon.Services.Scan.csproj" />
     </ItemGroup>
     
 </Project>

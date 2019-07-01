@@ -5,7 +5,7 @@ using Falcon.Logging;
 using Falcon.Contracts;
 using Microsoft.Extensions.Hosting;
 
-namespace Falcon.Services.Scanning
+namespace Falcon.Services.Scan
 {
     public class HostedService : IHostedService
     {
@@ -29,7 +29,7 @@ namespace Falcon.Services.Scanning
             _logger.Information("Start");
 
             _bus.SubscribeAsync<TargetProfile>(string.Empty, // todo: set id
-                async script => await _requestHandler.ProcessAsync(script));
+                async targetProfile => await _requestHandler.ProcessAsync(targetProfile));
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)

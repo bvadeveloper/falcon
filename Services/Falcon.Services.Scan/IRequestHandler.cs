@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
 using Falcon.Contracts;
 
-namespace Falcon.Services.Scanning
+namespace Falcon.Services.Scan
 {
     public interface IRequestHandler
     {
-        Task ProcessAsync(TargetProfile script);
+        Task ProcessAsync(TargetProfile profile);
     }
 }

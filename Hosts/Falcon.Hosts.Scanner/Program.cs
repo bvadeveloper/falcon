@@ -3,7 +3,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Falcon.Bus.EasyNetQ.Module;
 using Falcon.Logging.Scanner.Module;
-using Falcon.Services.Scanning;
+using Falcon.Services.Scan;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 

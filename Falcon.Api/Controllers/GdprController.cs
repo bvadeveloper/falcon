@@ -20,7 +20,7 @@ namespace Falcon.Api.Controllers
         [HttpPost("gdpr")]
         public async Task<string> ScanGdpr([FromBody] string domain)
         {
-            return await _processingService.ScanGdprInfoAsync(domain).ExtractValue();
+            return await _processingService.ScanGdprInfoAsync(domain).Extract();
         }
     }
 }
