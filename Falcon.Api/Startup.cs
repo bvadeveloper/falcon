@@ -3,6 +3,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Falcon.Bus.EasyNetQ.Module;
 using Falcon.Logging.Api.Module;
+using Falcon.Services;
 using Falcon.Services.RequestProcessing;
 using Falcon.Utils.Api;
 using Falcon.Utils.Autofac;

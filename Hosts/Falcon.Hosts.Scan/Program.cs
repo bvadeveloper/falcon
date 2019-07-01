@@ -2,24 +2,19 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Falcon.Bus.EasyNetQ.Module;
-using Falcon.Logging.Report.Module;
-using Microsoft.Extensions.Configuration;
+using Falcon.Logging.Scan.Module;
 using Microsoft.Extensions.Hosting;
 
-namespace Falcon.Hosts.Report
+namespace Falcon.Hosts.Scan
 {
     static class Program
     {
         private static async Task Main() =>
             await new HostBuilder()
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
-                .ConfigureAppConfiguration((context, configurationBuilder) =>
-                {
-                    configurationBuilder.AddEnvironmentVariables();
-                })
                 .ConfigureContainer<ContainerBuilder>(builder =>
                 {
-                    builder.RegisterModule<ReportLoggerModule>();
+                    builder.RegisterModule<ScanLoggerModule>();
                     builder.RegisterModule<EasyNetQModule>();
                     builder.RegisterType<HostedService>().As<IHostedService>();
                 })

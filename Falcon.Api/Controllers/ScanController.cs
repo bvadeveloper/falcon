@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Falcon.Contracts;
-using Falcon.Services.RequestProcessing;
+using Falcon.Profiles;
+using Falcon.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Falcon.Api.Controllers
@@ -26,9 +26,9 @@ namespace Falcon.Api.Controllers
 
         // POST api/scan/domains
         [HttpPost("domains")]
-        public async Task<Result> ScanDomains([FromBody] List<string> domains)
+        public async Task<Result> ScanDomains([FromBody] List<string> domains, List<string> tools)
         {
-            return await _processingService.ScanDomainsAsync(domains);
+            return await _processingService.ScanDomainsAsync(domains, tools);
         }
     }
 }

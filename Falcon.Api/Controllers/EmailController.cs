@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Falcon.Contracts;
-using Falcon.Services.RequestProcessing;
+using Falcon.Profiles;
+using Falcon.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Falcon.Api.Controllers

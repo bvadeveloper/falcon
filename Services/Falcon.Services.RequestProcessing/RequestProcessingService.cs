@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Falcon.Contracts;
+using Falcon.Profiles;
 
 namespace Falcon.Services.RequestProcessing
 {
@@ -12,7 +12,7 @@ namespace Falcon.Services.RequestProcessing
             throw new NotImplementedException();
         }
 
-        public Task<Result> ScanDomainsAsync(List<string> domains)
+        public Task<Result> ScanDomainsAsync(List<string> domains, List<string> tools)
         {
             throw new NotImplementedException();
         }
