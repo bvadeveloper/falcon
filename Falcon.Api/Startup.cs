@@ -4,7 +4,8 @@ using Autofac.Extensions.DependencyInjection;
 using Falcon.Bus.EasyNetQ.Module;
 using Falcon.Logging.Api.Module;
 using Falcon.Services.RequestProcessing;
-using Falcon.Services.Scanning;
+using Falcon.Utils.Api;
+using Falcon.Utils.Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -13,8 +14,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
-using Falcon.Utils.Api;
-using Falcon.Utils.Autofac;
 
 namespace Falcon.Api
 {

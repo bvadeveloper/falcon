@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Falcon.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/scan")]
     [ApiController]
     public class EmailsController : ControllerBase
     {
@@ -17,8 +17,8 @@ namespace Falcon.Api.Controllers
             _processingService = processingService;
         }
 
-        // POST api/scanEmails
-        [HttpPost]
+        // POST api/scan/emails
+        [HttpPost("emails")]
         public async Task<string> ScanEmails([FromBody] List<string> emails)
         {
             return await _processingService.ScanEmailsAsync(emails).ExtractValue();

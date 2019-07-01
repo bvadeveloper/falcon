@@ -1,9 +1,12 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Falcon.Contracts;
 using Falcon.Services.RequestProcessing;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Falcon.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/scan")]
     [ApiController]
     public class ScanController : ControllerBase
     {
@@ -12,6 +15,20 @@ namespace Falcon.Api.Controllers
         public ScanController(IRequestProcessingService processingService)
         {
             _processingService = processingService;
+        }
+
+        // POST api/scan/ip
+        [HttpPost("ip")]
+        public async Task<Result> ScanIp([FromBody] string ip)
+        {
+            return await _processingService.ScanIpAsync(ip);
+        }
+
+        // POST api/scan/domains
+        [HttpPost("domains")]
+        public async Task<Result> ScanDomains([FromBody] List<string> domains)
+        {
+            return await _processingService.ScanDomainsAsync(domains);
         }
     }
 }
