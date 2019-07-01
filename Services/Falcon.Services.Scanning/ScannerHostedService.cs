@@ -2,7 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using EasyNetQ;
 using Falcon.Logging;
-using Falcon.Scripts;
+using Falcon.Contracts;
 using Microsoft.Extensions.Hosting;
 
 namespace Falcon.Services.Scanning
@@ -28,7 +28,7 @@ namespace Falcon.Services.Scanning
             await Task.Yield();
             _logger.Information("Start");
 
-            _bus.SubscribeAsync<Script>(string.Empty, // todo: set id
+            _bus.SubscribeAsync<TargetProfile>(string.Empty, // todo: set id
                 async script => await _requestHandler.ProcessAsync(script));
         }
 

@@ -1,16 +1,16 @@
 using Autofac;
 using Falcon.Logging.Serilog.Module;
 
-namespace Falcon.Logging.Sorter.Module
+namespace Falcon.Logging.Report.Module
 {
-    public class SorterLoggerModule : Autofac.Module
+    public class ReportLoggerModule : Autofac.Module
     {
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterModule<SerilogModule>();
 
-            builder.RegisterGeneric(typeof(SorterLogger<>))
-                .As(typeof(ISorterLogger<>))
+            builder.RegisterGeneric(typeof(ReportLogger<>))
+                .As(typeof(IReportLogger))
                 .As(typeof(IJsonLogger<>))
                 .InstancePerLifetimeScope();
         }

@@ -14,15 +14,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Data", "Data\Falcon.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Data.Entities", "Data\Falcon.Data.Entities\Falcon.Data.Entities.csproj", "{F3B39FA6-8B67-4F4E-BF57-1A982013CDA0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{C9536D0A-71C2-4DE3-B0A7-0AE2ABBF358A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contracts", "Contracts", "{C9536D0A-71C2-4DE3-B0A7-0AE2ABBF358A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scanners", "Scanners", "{F4DFB76C-B2A4-4F1F-9178-88D66B614F63}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hosts", "Hosts", "{F4DFB76C-B2A4-4F1F-9178-88D66B614F63}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utils", "Utils", "{8607D660-F92C-48F3-B3B5-50A657C3741D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Scanner", "Scanners\Falcon.Scanner\Falcon.Scanner.csproj", "{2F406993-AF2D-40DE-A466-7D1A93131AE5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Hosts.Scanner", "Hosts\Falcon.Hosts.Scanner\Falcon.Hosts.Scanner.csproj", "{2F406993-AF2D-40DE-A466-7D1A93131AE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Scripts", "Scripts\Falcon.Scripts\Falcon.Scripts.csproj", "{A2AF49E3-AF0F-414E-913E-C5FDC655ACF6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Contracts", "Contracts\Falcon.Contracts\Falcon.Contracts.csproj", "{A2AF49E3-AF0F-414E-913E-C5FDC655ACF6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Utils.Autofac", "Utils\Falcon.Utils.Autofac\Falcon.Utils.Autofac.csproj", "{79BECAF3-D0F5-457D-BE5A-03B8488C98A2}"
 EndProject
@@ -30,7 +30,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Utils.Serialization"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{48FFD131-D5B4-4F4B-8EDB-604E771CE58C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Scanners", "Scanners\Falcon.Sorter\Falcon.Sorter.csproj", "{3421184C-8A38-42D5-9FEC-B89FAC4615C8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Hosts.ToolOrchestration", "Hosts\Falcon.Hosts.ToolOrchestration\Falcon.Hosts.ToolOrchestration.csproj", "{3421184C-8A38-42D5-9FEC-B89FAC4615C8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logging", "Logging", "{12B501D5-FA06-4EC9-88D8-5DA2D1C8F84E}"
 EndProject
@@ -46,13 +46,21 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Logging.Serilog", "L
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Logging.Scanner", "Logging\Falcon.Logging.Scanner\Falcon.Logging.Scanner.csproj", "{F3C9A067-2B8F-431D-B688-194A55B1FD62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Logging.Sorter", "Logging\Falcon.Logging.Sorter\Falcon.Logging.Sorter.csproj", "{BC372E71-82A8-44EE-951C-FDE8C10E6430}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Logging.Tool", "Logging\Falcon.Logging.Tool\Falcon.Logging.Tool.csproj", "{BC372E71-82A8-44EE-951C-FDE8C10E6430}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Utils.Api", "Utils\Falcon.Utils.Api\Falcon.Utils.Api.csproj", "{961F8FFD-1181-43C4-9827-67174FFD80E5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Services.Scanning", "Services\Falcon.Services.Scanning\Falcon.Services.Scanning.csproj", "{9734CFBB-D89E-45D0-B6BF-060BECD7DE04}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Services.RequestProcessing", "Services\Falcon.Services.RequestProcessing\Falcon.Services.RequestProcessing.csproj", "{B650E90F-02B4-4EF8-9F76-698666D1E586}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Hosts.Report", "Hosts\Falcon.Hosts.Report\Falcon.Hosts.Report.csproj", "{ACC07466-B734-454C-A773-F72F7EB27219}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Hosts.Data", "Hosts\Falcon.Hosts.Data\Falcon.Hosts.Data.csproj", "{DE8B14F1-17D8-4CDD-A602-B0A4B9CB2025}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Logging.Report", "Logging\Falcon.Logging.Report\Falcon.Logging.Report.csproj", "{C22878E3-4DC2-459D-A57E-8B24CE7A7784}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Logging.Data", "Logging\Falcon.Logging.Data\Falcon.Logging.Data.csproj", "{5C8189B2-6F70-49A5-A5A5-A8630F1DCD94}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -132,6 +140,22 @@ Global
 		{B650E90F-02B4-4EF8-9F76-698666D1E586}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B650E90F-02B4-4EF8-9F76-698666D1E586}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B650E90F-02B4-4EF8-9F76-698666D1E586}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACC07466-B734-454C-A773-F72F7EB27219}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACC07466-B734-454C-A773-F72F7EB27219}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACC07466-B734-454C-A773-F72F7EB27219}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACC07466-B734-454C-A773-F72F7EB27219}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE8B14F1-17D8-4CDD-A602-B0A4B9CB2025}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE8B14F1-17D8-4CDD-A602-B0A4B9CB2025}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE8B14F1-17D8-4CDD-A602-B0A4B9CB2025}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE8B14F1-17D8-4CDD-A602-B0A4B9CB2025}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C22878E3-4DC2-459D-A57E-8B24CE7A7784}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C22878E3-4DC2-459D-A57E-8B24CE7A7784}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C22878E3-4DC2-459D-A57E-8B24CE7A7784}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C22878E3-4DC2-459D-A57E-8B24CE7A7784}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C8189B2-6F70-49A5-A5A5-A8630F1DCD94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C8189B2-6F70-49A5-A5A5-A8630F1DCD94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C8189B2-6F70-49A5-A5A5-A8630F1DCD94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C8189B2-6F70-49A5-A5A5-A8630F1DCD94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B5CDEE56-AA03-4161-A3D1-EFCAA6AF31A9} = {46AECE87-DBF7-4E62-96B5-91DC61D75641}
@@ -152,5 +176,9 @@ Global
 		{961F8FFD-1181-43C4-9827-67174FFD80E5} = {8607D660-F92C-48F3-B3B5-50A657C3741D}
 		{9734CFBB-D89E-45D0-B6BF-060BECD7DE04} = {48FFD131-D5B4-4F4B-8EDB-604E771CE58C}
 		{B650E90F-02B4-4EF8-9F76-698666D1E586} = {48FFD131-D5B4-4F4B-8EDB-604E771CE58C}
+		{ACC07466-B734-454C-A773-F72F7EB27219} = {F4DFB76C-B2A4-4F1F-9178-88D66B614F63}
+		{DE8B14F1-17D8-4CDD-A602-B0A4B9CB2025} = {F4DFB76C-B2A4-4F1F-9178-88D66B614F63}
+		{C22878E3-4DC2-459D-A57E-8B24CE7A7784} = {12B501D5-FA06-4EC9-88D8-5DA2D1C8F84E}
+		{5C8189B2-6F70-49A5-A5A5-A8630F1DCD94} = {12B501D5-FA06-4EC9-88D8-5DA2D1C8F84E}
 	EndGlobalSection
 EndGlobal

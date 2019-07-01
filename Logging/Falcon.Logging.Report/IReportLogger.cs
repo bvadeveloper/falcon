@@ -1,8 +1,8 @@
 using System;
 
-namespace Falcon.Logging.Sorter
+namespace Falcon.Logging.Report
 {
-    public interface ISorterLogger : IJsonLogger
+    public interface IReportLogger : IJsonLogger
     {
         /// <summary>
         /// Log TCP request
@@ -20,6 +20,6 @@ namespace Falcon.Logging.Sorter
             Exception exception);
     }
 
-    public interface ISorterLogger<out TSorter> : ISorterLogger, IJsonLogger<TSorter>
+    public interface IReportLogger<out TSorter> : IReportLogger, IJsonLogger<TSorter>
         where TSorter : class { }
 }

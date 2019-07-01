@@ -7,7 +7,7 @@ using Falcon.Services.Scanning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
-namespace Falcon.Scanner
+namespace Falcon.Hosts.Scanner
 {
     static class Program
     {

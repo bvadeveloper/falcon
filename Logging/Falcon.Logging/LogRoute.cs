@@ -3,27 +3,37 @@ namespace Falcon.Logging
     public enum LogRoute
     {
         /// <summary>
-        /// re-log-api 
+        /// log-api 
         /// </summary>
         Api,
 
         /// <summary>
-        /// re-log-job
+        /// log-scanner
         /// </summary>
         Scanner,
 
         /// <summary>
-        /// re-log-processor 
+        /// log-tool
         /// </summary>
-        Sorter,
+        Tool,
+        
+        /// <summary>
+        /// log-report
+        /// </summary>
+        Report,
+        
+        /// <summary>
+        /// log-data
+        /// </summary>
+        Data,
 
         /// <summary>
-        /// re-log-trace
+        /// log-trace
         /// </summary>
         Trace,
 
         /// <summary>
-        /// re-log-default
+        /// log-default
         /// </summary>
         Default,
     }

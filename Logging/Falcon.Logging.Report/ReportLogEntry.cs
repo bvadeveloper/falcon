@@ -1,8 +1,8 @@
 using System;
 
-namespace Falcon.Logging.Sorter
+namespace Falcon.Logging.Report
 {
-    public class SorterLogEntry : LogEntry
+    public class ReportLogEntry : LogEntry
     {
         public TimeSpan ElapsedTime { get; set; }
 

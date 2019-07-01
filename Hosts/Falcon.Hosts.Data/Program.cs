@@ -2,20 +2,25 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Falcon.Bus.EasyNetQ.Module;
-using Falcon.Logging.Sorter.Module;
+using Falcon.Logging.Data.Module;
 using Falcon.Services.Scanning;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
-namespace Falcon.Sorter
+namespace Falcon.Hosts.Data
 {
     static class Program
     {
         private static async Task Main() =>
             await new HostBuilder()
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                .ConfigureAppConfiguration((context, configurationBuilder) =>
+                {
+                    configurationBuilder.AddEnvironmentVariables();
+                })
                 .ConfigureContainer<ContainerBuilder>(builder =>
                 {
-                    builder.RegisterModule<SorterLoggerModule>();
+                    builder.RegisterModule<DataLoggerModule>();
                     builder.RegisterModule<EasyNetQModule>();
                     builder.RegisterType<HostedService>().As<IHostedService>();
                 })

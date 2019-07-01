@@ -1,21 +1,21 @@
 ﻿using System;
-using Microsoft.Extensions.Logging;
 using Falcon.Utils.Serialization;
+using Microsoft.Extensions.Logging;
 
-namespace Falcon.Logging.Sorter
+namespace Falcon.Logging.Data
 {
-    public class SorterLogger<T> : JsonLogger<T, LogEntry>, ISorterLogger<T>
+    public class DataLogger<T> : JsonLogger<T, LogEntry>, IDataLogger<T>
         where T : class
     {
-        public SorterLogger(
+        public DataLogger(
             IGlobalContext globalContext,
             IInterceptionWriter logWriter,
             ISerializationService serializationService)
-            : base(logWriter, globalContext, serializationService, LogRoute.Scanner) { }
+            : base(logWriter, globalContext, serializationService, LogRoute.Data) { }
 
         public void LogRequest(long duration, string remoteIp, string requestBody, string response, Exception exception)
         {
-            var tcpLog = new SorterLogEntry
+            var tcpLog = new DataLogEntry
             {
                 RequestBody = requestBody,
                 Response = response,
