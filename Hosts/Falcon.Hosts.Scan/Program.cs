@@ -15,7 +15,7 @@ namespace Falcon.Hosts.Scan
                 .ConfigureContainer<ContainerBuilder>(builder =>
                 {
                     builder.RegisterModule<ScanLoggerModule>();
-                    builder.RegisterModule<EasyNetQModule>();
+                    builder.RegisterModule<EasyNetQSubscriberModule>();
                     builder.RegisterType<HostedService>().As<IHostedService>();
                 })
                 .RunConsoleAsync();

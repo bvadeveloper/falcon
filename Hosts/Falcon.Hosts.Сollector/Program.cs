@@ -20,7 +20,7 @@ namespace Falcon.Hosts.Сollector
                 .ConfigureContainer<ContainerBuilder>(builder =>
                 {
                     builder.RegisterModule<СollectorLoggerModule>();
-                    builder.RegisterModule<EasyNetQModule>();
+                    builder.RegisterModule<EasyNetQSubscriberModule>();
                     builder.RegisterType<HostedService>().As<IHostedService>();
                 })
                 .RunConsoleAsync();

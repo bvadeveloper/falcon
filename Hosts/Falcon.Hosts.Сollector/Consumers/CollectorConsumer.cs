@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using EasyNetQ.AutoSubscribe;
 using Falcon.Profiles.Collect;
 
-namespace Falcon.Hosts
+namespace Falcon.Hosts.Сollector.Consumers
 {
     public class CollectorConsumer : IConsumeAsync<CollectDomainProfile>
     {

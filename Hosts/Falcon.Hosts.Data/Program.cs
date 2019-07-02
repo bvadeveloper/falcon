@@ -20,7 +20,7 @@ namespace Falcon.Hosts.Data
                 .ConfigureContainer<ContainerBuilder>(builder =>
                 {
                     builder.RegisterModule<DataLoggerModule>();
-                    builder.RegisterModule<EasyNetQModule>();
+                    builder.RegisterModule<EasyNetQSubscriberModule>();
                     builder.RegisterType<HostedService>().As<IHostedService>();
                 })
                 .RunConsoleAsync();

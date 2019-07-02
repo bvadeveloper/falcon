@@ -1,9 +1,7 @@
-using System;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using EasyNetQ;
-using EasyNetQ.AutoSubscribe;
 using Falcon.Logging;
 using Microsoft.Extensions.Hosting;
 
@@ -22,22 +20,14 @@ namespace Falcon.Hosts
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _logger.Information("Start");
-
-            var subscriber = new AutoSubscriber(_bus, "host")
-            {
-                ConfigureSubscriptionConfiguration = c => c.WithAutoDelete(),
-                GenerateSubscriptionId = info => "host"
-            };
-
-            subscriber.SubscribeAsync(Assembly.GetEntryAssembly());
+            _logger.Information($"Host start '{Assembly.GetEntryAssembly()?.GetName().Name}'");
 
             return Task.CompletedTask;
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            _logger.Information("Stop");
+            _logger.Information($"Host stop '{Assembly.GetEntryAssembly()?.GetName().Name}'");
             _bus.Dispose();
 
             return Task.CompletedTask;
