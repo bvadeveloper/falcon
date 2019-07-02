@@ -4,7 +4,7 @@
       "commandName": "Project",
       "environmentVariables": {
       
-        "ConnectionStrings:RabbitMQ": "host=localhost;virtualHost=/;username=rmquser;password=rmquser;prefetchcount=1",
+        "ConnectionStrings:RabbitMQ": "host=localhost;virtualHost=/;username=rmquser;password=rmquser;prefetchcount=1;product=collector",
         "ConnectionStrings:Database": "Server=.;Database=RegistrarEngine;Trusted_Connection=true;MultipleActiveResultSets=True;",
       
         "Logging:LogLevel:Microsoft": "Information",

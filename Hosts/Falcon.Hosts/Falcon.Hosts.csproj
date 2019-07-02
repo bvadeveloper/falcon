@@ -9,6 +9,5 @@
     <ItemGroup>
       <ProjectReference Include="..\..\Bus\Falcon.Bus.EasyNetQ\Falcon.Bus.EasyNetQ.csproj" />
       <ProjectReference Include="..\..\Logging\Falcon.Logging\Falcon.Logging.csproj" />
-      <ProjectReference Include="..\..\Profiles\Falcon.Profiles.Scan\Falcon.Profiles.Scan.csproj" />
     </ItemGroup>
 </Project>

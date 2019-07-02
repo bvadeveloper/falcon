@@ -40,18 +40,18 @@ namespace Falcon.Api.Controllers
         [HttpPost("emails")]
         [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
         [ProducesResponseType((int) HttpStatusCode.InternalServerError)]
-        public async Task<string> ScanEmails([FromBody] List<string> emails)
+        public async Task<Result<string>> ScanEmails([FromBody] List<string> emails)
         {
-            return await _processingService.ScanEmailsAsync(emails).Extract();
+            return await _processingService.ScanEmailsAsync(emails);
         }
 
         // POST api/scan/gdpr
         [HttpPost("gdpr")]
         [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
         [ProducesResponseType((int) HttpStatusCode.InternalServerError)]
-        public async Task<string> ScanGdpr([FromBody] List<string> domains)
+        public async Task<Result<string>> ScanGdpr([FromBody] List<string> domains)
         {
-            return await _processingService.ScanGdprInfoAsync(domains).Extract();
+            return await _processingService.ScanGdprInfoAsync(domains);
         }
     }
 }
