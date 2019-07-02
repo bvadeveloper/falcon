@@ -2,9 +2,9 @@ using System.Collections.Generic;
 
 namespace Falcon.Profiles.Collect
 {
-    public class CollectProfile
+    public class CollectDomainProfile
     {
-        public string Target { get; set; }
+        public List<string> Targets { get; set; }
 
         public List<string> Tools { get; set; }
     }

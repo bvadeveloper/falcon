@@ -5,7 +5,7 @@ namespace Falcon.Services
 {
     public interface IResult
     {
-        bool Succeed();
+        bool Succeed { get; set; }
 
         Exception ProcessedException { get; set; }
     }
@@ -17,10 +17,7 @@ namespace Falcon.Services
 
     public class Result : IResult
     {
-        public bool Succeed()
-        {
-            return ProcessedException == null;
-        }
+        public bool Succeed { get; set; }
 
         public Exception ProcessedException { get; set; }
     }
@@ -32,6 +29,12 @@ namespace Falcon.Services
         public Result<TValue> SetResult(TValue value)
         {
             Value = value;
+            return this;
+        }
+
+        public Result<TValue> Ok()
+        {
+            Succeed = true;
             return this;
         }
     }

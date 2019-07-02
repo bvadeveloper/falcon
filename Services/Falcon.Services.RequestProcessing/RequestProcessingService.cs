@@ -1,30 +1,63 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Falcon.Profiles;
+using EasyNetQ;
+using Falcon.Logging;
+using Falcon.Profiles.Collect;
+using Falcon.Profiles.Scan;
 
 namespace Falcon.Services.RequestProcessing
 {
     public class RequestProcessingService : IRequestProcessingService
     {
-        public Task<Result> ScanIpAsync(string ip)
+        private readonly IJsonLogger _logger;
+        private readonly IBus _bus;
+
+        public RequestProcessingService(IJsonLogger<RequestProcessingService> logger, IBus bus)
         {
-            throw new NotImplementedException();
+            _logger = logger;
+            _bus = bus;
         }
 
-        public Task<Result> ScanDomainsAsync(List<string> domains, List<string> tools)
+        public async Task<Result<string>> ScanIpAsync(List<string> targets, List<string> tools)
         {
-            throw new NotImplementedException();
+            await _bus.PublishAsync(new ScanIpProfile
+            {
+                Targets = targets,
+                Tools = tools
+            });
+
+            return new Result<string>().SetResult("request in processing");
         }
 
-        public Task<Result<string>> ScanEmailsAsync(List<string> emails)
+        public async Task<Result<string>> ScanDomainsAsync(List<string> domains, List<string> tools)
         {
-            return Task.FromResult(new Result<string>().SetResult("your emails is hacked"));
+            await _bus.PublishAsync(new CollectDomainProfile
+            {
+                Targets = domains,
+                Tools = tools
+            });
+
+            return new Result<string>().SetResult("request in processing").Ok();
         }
 
-        public Task<Result<string>> ScanGdprInfoAsync(string domain)
+        public async Task<Result<string>> ScanEmailsAsync(List<string> emails)
         {
-            throw new NotImplementedException();
+            await _bus.PublishAsync(new ScanEmailProfile
+            {
+                Targets = emails
+            });
+
+            return new Result<string>().SetResult("request in processing").Ok();
+        }
+
+        public async Task<Result<string>> ScanGdprInfoAsync(List<string> domains)
+        {
+            await _bus.PublishAsync(new ScanGdprProfile
+            {
+                Targets = domains
+            });
+
+            return new Result<string>().SetResult("request in processing").Ok();
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Falcon.Hosts
             await Task.Yield();
             _logger.Information("Start");
 
-            _bus.SubscribeAsync<ScanProfile>(string.Empty, // todo: set id
+            _bus.SubscribeAsync<ScanDomainProfile>(string.Empty, // todo: set id
                 async targetProfile => await _requestHandler.ProcessAsync(targetProfile));
         }
 

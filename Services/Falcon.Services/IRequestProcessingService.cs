@@ -16,12 +16,12 @@ namespace Falcon.Services
         // 443 SSL/TLS(HTTPS)
         // 445 Microsoft(SMB)
         // 3389 Remote(RDP)
-        Task<Result> ScanIpAsync(string ip);
+        Task<Result<string>> ScanIpAsync(List<string> targets, List<string> tools);
 
-        Task<Result> ScanDomainsAsync(List<string> domains, List<string> tools);
+        Task<Result<string>> ScanDomainsAsync(List<string> targets, List<string> tools);
 
         Task<Result<string>> ScanEmailsAsync(List<string> emails);
 
-        Task<Result<string>> ScanGdprInfoAsync(string domain);
+        Task<Result<string>> ScanGdprInfoAsync(List<string> domains);
     }
 }

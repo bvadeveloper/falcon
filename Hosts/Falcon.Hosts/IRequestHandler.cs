@@ -5,6 +5,6 @@ namespace Falcon.Hosts
 {
     public interface IRequestHandler
     {
-        Task ProcessAsync(ScanProfile profile);
+        Task ProcessAsync(ScanDomainProfile profile);
     }
 }

@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 
-namespace Falcon.Profiles.Scan
+namespace Falcon.Api.Models
 {
-    public abstract class ScanProfile
+    public class TargetModel
     {
         public List<string> Targets { get; set; }
-        
+
         public List<string> Tools { get; set; }
     }
 }
