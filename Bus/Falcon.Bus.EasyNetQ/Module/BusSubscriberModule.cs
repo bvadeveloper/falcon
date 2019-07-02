@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Falcon.Bus.EasyNetQ.Module
 {
-    public class EasyNetQSubscriberModule : Autofac.Module
+    public class BusSubscriberModule : Autofac.Module
     {
         protected override void Load(ContainerBuilder builder)
         {

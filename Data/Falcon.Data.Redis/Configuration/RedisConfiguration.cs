@@ -1,4 +1,4 @@
-﻿namespace Falcon.Cache.Redis.Configuration
+﻿namespace Falcon.Data.Redis.Configuration
 {
     public class RedisConfiguration
     {

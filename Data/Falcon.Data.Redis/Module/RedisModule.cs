@@ -1,10 +1,10 @@
 ﻿using Autofac;
-using Falcon.Cache.Redis.Configuration;
+using Falcon.Data.Redis.Configuration;
 using Falcon.Logging;
 using StackExchange.Redis;
 using Falcon.Utils.Autofac;
 
-namespace Falcon.Cache.Redis.Module
+namespace Falcon.Data.Redis.Module
 {
     public class RedisModule : Autofac.Module
     {

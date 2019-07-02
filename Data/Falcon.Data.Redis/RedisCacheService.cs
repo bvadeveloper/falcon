@@ -6,7 +6,7 @@ using Falcon.Logging;
 using StackExchange.Redis;
 using Falcon.Utils.Serialization;
 
-namespace Falcon.Cache.Redis
+namespace Falcon.Data.Redis
 {
     public class RedisCacheService : ICacheService
     {

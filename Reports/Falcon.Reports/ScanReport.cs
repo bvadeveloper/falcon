@@ -1,4 +1,4 @@
-namespace Falcon.Profiles.Report
+namespace Falcon.Reports
 {
     public class ScanReport
     {

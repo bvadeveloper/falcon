@@ -7,17 +7,8 @@ using Microsoft.Extensions.Hosting;
 
 namespace Falcon.Hosts.Scan
 {
-    static class Program
+    internal static class Program
     {
-        private static async Task Main() =>
-            await new HostBuilder()
-                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
-                .ConfigureContainer<ContainerBuilder>(builder =>
-                {
-                    builder.RegisterModule<ScanLoggerModule>();
-                    builder.RegisterModule<EasyNetQSubscriberModule>();
-                    builder.RegisterType<HostedService>().As<IHostedService>();
-                })
-                .RunConsoleAsync();
+        private static async Task Main() => await Host.Init();
     }
 }
