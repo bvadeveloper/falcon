@@ -6,11 +6,11 @@ using Falcon.Profiles.Scan;
 
 namespace Falcon.Hosts.Scan.Consumers
 {
-    public class ScanConsumer : IConsumeAsync<ScanDomainProfile>
+    public class ScanConsumer : IConsumeAsync<DomainScanProfile>
     {
-        public Task ConsumeAsync(ScanDomainProfile message)
+        public Task ConsumeAsync(DomainScanProfile message)
         {
-            Console.WriteLine(message.Targets.FirstOrDefault());
+            Console.WriteLine(message.Target.FirstOrDefault());
 
             return Task.CompletedTask;
         }

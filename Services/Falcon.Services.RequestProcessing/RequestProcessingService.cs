@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using EasyNetQ;
 using Falcon.Logging;
@@ -18,46 +19,53 @@ namespace Falcon.Services.RequestProcessing
             _bus = bus;
         }
 
-        public async Task<Result<string>> ScanIpAsync(List<string> targets, List<string> tools)
+        public Task<Result<string>> ScanIpAsync(List<string> targets, List<string> tools)
         {
-            await _bus.PublishAsync(new ScanIpProfile
+            targets.Publish(_bus, t => new IpScanProfile
             {
-                Targets = targets,
+                Target = t,
                 Tools = tools
             });
 
-            return new Result<string>().SetResult("request in processing");
+            return Task.FromResult(new Result<string>().SetResult("request in processing").Ok());
         }
 
-        public async Task<Result<string>> ScanDomainsAsync(List<string> domains, List<string> tools)
+
+        public Task<Result<string>> ScanDomainsAsync(List<string> targets, List<string> tools)
         {
-            await _bus.PublishAsync(new CollectDomainProfile
+            targets.Publish(_bus, t => new DomainCollectProfile
             {
-                Targets = domains,
+                Target = t,
                 Tools = tools
             });
 
-            return new Result<string>().SetResult("request in processing").Ok();
+            return Task.FromResult(new Result<string>().SetResult("request in processing").Ok());
         }
 
-        public async Task<Result<string>> ScanEmailsAsync(List<string> emails)
+        public Task<Result<string>> ScanEmailsAsync(List<string> targets)
         {
-            await _bus.PublishAsync(new ScanEmailProfile
+            targets.Publish(_bus, t => new EmailScanProfile
             {
-                Targets = emails
+                Target = t,
             });
 
-            return new Result<string>().SetResult("request in processing").Ok();
+            return Task.FromResult(new Result<string>().SetResult("request in processing").Ok());
         }
 
-        public async Task<Result<string>> ScanGdprInfoAsync(List<string> domains)
+        public Task<Result<string>> ScanGdprInfoAsync(List<string> targets)
         {
-            await _bus.PublishAsync(new ScanGdprProfile
+            targets.Publish(_bus, t => new GdprScanProfile
             {
-                Targets = domains
+                Target = t,
             });
 
-            return new Result<string>().SetResult("request in processing").Ok();
+            return Task.FromResult(new Result<string>().SetResult("request in processing").Ok());
         }
+    }
+
+    internal static class PublishExtensions
+    {
+        internal static void Publish<TProfile>(this List<string> targets, IBus bus, Func<string, TProfile> func)
+            where TProfile : class => targets.ForEach(async t => await bus.PublishAsync(func(t)));
     }
 }

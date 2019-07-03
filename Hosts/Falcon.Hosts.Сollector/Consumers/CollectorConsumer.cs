@@ -6,11 +6,11 @@ using Falcon.Profiles.Collect;
 
 namespace Falcon.Hosts.Сollector.Consumers
 {
-    public class CollectorConsumer : IConsumeAsync<CollectDomainProfile>
+    public class CollectorConsumer : IConsumeAsync<DomainCollectProfile>
     {
-        public Task ConsumeAsync(CollectDomainProfile message)
+        public Task ConsumeAsync(DomainCollectProfile message)
         {
-            Console.WriteLine(message.Targets.FirstOrDefault());
+            Console.WriteLine(message.Target);
 
             return Task.CompletedTask;
         }
