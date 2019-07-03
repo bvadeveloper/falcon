@@ -37,6 +37,12 @@ namespace Falcon.Services
             Succeed = true;
             return this;
         }
+
+        public Result<TValue> Fail()
+        {
+            Succeed = false;
+            return this;
+        }
     }
 
     public static class ResultExtensions
