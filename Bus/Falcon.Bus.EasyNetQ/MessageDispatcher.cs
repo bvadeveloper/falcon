@@ -32,6 +32,9 @@ namespace Falcon.Bus.EasyNetQ
             using (var scope = _provider.CreateScope())
             {
                 var consumer = scope.ServiceProvider.GetRequiredService<TConsumer>();
+                
+                // todo: log execution 
+                // todo: wrap with try-catch block
                 await consumer.ConsumeAsync(message);
             }
         }

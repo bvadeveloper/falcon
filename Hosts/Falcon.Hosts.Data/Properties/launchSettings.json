@@ -1,10 +1,8 @@
 {
   "profiles": {
-    "Falcon.Collector": {
+    "Falcon.Data": {
       "commandName": "Project",
       "environmentVariables": {
-      
-        "ConnectionStrings:Database": "Server=.;Database=RegistrarEngine;Trusted_Connection=true;MultipleActiveResultSets=True;",
 
         "Bus:Host": "localhost",
         "Bus:Port": "5672",

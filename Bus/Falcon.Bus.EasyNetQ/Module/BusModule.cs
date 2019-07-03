@@ -2,6 +2,8 @@ using System.Reflection;
 using Autofac;
 using EasyNetQ;
 using EasyNetQ.AutoSubscribe;
+using Falcon.Bus.EasyNetQ.Configuration;
+using Falcon.Utils.Autofac;
 using Microsoft.Extensions.Configuration;
 
 namespace Falcon.Bus.EasyNetQ.Module
@@ -10,22 +12,25 @@ namespace Falcon.Bus.EasyNetQ.Module
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterModel<BusConfiguration>("Bus");
+
             builder.RegisterEasyNetQ(c =>
             {
+                var config = c.Resolve<BusConfiguration>();
                 var configuration = new ConnectionConfiguration
                 {
                     Hosts = new[]
                     {
                         new HostConfiguration
                         {
-                            Host = "localhost",
-                            Port = 5672
+                            Host = config.Host,
+                            Port = (ushort) config.Port
                         }
                     },
-                    UserName = "rmquser",
-                    Password = "rmquser",
-                    VirtualHost = "/",
-                    PrefetchCount = 1
+                    UserName = config.UserName,
+                    Password = config.Password,
+                    VirtualHost = config.VirtualHost,
+                    PrefetchCount = (ushort) config.PrefetchCount
                 };
 
                 return configuration;

@@ -9,7 +9,14 @@
      
         "ConnectionStrings:RabbitMQ": "host=localhost;virtualHost=/;username=rmquser;password=rmquser;prefetchcount=1",
         "ConnectionStrings:Database": "Server=.;Database=RegistrarEngine;Trusted_Connection=true;MultipleActiveResultSets=True;",
-    
+
+        "Bus:Host": "localhost",
+        "Bus:Port": "5672",
+        "Bus:UserName": "rmquser",
+        "Bus:Password": "rmquser",
+        "Bus:VirtualHost": "/",
+        "Bus:PrefetchCount": "1",
+        
         "CacheRedis:Endpoint": "localhost:6379",
         "CacheRedis:Password": "5EZT8ONc",
         "CacheRedis:ClientName": "RE",

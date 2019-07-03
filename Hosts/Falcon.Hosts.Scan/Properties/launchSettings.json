@@ -1,10 +1,15 @@
 {
   "profiles": {
-    "Falcon.Sorter": {
+    "Falcon.Scan": {
       "commandName": "Project",
       "environmentVariables": {
 
-        "ConnectionStrings:RabbitMQ": "host=localhost;virtualHost=/;username=rmquser;password=rmquser;prefetchcount=1",
+        "Bus:Host": "localhost",
+        "Bus:Port": "5672",
+        "Bus:UserName": "rmquser",
+        "Bus:Password": "rmquser",
+        "Bus:VirtualHost": "/",
+        "Bus:PrefetchCount": "1",
         
         "Logging:LogLevel:Microsoft": "Information",
         "Logging:LogLevel:System": "Information",
