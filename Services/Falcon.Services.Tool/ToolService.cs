@@ -12,5 +12,12 @@ namespace Falcon.Services.Tool
 
             return new List<string>();
         }
+
+        public List<string> CollectTools()
+        {
+            // returns collection of tools for collecting data about target
+            
+            return new List<string>();
+        }
     }
 }

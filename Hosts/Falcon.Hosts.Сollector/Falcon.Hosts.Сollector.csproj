@@ -14,6 +14,7 @@
         <ProjectReference Include="..\..\Profiles\Falcon.Profiles.Scan\Falcon.Profiles.Scan.csproj" />
         <ProjectReference Include="..\..\Reports\Falcon.Reports\Falcon.Reports.csproj" />
         <ProjectReference Include="..\..\Services\Falcon.Services.Tool\Falcon.Services.Tool.csproj" />
+        <ProjectReference Include="..\..\Tools\Falcon.Tools\Falcon.Tools.csproj" />
         <ProjectReference Include="..\Falcon.Hosts\Falcon.Hosts.csproj" />
     </ItemGroup>
     
