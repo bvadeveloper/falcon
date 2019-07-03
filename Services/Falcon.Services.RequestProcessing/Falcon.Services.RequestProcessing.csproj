@@ -8,7 +8,6 @@
       <ProjectReference Include="..\..\Logging\Falcon.Logging\Falcon.Logging.csproj" />
       <ProjectReference Include="..\..\Profiles\Falcon.Profiles.Collect\Falcon.Profiles.Collect.csproj" />
       <ProjectReference Include="..\..\Profiles\Falcon.Profiles.Scan\Falcon.Profiles.Scan.csproj" />
-      <ProjectReference Include="..\Falcon.Services\Falcon.Services.csproj" />
         <ProjectReference Include="..\..\Bus\Falcon.Bus.EasyNetQ\Falcon.Bus.EasyNetQ.csproj" />
     </ItemGroup>
 

@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Falcon.Services
+namespace Falcon.Services.RequestProcessing
 {
     public interface IResult
     {

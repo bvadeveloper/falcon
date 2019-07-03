@@ -9,5 +9,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\Bus\Falcon.Bus.EasyNetQ\Falcon.Bus.EasyNetQ.csproj" />
       <ProjectReference Include="..\..\Logging\Falcon.Logging.Scan\Falcon.Logging.Scan.csproj" />
+      <ProjectReference Include="..\..\Profiles\Falcon.Profiles.Collect\Falcon.Profiles.Collect.csproj" />
+      <ProjectReference Include="..\..\Services\Falcon.Services.Tool\Falcon.Services.Tool.csproj" />
     </ItemGroup>
 </Project>

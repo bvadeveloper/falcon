@@ -4,6 +4,7 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="EasyNetQ" Version="3.5.1" />
+        <PackageReference Include="EasyNetQ.DI.Autofac" Version="3.5.1" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\..\Utils\Falcon.Utils.Autofac\Falcon.Utils.Autofac.csproj" />
