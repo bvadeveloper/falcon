@@ -41,33 +41,31 @@ namespace Falcon.Hosts.Сollector.Consumers
                 .RunAsync();
 
 
-            var data = new List<string>();
-
-            foreach (var d in data)
+            foreach (var d in result)
             {
                 _logger.Information(d);
             }
 
-            if (!data.Any())
-            {
-                // send report and stop
-                await _bus.PublishAsync(new CollectReport { Report = $"'{message.Target}' can't be found" });
-                return;
-            }
-
-            // save collected data to db
-            await _bus.PublishAsync(new SaveProfile { Data = data.FirstOrDefault() });
-
-            // send messages to run scanners
-            await _bus.PublishAsync(new DomainScanProfile
-            {
-                Target = message.Target,
-                Tools = message.Tools.Any() ? message.Tools : _toolService.PickupTools(data),
-                TargetData = new Dictionary<TargetAttributes, string>()
-            });
-
-            // send report 
-            await _bus.PublishAsync(new CollectReport { Report = $"data for target '{data}'" });
+//            if (!data.Any())
+//            {
+//                // send report and stop
+//                await _bus.PublishAsync(new CollectReport { Report = $"'{message.Target}' can't be found" });
+//                return;
+//            }
+//
+//            // save collected data to db
+//            await _bus.PublishAsync(new SaveProfile { Data = data.FirstOrDefault() });
+//
+//            // send messages to run scanners
+//            await _bus.PublishAsync(new DomainScanProfile
+//            {
+//                Target = message.Target,
+//                Tools = message.Tools.Any() ? message.Tools : _toolService.PickupTools(data),
+//                TargetData = new Dictionary<TargetAttributes, string>()
+//            });
+//
+//            // send report 
+//            await _bus.PublishAsync(new CollectReport { Report = $"data for target '{data}'" });
         }
     }
 }

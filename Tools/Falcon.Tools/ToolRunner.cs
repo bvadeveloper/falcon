@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 using Falcon.Tools.Interfaces;
 
 namespace Falcon.Tools
@@ -6,36 +8,37 @@ namespace Falcon.Tools
     public class ToolRunner : IToolRunner
     {
         private string Output { get; set; }
-        
+
         private string ErrorOutput { get; set; }
 
         public string GetOutput() => Output;
-        
+
         public string GetErrorOutput() => ErrorOutput;
 
-        public IToolRunner Run(string command)
-        {
-            using (var process = new Process())
+        public Task<ToolRunner> MakeTask(string command, CancellationToken token) =>
+            Task.Run(() =>
             {
-                process.StartInfo = new ProcessStartInfo
+                using (var process = new Process())
                 {
-                    FileName = "/bin/bash",
-                    Arguments = $"-c \"{command.Replace("\"", "\\\"")}\"",
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true,
-                };
+                    process.StartInfo = MakeStartInfo(command);
+                    process.Start();
+                    Output += process.StandardOutput.ReadToEnd();
+                    ErrorOutput += process.StandardError.ReadToEnd(); // todo: ??
+                    process.WaitForExit();
+                }
 
-                process.Start();
+                return this;
+            }, token);
 
-                Output += process.StandardOutput.ReadToEnd();
-                ErrorOutput += process.StandardError.ReadToEnd(); // todo: ??
-
-                process.WaitForExit();
-            }
-
-            return this;
-        }
+        private static ProcessStartInfo MakeStartInfo(string command) =>
+            new ProcessStartInfo
+            {
+                FileName = "/bin/bash",
+                Arguments = $"-c \"{command.Replace("\"", "\\\"")}\"",
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true,
+            };
     }
 }

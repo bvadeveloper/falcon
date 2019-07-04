@@ -32,7 +32,7 @@ namespace Falcon.Tools
             _logger = logger;
         }
 
-        public Task<object> RunAsync()
+        public Task<List<string>> RunAsync()
         {
             switch (_toolType)
             {

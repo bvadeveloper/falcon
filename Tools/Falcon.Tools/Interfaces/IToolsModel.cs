@@ -7,11 +7,16 @@ namespace Falcon.Tools.Interfaces
     {
         List<ToolModel> Toolset { get; set; }
 
-        Task<object> RunToolsAsync(string target);
+        Task<List<string>> RunToolsAsync(string target);
     }
 
     public interface IScanToolsModel : IToolsModel
     {
+        /// <summary>
+        /// Map optional tools only for scanners
+        /// </summary>
+        /// <param name="optionalTools"></param>
+        /// <returns></returns>
         IScanToolsModel MapOptionalTools(List<string> optionalTools);
     }
 

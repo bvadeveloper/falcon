@@ -2,35 +2,11 @@
   "Collect": {
     "Toolset": [
       {
-        "name": "test1Collect",
-        "commonTags": "testTag1",
-        "hostTags": "testHostTag1",
-        "info": "testInfo1",
-        "commandLine": "testCommandLine1",
-        "timeout": "10"
-      },
-      {
-        "name": "test2Collect",
-        "commonTags": "testTag2",
-        "hostTags": "testHostTag2",
-        "info": "testInfo2",
-        "commandLine": "testCommandLine2",
-        "timeout": "10"
-      },
-      {
-        "name": "test3Collect",
-        "commonTags": "testTag3",
-        "hostTags": "testHostTag3",
-        "info": "testInfo3",
-        "commandLine": "testCommandLine3",
-        "timeout": "10"
-      },
-      {
-        "name": "test4Collect",
-        "commonTags": "testTag4",
-        "hostTags": "testHostTag4",
-        "info": "testInfo4",
-        "commandLine": "testCommandLine4",
+        "name": "nmap",
+        "commonTags": "cool tool",
+        "hostTags": "any hosts",
+        "info": "nmap",
+        "commandLine": "nmap -v -A {0}",
         "timeout": "10"
       }
     ]
