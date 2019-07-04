@@ -1,24 +1,18 @@
 using System.Diagnostics;
+using Falcon.Tools.Interfaces;
 
 namespace Falcon.Tools
 {
-    public interface IToolProcess
+    public class ToolRunner : IToolRunner
     {
-        IToolProcess Run(string command);
+        private string Output { get; set; }
 
-        string MakeReport();
-    }
-
-    public class ToolProcess : IToolProcess
-    {
-        private string Report { get; set; }
-
-        public string MakeReport()
+        public string GetOutput()
         {
-            return Report;
+            return Output;
         }
 
-        public IToolProcess Run(string command)
+        public IToolRunner Run(string command)
         {
             using (var process = new Process())
             {
@@ -34,8 +28,8 @@ namespace Falcon.Tools
 
                 process.Start();
 
-                Report += process.StandardOutput.ReadToEnd();
-                Report += process.StandardError.ReadToEnd();
+                Output += process.StandardOutput.ReadToEnd();
+                Output += process.StandardError.ReadToEnd(); // todo: ??
 
                 process.WaitForExit();
             }

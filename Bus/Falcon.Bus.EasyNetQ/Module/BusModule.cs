@@ -1,10 +1,7 @@
-using System.Reflection;
 using Autofac;
 using EasyNetQ;
-using EasyNetQ.AutoSubscribe;
 using Falcon.Bus.EasyNetQ.Configuration;
 using Falcon.Utils.Autofac;
-using Microsoft.Extensions.Configuration;
 
 namespace Falcon.Bus.EasyNetQ.Module
 {

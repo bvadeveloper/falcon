@@ -39,5 +39,17 @@ namespace Falcon.Utils.Autofac
                 return model;
             });
         }
+
+        public static void RegisterModelAsInterface<TModel, TInterface>(this ContainerBuilder builder, string section)
+            where TModel : class, new()
+        {
+            builder.Register(c =>
+            {
+                var configuration = c.Resolve<IConfiguration>();
+                var model = new TModel();
+                configuration.GetSection(section).Bind(model);
+                return model;
+            }).As<TInterface>();
+        }
     }
 }

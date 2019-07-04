@@ -4,6 +4,7 @@ using Autofac.Extensions.DependencyInjection;
 using Falcon.Bus.EasyNetQ.Module;
 using Falcon.Logging.Scan.Module;
 using Falcon.Services.Tool;
+using Falcon.Tools.Module;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
@@ -25,6 +26,7 @@ namespace Falcon.Hosts
                     builder.RegisterModule<BusSubscriberModule>();
                     builder.RegisterType<HostedService>().As<IHostedService>();
                     builder.RegisterType<ToolService>().As<IToolService>();
+                    builder.RegisterModule<ToolModule>();
                 })
                 .RunConsoleAsync();
         }

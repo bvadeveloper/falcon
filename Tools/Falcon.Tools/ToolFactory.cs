@@ -17,16 +17,16 @@ namespace Falcon.Tools
             _cancellationToken = new CancellationTokenSource(timeout).Token;
         }
 
-        public static ToolFactory Init(int timeout = default)
+        public static ToolFactory Init(int timeout = default(int))
         {
-            return new ToolFactory(timeout == default ? DefaultProcessTimeout : timeout);
+            return new ToolFactory(timeout == default(int) ? DefaultProcessTimeout : timeout);
         }
 
         public Task<string[]> RunAsync()
         {
-            var tasks = _tools.Select(command => Task.Run(() => new ToolProcess()
+            var tasks = _tools.Select(command => Task.Run(() => new ToolRunner()
                 .Run(command)
-                .MakeReport(), _cancellationToken));
+                .GetOutput(), _cancellationToken));
 
             return Task.WhenAll(tasks);
         }
@@ -39,7 +39,7 @@ namespace Falcon.Tools
 
         public ToolFactory UseCollectTools()
         {
-            _tools = new List<string>() { $"nmap -v -A {_target}" };
+            _tools = new List<string> { $"nmap -v -A {_target}" };
             return this;
         }
 

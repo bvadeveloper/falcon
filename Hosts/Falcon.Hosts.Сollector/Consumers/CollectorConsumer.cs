@@ -11,6 +11,7 @@ using Falcon.Profiles.Scan;
 using Falcon.Reports;
 using Falcon.Services.Tool;
 using Falcon.Tools;
+using Falcon.Tools.Interfaces;
 
 namespace Falcon.Hosts.Сollector.Consumers
 {
@@ -20,11 +21,18 @@ namespace Falcon.Hosts.Сollector.Consumers
         private readonly IJsonLogger _logger;
         private readonly IToolService _toolService;
 
-        public CollectorConsumer(IBus bus, IJsonLogger<CollectorConsumer> logger, IToolService toolService)
+        private readonly ICollectTools _collectTools;
+
+        public CollectorConsumer(
+            IBus bus,
+            IJsonLogger<CollectorConsumer> logger,
+            IToolService toolService,
+            ICollectTools collectTools)
         {
             _bus = bus;
             _logger = logger;
             _toolService = toolService;
+            _collectTools = collectTools; // todo: move to ToolFabric
         }
 
         public async Task ConsumeAsync(DomainCollectProfile message)
