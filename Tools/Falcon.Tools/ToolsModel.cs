@@ -3,7 +3,8 @@ using Falcon.Tools.Interfaces;
 
 namespace Falcon.Tools
 {
-    public class Tool : ITool
+    /// <inheritdoc />
+    public class ToolModel : IToolModel
     {
         public string Name { get; set; }
 
@@ -18,8 +19,8 @@ namespace Falcon.Tools
         public string MakeCommandLine(string target) => string.Format(CommandLine, target);
     }
 
-    public class Tools : ICollectTools, IScanTools
+    public class ToolsModel : ICollectToolsModel, IScanToolsModel
     {
-        public List<Tool> Toolset { get; set; }
+        public List<ToolModel> Toolset { get; set; }
     }
 }

@@ -18,30 +18,31 @@ namespace Falcon.Hosts.Сollector.Consumers
     public class CollectorConsumer : IConsumeAsync<DomainCollectProfile>
     {
         private readonly IBus _bus;
+        private readonly ToolsHolder.Factory _tooFactory;
         private readonly IJsonLogger _logger;
         private readonly IToolService _toolService;
 
-        private readonly ICollectTools _collectTools;
-
         public CollectorConsumer(
             IBus bus,
+            ToolsHolder.Factory tooFactory,
             IJsonLogger<CollectorConsumer> logger,
-            IToolService toolService,
-            ICollectTools collectTools)
+            IToolService toolService)
         {
             _bus = bus;
-            _logger = logger;
+            _tooFactory = tooFactory;
             _toolService = toolService;
-            _collectTools = collectTools; // todo: move to ToolFabric
+            _logger = logger;
         }
 
         public async Task ConsumeAsync(DomainCollectProfile message)
         {
-            var data = await ToolFactory
-                .Init()
-                .AddTarget(message.Target)
-                .UseCollectTools()
+            var result = await _tooFactory
+                .Invoke(message.Target, message.Tools, ToolType.Collect)
+                .Timeout(5)
                 .RunAsync();
+
+
+            var data = new List<string>();
 
             foreach (var d in data)
             {

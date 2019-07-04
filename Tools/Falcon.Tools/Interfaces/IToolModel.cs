@@ -1,6 +1,6 @@
 namespace Falcon.Tools.Interfaces
 {
-    public interface ITool
+    public interface IToolModel
     {
         /// <summary>
         /// Name of tool

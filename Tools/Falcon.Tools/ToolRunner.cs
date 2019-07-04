@@ -6,11 +6,12 @@ namespace Falcon.Tools
     public class ToolRunner : IToolRunner
     {
         private string Output { get; set; }
+        
+        private string ErrorOutput { get; set; }
 
-        public string GetOutput()
-        {
-            return Output;
-        }
+        public string GetOutput() => Output;
+        
+        public string GetErrorOutput() => ErrorOutput;
 
         public IToolRunner Run(string command)
         {
@@ -29,7 +30,7 @@ namespace Falcon.Tools
                 process.Start();
 
                 Output += process.StandardOutput.ReadToEnd();
-                Output += process.StandardError.ReadToEnd(); // todo: ??
+                ErrorOutput += process.StandardError.ReadToEnd(); // todo: ??
 
                 process.WaitForExit();
             }

@@ -5,6 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Logging\Falcon.Logging\Falcon.Logging.csproj" />
       <ProjectReference Include="..\..\Utils\Falcon.Utils.Autofac\Falcon.Utils.Autofac.csproj" />
     </ItemGroup>
 

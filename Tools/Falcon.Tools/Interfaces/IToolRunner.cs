@@ -5,5 +5,7 @@ namespace Falcon.Tools.Interfaces
         IToolRunner Run(string command);
 
         string GetOutput();
+
+        string GetErrorOutput();
     }
 }
