@@ -8,8 +8,10 @@ namespace Falcon.Tools.Module
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterModelAsInterface<Tools, ICollectTools>("CollectTool");
-            builder.RegisterModelAsInterface<Tools, IScanTools>("ScanTool");
+            builder.RegisterType<Tools>().As<ICollectTools>();
+            builder.RegisterType<Tools>().As<IScanTools>();
+            builder.RegisterModelAsInterface<Tools, ICollectTools>("CollectTools");
+            builder.RegisterModelAsInterface<Tools, IScanTools>("ScanTools");
         }
     }
 }

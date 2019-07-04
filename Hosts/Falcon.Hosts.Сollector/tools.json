@@ -1,0 +1,34 @@
+{
+  "CollectTools:ToolCollection": [
+    {
+      "name": "test1",
+      "commonTags": "testTag1",
+      "hostTags": "testHostTag1",
+      "info": "testInfo1",
+      "commandLine": "testCommandLine1"
+    },
+    {
+      "name": "test2",
+      "commonTags": "testTag2",
+      "hostTags": "testHostTag2",
+      "info": "testInfo2",
+      "commandLine": "testCommandLine2"
+    }
+  ],
+  "ScanTools:ToolCollection": [
+    {
+      "name": "test",
+      "commonTags": "testTag",
+      "hostTags": "testHostTag",
+      "info": "testInfo",
+      "commandLine": "testCommandLine"
+    },
+    {
+      "name": "test2",
+      "commonTags": "testTag2",
+      "hostTags": "testHostTag2",
+      "info": "testInfo2",
+      "commandLine": "testCommandLine2"
+    }
+  ]
+}

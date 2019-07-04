@@ -17,5 +17,11 @@
         <ProjectReference Include="..\..\Tools\Falcon.Tools\Falcon.Tools.csproj" />
         <ProjectReference Include="..\Falcon.Hosts\Falcon.Hosts.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <None Update="tools.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
     
 </Project>
