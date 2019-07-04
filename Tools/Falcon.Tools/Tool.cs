@@ -20,6 +20,6 @@ namespace Falcon.Tools
 
     public class Tools : ICollectTools, IScanTools
     {
-        public List<ITool> ToolCollection { get; set; }
+        public List<Tool> Toolset { get; set; }
     }
 }
