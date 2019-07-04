@@ -37,8 +37,7 @@ namespace Falcon.Hosts.Сollector.Consumers
         public async Task ConsumeAsync(DomainCollectProfile message)
         {
             var result = await _tooFactory
-                .Invoke(message.Target, message.Tools, ToolType.Collect)
-                .Timeout(5)
+                .Invoke(message.Target, ToolType.Collect)
                 .RunAsync();
 
 

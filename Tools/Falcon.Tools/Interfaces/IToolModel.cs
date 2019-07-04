@@ -3,30 +3,34 @@ namespace Falcon.Tools.Interfaces
     public interface IToolModel
     {
         /// <summary>
-        /// Name of tool
+        /// Name of tool like 'nmap, sqlmap, etc'
         /// </summary>
         string Name { get; set; }
 
         /// <summary>
-        /// Tags for tool like 'WordPress, Joomla, PHP, Java, SQL etc'
+        /// Tags for tool like 'WordPress, Joomla, PHP, Java, SQL, etc'
         /// </summary>
         string CommonTags { get; set; }
 
         /// <summary>
-        /// Tags for host like 'Nginx, IIS, Kestrel'
+        /// Tags for host like 'Nginx, IIS, Kestrel, etc'
         /// </summary>
         string HostTags { get; set; }
 
         /// <summary>
-        /// Info about tool, refs, helpers erc
+        /// Info about tool, refs, helpers, etc
         /// </summary>
         string Info { get; set; }
 
         /// <summary>
-        /// Command line with place holders like 'nmap -v -A {0}'
-        /// where {0} is target
+        /// Command line with place holders like 'nmap -v -A {0}' where {0} is target
         /// </summary>
         string CommandLine { get; set; }
+
+        /// <summary>
+        /// Execution timeout for tool
+        /// </summary>
+        int Timeout { get; set; }
 
         /// <summary>
         /// Map target to command line
