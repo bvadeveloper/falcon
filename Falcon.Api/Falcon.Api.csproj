@@ -8,13 +8,16 @@
         <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.HttpsPolicy" Version="2.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="4.0.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="4.0.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="4.0.1" />
         
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Bus\Falcon.Bus.EasyNetQ\Falcon.Bus.EasyNetQ.csproj" />
+      <ProjectReference Include="..\Logging\Falcon.Logging.Api\Falcon.Logging.Api.csproj" />
       <ProjectReference Include="..\Services\Falcon.Services.RequestManagement\Falcon.Services.RequestManagement.csproj" />
-      <ProjectReference Include="..\Utils\Falcon.Utils.Api\Falcon.Utils.Api.csproj" />
     </ItemGroup>
 
 </Project>

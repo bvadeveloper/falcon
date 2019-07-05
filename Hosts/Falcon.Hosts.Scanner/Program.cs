@@ -5,7 +5,7 @@ using Falcon.Bus.EasyNetQ.Module;
 using Falcon.Logging.Scan.Module;
 using Microsoft.Extensions.Hosting;
 
-namespace Falcon.Hosts.Scan
+namespace Falcon.Hosts.Scanner
 {
     internal static class Program
     {

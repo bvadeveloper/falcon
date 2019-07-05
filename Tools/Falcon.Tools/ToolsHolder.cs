@@ -1,68 +1,72 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Falcon.Logging;
 using Falcon.Tools.Interfaces;
 
 namespace Falcon.Tools
 {
+    /// <summary>
+    /// Hold tools and prepares tools for using
+    /// </summary>
     public class ToolsHolder
     {
-        public delegate ToolsHolder Factory(string target, ToolType toolType);
+        /// <summary>
+        /// Tools holder factory for autofac injections
+        /// https://autofaccn.readthedocs.io/en/latest/advanced/delegate-factories.html
+        /// </summary>
+        /// <param name="toolType"></param>
+        public delegate ToolsHolder Factory(ToolType toolType);
 
-        private readonly string _target;
-        private List<string> _optionalTools;
         private readonly ToolType _toolType;
+        internal List<string> OptionalTools;
         private readonly Lazy<ICollectToolsModel> _collectTools;
         private readonly Lazy<IScanToolsModel> _scanTools;
-        private readonly IJsonLogger _logger;
 
         public ToolsHolder(
-            string target,
             ToolType toolType,
             Lazy<ICollectToolsModel> collectTools,
-            Lazy<IScanToolsModel> scanTools,
-            IJsonLogger<ToolsHolder> logger)
+            Lazy<IScanToolsModel> scanTools)
         {
-            _target = target;
             _toolType = toolType;
             _collectTools = collectTools;
             _scanTools = scanTools;
-            _logger = logger;
         }
 
-        public Task<List<string>> RunAsync()
+        /// <summary>
+        /// Make tools
+        /// </summary>
+        /// <returns></returns>
+        public IToolsModel MakeTools()
         {
             switch (_toolType)
             {
                 case ToolType.Scan:
-                    return _scanTools.Value.MapOptionalTools(_optionalTools).RunToolsAsync(_target);
+                    return _scanTools.Value.MapOptionalTools(OptionalTools);
                 case ToolType.Collect:
-                    return _collectTools.Value.RunToolsAsync(_target);
+                    return _collectTools.Value;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
+    }
 
+    public static class ToolsHolderExtensions
+    {
         /// <summary>
-        /// Set optional tools
+        /// Set optional tools from request (ONLY FOR SCANNERS)
         /// </summary>
-        /// <param name="optionalTools"></param>
+        /// <param name="holder"></param>
+        /// <param name="tools"></param>
         /// <returns></returns>
-        public ToolsHolder OptionalTools(List<string> optionalTools)
+        public static ToolsHolder UseOptionalTools(this ToolsHolder holder, List<string> tools)
         {
-            _optionalTools = optionalTools;
-            return this;
+            holder.OptionalTools = tools;
+            return holder;
         }
 
-        /// <summary>
-        /// Get tool names
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<string> GetToolNames()
+        public static IEnumerable<string> GetScannersName(this ToolsHolder holder, Lazy<IScanToolsModel> scanTools)
         {
-            return _scanTools.Value.Toolset.Select(t => t.Name);
+            return scanTools.Value.Toolset.Select(n => n.Name);
         }
     }
 }

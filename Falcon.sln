@@ -30,7 +30,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Utils.Serialization"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{48FFD131-D5B4-4F4B-8EDB-604E771CE58C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Hosts.Scan", "Hosts\Falcon.Hosts.Scan\Falcon.Hosts.Scan.csproj", "{3421184C-8A38-42D5-9FEC-B89FAC4615C8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Hosts.Scanner", "Hosts\Falcon.Hosts.Scanner\Falcon.Hosts.Scanner.csproj", "{3421184C-8A38-42D5-9FEC-B89FAC4615C8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logging", "Logging", "{12B501D5-FA06-4EC9-88D8-5DA2D1C8F84E}"
 EndProject

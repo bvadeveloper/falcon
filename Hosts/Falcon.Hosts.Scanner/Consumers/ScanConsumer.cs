@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using EasyNetQ.AutoSubscribe;
 using Falcon.Profiles.Scan;
 
-namespace Falcon.Hosts.Scan.Consumers
+namespace Falcon.Hosts.Scanner.Consumers
 {
     public class ScanConsumer : IConsumeAsync<DomainScanProfile>
     {

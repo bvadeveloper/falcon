@@ -25,12 +25,13 @@ namespace Falcon.Bus.EasyNetQ
             {
                 try
                 {
+                    _logger.Trace($"Request for '{typeof(TConsumer).Name}' with type '{typeof(TMessage)}'", message);
                     var consumer = scope.ServiceProvider.GetRequiredService<TConsumer>();
                     consumer.Consume(message);
                 }
                 catch (InvalidOperationException operationException)
                 {
-                    _logger.Error($"Can't resolve consumer '{typeof(TConsumer).Name}' for message '{typeof(TMessage)}'",
+                    _logger.Error($"Can't resolve consumer '{typeof(TConsumer).Name}' for type '{typeof(TMessage)}'",
                         message, operationException);
                 }
                 catch (Exception ex)
@@ -48,12 +49,13 @@ namespace Falcon.Bus.EasyNetQ
             {
                 try
                 {
+                    _logger.Trace($"Request for '{typeof(TConsumer).Name}' with type '{typeof(TMessage)}'", message);
                     var consumer = scope.ServiceProvider.GetRequiredService<TConsumer>();
                     await consumer.ConsumeAsync(message);
                 }
                 catch (InvalidOperationException operationException)
                 {
-                    _logger.Error($"Can't resolve consumer '{typeof(TConsumer).Name}' for message '{typeof(TMessage)}'",
+                    _logger.Error($"Can't resolve consumer '{typeof(TConsumer).Name}' for type '{typeof(TMessage)}'",
                         message, operationException);
                 }
                 catch (Exception ex)

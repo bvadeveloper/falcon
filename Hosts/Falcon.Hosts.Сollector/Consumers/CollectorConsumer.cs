@@ -25,11 +25,12 @@ namespace Falcon.Hosts.Сollector.Consumers
 
         public async Task ConsumeAsync(DomainCollectProfile message)
         {
+            var r = await _tooFactory(ToolType.Collect)
+                .MakeTools()
+                .RunToolsAsync(message.Target);
 
-            var r = _tooFactory.Invoke(message.Target, ToolType.Collect);
-            
             _logger.Information("wwwwwwwwwwww");
-            
+
 //            var result = await _tooFactory
 //                .Invoke(message.Target, ToolType.Collect)
 //                .RunAsync();
