@@ -1,7 +1,8 @@
 using System.Threading.Tasks;
 using Falcon.Profiles;
 
-namespace Falcon.Services.RequestManagement {
+namespace Falcon.Services.RequestManagement
+{
     public interface IRequestManagementService
     {
         // todo: only for ports
@@ -15,12 +16,10 @@ namespace Falcon.Services.RequestManagement {
         // 443 SSL/TLS(HTTPS)
         // 445 Microsoft(SMB)
         // 3389 Remote(RDP)
-        Task<Result<string>> ScanIpAsync(TargetModel model);
+        Task<Result<string>> IpScanAsync(TargetModel model);
 
-        Task<Result<string>> ScanDomainsAsync(TargetModel model);
+        Task<Result<string>> DomainsVulnerabilityScanAsync(TargetModel model);
 
-        Task<Result<string>> ScanEmailsAsync(TargetModel model);
-
-        Task<Result<string>> ScanGdprInfoAsync(TargetModel model);
+        Task<Result<string>> MailboxLeakCheckAsync(TargetModel model);
     }
 }

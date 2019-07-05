@@ -22,27 +22,23 @@ namespace Falcon.Api.Controllers
         [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
         [ProducesResponseType((int) HttpStatusCode.InternalServerError)]
         public async Task<Result<string>> ScanIp([FromBody] TargetModel model) =>
-            await _processingService.ScanIpAsync(model);
+            await _processingService.IpScanAsync(model);
 
         // POST api/scan/domains
         [HttpPost("domains")]
         [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
         [ProducesResponseType((int) HttpStatusCode.InternalServerError)]
         public async Task<Result<string>> ScanDomains([FromBody] TargetModel model) =>
-            await _processingService.ScanDomainsAsync(model);
+            await _processingService.DomainsVulnerabilityScanAsync(model);
 
         // POST api/scan/emails
         [HttpPost("emails")]
         [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
         [ProducesResponseType((int) HttpStatusCode.InternalServerError)]
         public async Task<Result<string>> ScanEmails([FromBody] TargetModel model) =>
-            await _processingService.ScanEmailsAsync(model);
+            await _processingService.MailboxLeakCheckAsync(model);
 
-        // POST api/scan/gdpr
-        [HttpPost("gdpr")]
-        [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
-        [ProducesResponseType((int) HttpStatusCode.InternalServerError)]
-        public async Task<Result<string>> ScanGdpr([FromBody] TargetModel model) =>
-            await _processingService.ScanGdprInfoAsync(model);
+        
+        
     }
 }

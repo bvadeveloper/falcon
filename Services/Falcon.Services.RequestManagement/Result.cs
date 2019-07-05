@@ -8,7 +8,7 @@ namespace Falcon.Services.RequestManagement
     {
         bool Succeed { get; set; }
 
-        Guid SessionId { get; set; }
+        Guid Session { get; set; }
     }
 
     public interface IResult<TResult> : IResult
@@ -20,7 +20,7 @@ namespace Falcon.Services.RequestManagement
     {
         public bool Succeed { get; set; }
 
-        public Guid SessionId { get; set; }
+        public Guid Session { get; set; }
     }
 
     public class Result<TValue> : Result, IResult<TValue>
@@ -47,7 +47,7 @@ namespace Falcon.Services.RequestManagement
 
         public Result<TValue> Context(SessionContext context)
         {
-            SessionId = context.SessionId;
+            Session = context.SessionId;
             return this;
         }
     }

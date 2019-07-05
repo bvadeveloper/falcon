@@ -4,14 +4,16 @@ using EasyNetQ;
 using Falcon.Logging;
 using Falcon.Profiles;
 
-namespace Falcon.Services.RequestManagement {
+namespace Falcon.Services.RequestManagement
+{
     public abstract class RequestManagementAbstract
     {
         private readonly IBus _bus;
         private readonly IJsonLogger _logger;
         private readonly SessionContext _context;
 
-        protected RequestManagementAbstract(IBus bus, IJsonLogger<RequestManagementAbstract> logger, SessionContext context)
+        protected RequestManagementAbstract(IBus bus, IJsonLogger<RequestManagementAbstract> logger,
+            SessionContext context)
         {
             _bus = bus;
             _logger = logger;
