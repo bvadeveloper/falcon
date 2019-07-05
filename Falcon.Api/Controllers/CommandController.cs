@@ -12,9 +12,9 @@ namespace Falcon.Api.Controllers
     [ApiController]
     public class CommandController : ControllerBase
     {
-        private readonly IRequestProcessingService _processingService;
+        private readonly IRequestManagementService _processingService;
 
-        public CommandController(IRequestProcessingService processingService)
+        public CommandController(IRequestManagementService processingService)
         {
             _processingService = processingService;
         }

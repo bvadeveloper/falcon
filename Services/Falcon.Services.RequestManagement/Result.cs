@@ -27,7 +27,7 @@ namespace Falcon.Services.RequestManagement
     {
         public TValue Value { get; set; }
 
-        public Result<TValue> SetResult(TValue value)
+        public Result<TValue> UseResult(TValue value)
         {
             Value = value;
             return this;

@@ -57,7 +57,7 @@ namespace Falcon.Api
                     builder.Populate(services);
                     builder.RegisterModule<ApiLoggerModule>();
                     builder.RegisterModule<BusModule>();
-                    builder.RegisterType<RequestProcessingService>().As<IRequestProcessingService>();
+                    builder.RegisterType<RequestManagementService>().As<IRequestManagementService>();
                 })
                 .MakeProvider();
         }
