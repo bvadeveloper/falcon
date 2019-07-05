@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using EasyNetQ.AutoSubscribe;
+using Falcon.Logging;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Falcon.Bus.EasyNetQ
@@ -8,10 +9,12 @@ namespace Falcon.Bus.EasyNetQ
     public class MessageDispatcher : IAutoSubscriberMessageDispatcher
     {
         private readonly IServiceProvider _provider;
+        private readonly IJsonLogger _logger;
 
-        public MessageDispatcher(IServiceProvider provider)
+        public MessageDispatcher(IServiceProvider provider, IJsonLogger<MessageDispatcher> logger)
         {
             _provider = provider;
+            _logger = logger;
         }
 
         public void Dispatch<TMessage, TConsumer>(TMessage message)
@@ -20,8 +23,20 @@ namespace Falcon.Bus.EasyNetQ
         {
             using (var scope = _provider.CreateScope())
             {
-                var consumer = scope.ServiceProvider.GetRequiredService<TConsumer>();
-                consumer.Consume(message);
+                try
+                {
+                    var consumer = scope.ServiceProvider.GetRequiredService<TConsumer>();
+                    consumer.Consume(message);
+                }
+                catch (InvalidOperationException operationException)
+                {
+                    _logger.Error($"Can't resolve consumer '{typeof(TConsumer).Name}' for message '{typeof(TMessage)}'",
+                        message, operationException);
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error("Processing failed", message, ex);
+                }
             }
         }
 
@@ -31,11 +46,20 @@ namespace Falcon.Bus.EasyNetQ
         {
             using (var scope = _provider.CreateScope())
             {
-                var consumer = scope.ServiceProvider.GetRequiredService<TConsumer>();
-                
-                // todo: log execution 
-                // todo: wrap with try-catch block
-                await consumer.ConsumeAsync(message);
+                try
+                {
+                    var consumer = scope.ServiceProvider.GetRequiredService<TConsumer>();
+                    await consumer.ConsumeAsync(message);
+                }
+                catch (InvalidOperationException operationException)
+                {
+                    _logger.Error($"Can't resolve consumer '{typeof(TConsumer).Name}' for message '{typeof(TMessage)}'",
+                        message, operationException);
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error("Processing failed", message, ex);
+                }
             }
         }
     }

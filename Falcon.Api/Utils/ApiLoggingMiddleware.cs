@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
-namespace Falcon.Utils.Api
+namespace Falcon.Api.Utils
 {
     public class ApiLoggingMiddleware
     {

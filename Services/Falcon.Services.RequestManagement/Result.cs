@@ -1,13 +1,14 @@
 using System;
 using System.Threading.Tasks;
+using Falcon.Profiles;
 
-namespace Falcon.Services.RequestProcessing
+namespace Falcon.Services.RequestManagement
 {
     public interface IResult
     {
         bool Succeed { get; set; }
 
-        Exception ProcessedException { get; set; }
+        Guid SessionId { get; set; }
     }
 
     public interface IResult<TResult> : IResult
@@ -19,7 +20,7 @@ namespace Falcon.Services.RequestProcessing
     {
         public bool Succeed { get; set; }
 
-        public Exception ProcessedException { get; set; }
+        public Guid SessionId { get; set; }
     }
 
     public class Result<TValue> : Result, IResult<TValue>
@@ -43,6 +44,12 @@ namespace Falcon.Services.RequestProcessing
             Succeed = false;
             return this;
         }
+
+        public Result<TValue> Context(SessionContext context)
+        {
+            SessionId = context.SessionId;
+            return this;
+        }
     }
 
     public static class ResultExtensions
@@ -50,12 +57,6 @@ namespace Falcon.Services.RequestProcessing
         public static async Task<T> Extract<T>(this Task<Result<T>> task)
         {
             return (await task).Value;
-        }
-
-        public static Result<T> SetResult1<T>(this Result<T> @this, T value)
-        {
-            @this.Value = value;
-            return @this;
         }
     }
 }

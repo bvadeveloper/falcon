@@ -1,11 +1,11 @@
 ﻿using System;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Falcon.Api.Utils;
 using Falcon.Bus.EasyNetQ.Module;
 using Falcon.Logging.Api.Module;
 using Falcon.Services;
-using Falcon.Services.RequestProcessing;
-using Falcon.Utils.Api;
+using Falcon.Services.RequestManagement;
 using Falcon.Utils.Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

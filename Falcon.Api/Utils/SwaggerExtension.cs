@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace Falcon.Utils.Api
+namespace Falcon.Api.Utils
 {
     public static class SwaggerExtension
     {

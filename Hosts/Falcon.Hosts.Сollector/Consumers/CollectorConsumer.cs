@@ -1,17 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using EasyNetQ;
 using EasyNetQ.AutoSubscribe;
 using Falcon.Logging;
-using Falcon.Profiles;
 using Falcon.Profiles.Collect;
-using Falcon.Profiles.Data;
-using Falcon.Profiles.Scan;
-using Falcon.Reports;
-using Falcon.Services.Tool;
 using Falcon.Tools;
-using Falcon.Tools.Interfaces;
 
 namespace Falcon.Hosts.Сollector.Consumers
 {
@@ -20,31 +12,33 @@ namespace Falcon.Hosts.Сollector.Consumers
         private readonly IBus _bus;
         private readonly ToolsHolder.Factory _tooFactory;
         private readonly IJsonLogger _logger;
-        private readonly IToolService _toolService;
 
         public CollectorConsumer(
             IBus bus,
             ToolsHolder.Factory tooFactory,
-            IJsonLogger<CollectorConsumer> logger,
-            IToolService toolService)
+            IJsonLogger<CollectorConsumer> logger)
         {
             _bus = bus;
             _tooFactory = tooFactory;
-            _toolService = toolService;
             _logger = logger;
         }
 
         public async Task ConsumeAsync(DomainCollectProfile message)
         {
-            var result = await _tooFactory
-                .Invoke(message.Target, ToolType.Collect)
-                .RunAsync();
+
+            var r = _tooFactory.Invoke(message.Target, ToolType.Collect);
+            
+            _logger.Information("wwwwwwwwwwww");
+            
+//            var result = await _tooFactory
+//                .Invoke(message.Target, ToolType.Collect)
+//                .RunAsync();
 
 
-            foreach (var d in result)
-            {
-                _logger.Information(d);
-            }
+//            foreach (var d in result)
+//            {
+//                _logger.Information(d);
+//            }
 
 //            if (!data.Any())
 //            {
