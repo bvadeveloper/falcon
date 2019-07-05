@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using EasyNetQ;
 using EasyNetQ.AutoSubscribe;
@@ -10,26 +11,26 @@ namespace Falcon.Hosts.Сollector.Consumers
     public class CollectorConsumer : IConsumeAsync<DomainCollectProfile>
     {
         private readonly IBus _bus;
-        private readonly ToolsHolder.Factory _tooFactory;
+        private readonly ToolsHolder.Factory _toolsFactory;
         private readonly IJsonLogger _logger;
 
         public CollectorConsumer(
             IBus bus,
-            ToolsHolder.Factory tooFactory,
+            ToolsHolder.Factory toolsFactory,
             IJsonLogger<CollectorConsumer> logger)
         {
             _bus = bus;
-            _tooFactory = tooFactory;
+            _toolsFactory = toolsFactory;
             _logger = logger;
         }
 
         public async Task ConsumeAsync(DomainCollectProfile message)
         {
-            var r = await _tooFactory(ToolType.Collect)
+            var rs = await _toolsFactory(ToolType.Collect)
                 .MakeTools()
                 .RunToolsAsync(message.Target);
 
-            _logger.Information("wwwwwwwwwwww");
+            rs.ForEach(r => _logger.Trace(r));
 
 //            var result = await _tooFactory
 //                .Invoke(message.Target, ToolType.Collect)

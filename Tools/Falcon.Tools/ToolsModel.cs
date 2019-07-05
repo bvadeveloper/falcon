@@ -17,6 +17,8 @@ namespace Falcon.Tools
 
         public int Timeout { get; set; }
 
+        public string VersionCommandLine { get; set; }
+
         public string MakeCommandLine(string target) => string.Format(CommandLine, target);
     }
 }

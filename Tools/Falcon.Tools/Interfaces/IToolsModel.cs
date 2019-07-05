@@ -8,6 +8,8 @@ namespace Falcon.Tools.Interfaces
         List<ToolModel> Toolset { get; set; }
 
         Task<List<string>> RunToolsAsync(string target);
+        
+        Task<List<string>> RunToolsVersionCommandAsync();
     }
 
     public interface IScanToolsModel : IToolsModel

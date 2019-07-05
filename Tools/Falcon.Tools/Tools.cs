@@ -27,6 +27,19 @@ namespace Falcon.Tools
             return outputs;
         }
 
+        public async Task<List<string>> RunToolsVersionCommandAsync()
+        {
+            var tasks = Toolset.Select(t =>
+                new ToolRunner().MakeTask(t.VersionCommandLine, new CancellationTokenSource(t.Timeout).Token));
+
+            var results = await Task.WhenAll(tasks);
+
+            var outputs = results.Select(c => c.GetOutput()).ToList();
+
+
+            return outputs;
+        }
+
         public IScanToolsModel MapOptionalTools(List<string> optionalTools)
         {
             return optionalTools != null && optionalTools.Any()
