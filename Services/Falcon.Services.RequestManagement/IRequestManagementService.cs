@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using Falcon.Profiles;
 
 namespace Falcon.Services.RequestManagement {
     public interface IRequestManagementService
@@ -15,12 +15,12 @@ namespace Falcon.Services.RequestManagement {
         // 443 SSL/TLS(HTTPS)
         // 445 Microsoft(SMB)
         // 3389 Remote(RDP)
-        Task<Result<string>> ScanIpAsync(List<string> targets, List<string> tools);
+        Task<Result<string>> ScanIpAsync(TargetModel model);
 
-        Task<Result<string>> ScanDomainsAsync(List<string> targets, List<string> tools);
+        Task<Result<string>> ScanDomainsAsync(TargetModel model);
 
-        Task<Result<string>> ScanEmailsAsync(List<string> emails);
+        Task<Result<string>> ScanEmailsAsync(TargetModel model);
 
-        Task<Result<string>> ScanGdprInfoAsync(List<string> domains);
+        Task<Result<string>> ScanGdprInfoAsync(TargetModel model);
     }
 }

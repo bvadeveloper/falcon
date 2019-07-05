@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Falcon.Api.Models
+namespace Falcon.Profiles
 {
     public class TargetModel
     {

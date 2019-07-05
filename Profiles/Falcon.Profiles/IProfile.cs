@@ -1,7 +1,11 @@
+using System.Collections.Generic;
+
 namespace Falcon.Profiles
 {
-    public interface IProfile
+    public interface IProfile : ISessionContext
     {
-        SessionContext Context { get; set; }
+        string Target { get; set; }
+
+        List<string> Tools { get; set; }
     }
 }
