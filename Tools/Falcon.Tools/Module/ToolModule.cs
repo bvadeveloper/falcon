@@ -1,4 +1,5 @@
 using Autofac;
+using Falcon.Tools.Filters;
 using Falcon.Tools.Interfaces;
 using Falcon.Utils.Autofac;
 
@@ -12,6 +13,7 @@ namespace Falcon.Tools.Module
             builder.RegisterModelAsInterface<Tools, ICollectToolsModel>("Collect");
             builder.RegisterModelAsInterface<Tools, IScanToolsModel>("Scan");
             builder.RegisterType<ToolsHolder>();
+            builder.RegisterType<OutputFilter>();
         }
     }
 }

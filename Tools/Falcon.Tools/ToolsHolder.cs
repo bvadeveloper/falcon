@@ -53,7 +53,7 @@ namespace Falcon.Tools
     public static class ToolsHolderExtensions
     {
         /// <summary>
-        /// Set optional tools from request (ONLY FOR SCANNERS)
+        /// Use optional tools from request (by concept only for scanners)
         /// </summary>
         /// <param name="holder"></param>
         /// <param name="tools"></param>
@@ -64,9 +64,9 @@ namespace Falcon.Tools
             return holder;
         }
 
-        public static IEnumerable<string> GetScannersName(this ToolsHolder holder, Lazy<IScanToolsModel> scanTools)
+        public static IEnumerable<string> ToolNames(this IToolsModel toolsModel)
         {
-            return scanTools.Value.Toolset.Select(n => n.Name);
+            return toolsModel.Toolset.Select(n => n.Name);
         }
     }
 }

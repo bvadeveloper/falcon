@@ -16,12 +16,12 @@ namespace Falcon.Tools
 
         private string CommandLine { get; set; }
 
-        private string Output { get; set; }new
+        private string Output { get; set; }
 
         private string ErrorOutput { get; set; }
 
 
-        public OutputModel MakeOutput() => new OutputModel
+        public ToolOutputModel MakeOutput() => new ToolOutputModel
         {
             ToolName = ToolName,
             Output = Output,

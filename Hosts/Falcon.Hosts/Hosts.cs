@@ -27,6 +27,8 @@ namespace Falcon.Hosts
                     builder.RegisterModule<ScanLoggerModule>();
                     builder.RegisterModule<BusSubscriberModule>();
                     builder.RegisterType<HostedService>().As<IHostedService>();
+                    
+                    // register all stuff for tools
                     builder.RegisterModule<ToolModule>();
                 })
                 .RunConsoleAsync();

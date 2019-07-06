@@ -2,7 +2,7 @@ using System;
 
 namespace Falcon.Tools
 {
-    public class OutputModel
+    public class ToolOutputModel
     {
         public string Output { get; set; }
 

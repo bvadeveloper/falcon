@@ -24,6 +24,6 @@ namespace Falcon.Tools.Interfaces
         /// Make runner output
         /// </summary>
         /// <returns></returns>
-        OutputModel MakeOutput();
+        ToolOutputModel MakeOutput();
     }
 }
