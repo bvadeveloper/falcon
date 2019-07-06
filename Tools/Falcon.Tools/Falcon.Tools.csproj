@@ -6,6 +6,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Logging\Falcon.Logging\Falcon.Logging.csproj" />
+      <ProjectReference Include="..\..\Profiles\Falcon.Profiles\Falcon.Profiles.csproj" />
       <ProjectReference Include="..\..\Utils\Falcon.Utils.Autofac\Falcon.Utils.Autofac.csproj" />
     </ItemGroup>
 

@@ -3,48 +3,80 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Falcon.Logging;
 using Falcon.Tools.Interfaces;
 
 namespace Falcon.Tools
 {
     public class Tools : ICollectToolsModel, IScanToolsModel
     {
+        private readonly IJsonLogger _logger;
+
+        public Tools(IJsonLogger<Tools> logger)
+        {
+            _logger = logger;
+        }
+
         public List<ToolModel> Toolset { get; set; }
 
-        public async Task<List<string>> RunToolsAsync(string target)
+        private static CancellationToken MakeCancellationToken(int timeout) =>
+            new CancellationTokenSource(timeout).Token;
+
+        public async Task<IEnumerable<OutputModel>> RunToolsAsync(string target)
         {
             if (target == null)
                 throw new ArgumentNullException(nameof(target));
 
-            var tasks = Toolset.Select(t =>
-                new ToolRunner().MakeTask(t.MakeCommandLine(target), new CancellationTokenSource(t.Timeout).Token));
+            var tasks = Toolset.Select(t => new ToolRunner()
+                .Init(t.Name, t.MakeCommandLine(t.CommandLine))
+                .MakeTask(MakeCancellationToken(t.Timeout)));
 
             var results = await Task.WhenAll(tasks);
+            var outputs = results.Select(r => r.MakeOutput()).ToList();
 
-            var outputs = results.Select(c => c.GetOutput()).ToList();
+            LogOutputs(outputs);
 
-
-            return outputs;
+            return outputs.Where(o => o.Successful);
         }
 
-        public async Task<List<string>> RunToolsVersionCommandAsync()
+        private void LogOutputs(List<OutputModel> outputs)
+        {
+            outputs.ForEach(m =>
+            {
+                if (m.Successful)
+                {
+                    _logger.Trace("Successful processing", m);
+                }
+                else
+                {
+                    _logger.Error("Tool failure", new { m.ToolName, m.ErrorOutput }, m.ExecutionException);
+                }
+            });
+        }
+
+        public async Task<IEnumerable<OutputModel>> RunToolsVersionCommandAsync()
         {
             var tasks = Toolset.Select(t =>
-                new ToolRunner().MakeTask(t.VersionCommandLine, new CancellationTokenSource(t.Timeout).Token));
+                new ToolRunner()
+                    .Init(t.Name, t.VersionCommandLine)
+                    .MakeTask(MakeCancellationToken(t.Timeout)));
 
             var results = await Task.WhenAll(tasks);
+            var outputs = results.Select(r => r.MakeOutput()).ToList();
 
-            var outputs = results.Select(c => c.GetOutput()).ToList();
+            LogOutputs(outputs);
 
-
-            return outputs;
+            return outputs.Where(o => o.Successful);
         }
 
-        public IScanToolsModel MapOptionalTools(List<string> optionalTools)
+        public IScanToolsModel UseOnlyTools(List<string> specificTools)
         {
-            return optionalTools != null && optionalTools.Any()
-                ? new Tools { Toolset = this.Toolset.Where(m => optionalTools.Contains(m.Name)).ToList() }
-                : this;
+            if (specificTools != null && specificTools.Any())
+            {
+                this.Toolset = this.Toolset.Where(m => specificTools.Contains(m.Name)).ToList();
+            }
+
+            return this;
         }
     }
 }

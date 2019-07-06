@@ -5,10 +5,25 @@ namespace Falcon.Tools.Interfaces
 {
     public interface IToolRunner
     {
-        Task<ToolRunner> MakeTask(string command, CancellationToken token);
+        /// <summary>
+        /// Make tool runner tasks
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        Task<ToolRunner> MakeTask(CancellationToken token);
 
-        string GetOutput();
+        /// <summary>
+        /// Init tool runner with tool name and command line params
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="commandLine"></param>
+        /// <returns></returns>
+        ToolRunner Init(string name, string commandLine);
 
-        string GetErrorOutput();
+        /// <summary>
+        /// Make runner output
+        /// </summary>
+        /// <returns></returns>
+        OutputModel MakeOutput();
     }
 }

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using EasyNetQ;
 using EasyNetQ.AutoSubscribe;
 using Falcon.Logging;
+using Falcon.Profiles;
 using Falcon.Profiles.Collect;
 using Falcon.Tools;
 
@@ -26,21 +27,30 @@ namespace Falcon.Hosts.Сollector.Consumers
 
         public async Task ConsumeAsync(DomainCollectProfile message)
         {
+            if (message.HasTools())
+            {
+                // 1. send scan profile to scanners
+                // 2. check if target attributes already in cache skip steps #3, #4, #5
+                // 3. start collect tools, fill target attributes
+                // 4. send request to save target attributes to DB
+                // 5. save data to Redis - ttl 1 hour 
+                // 6. send target attributes to report for sending to clients
+            }
+            else
+            {
+                // 1. start collect tools, fill target attributes
+                // 2. send scan profile to scanners
+                // 3. send request to save target attributes to DB
+                // 4. save data to Redis- ttl 1 hour
+                // 5. send target attributes to report for sending to clients
+            }
+
+
             var rs = await _toolsFactory(ToolType.Collect)
                 .MakeTools()
                 .RunToolsAsync(message.Target);
 
-            rs.ForEach(r => _logger.Trace(r));
-
-//            var result = await _tooFactory
-//                .Invoke(message.Target, ToolType.Collect)
-//                .RunAsync();
-
-
-//            foreach (var d in result)
-//            {
-//                _logger.Information(d);
-//            }
+            rs.ToList().ForEach(r => _logger.Trace(r.Output));
 
 //            if (!data.Any())
 //            {

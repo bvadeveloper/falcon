@@ -41,7 +41,7 @@ namespace Falcon.Tools
             switch (_toolType)
             {
                 case ToolType.Scan:
-                    return _scanTools.Value.MapOptionalTools(OptionalTools);
+                    return _scanTools.Value.UseOnlyTools(OptionalTools);
                 case ToolType.Collect:
                     return _collectTools.Value;
                 default:
