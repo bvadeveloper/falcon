@@ -21,7 +21,7 @@ namespace Falcon.Tools
         private string ErrorOutput { get; set; }
 
 
-        public ToolOutputModel MakeOutput() => new ToolOutputModel
+        public OutputModel MakeOutput() => new OutputModel
         {
             ToolName = ToolName,
             Output = Output,

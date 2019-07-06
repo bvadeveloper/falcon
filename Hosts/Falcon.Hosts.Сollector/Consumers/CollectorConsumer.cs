@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using EasyNetQ;
 using EasyNetQ.AutoSubscribe;
@@ -7,7 +5,6 @@ using Falcon.Logging;
 using Falcon.Profiles;
 using Falcon.Profiles.Collect;
 using Falcon.Tools;
-using Falcon.Tools.Filters;
 
 namespace Falcon.Hosts.Сollector.Consumers
 {
@@ -15,18 +12,15 @@ namespace Falcon.Hosts.Сollector.Consumers
     {
         private readonly IBus _bus;
         private readonly ToolsHolder.Factory _toolsFactory;
-        private readonly OutputFilter.Factory _filterFactory;
         private readonly IJsonLogger _logger;
 
         public CollectorConsumer(
             IBus bus,
             ToolsHolder.Factory toolsFactory,
-            OutputFilter.Factory filterFactory,
             IJsonLogger<CollectorConsumer> logger)
         {
             _bus = bus;
             _toolsFactory = toolsFactory;
-            _filterFactory = filterFactory;
             _logger = logger;
         }
 
@@ -53,11 +47,10 @@ namespace Falcon.Hosts.Сollector.Consumers
 
             var outputs = await _toolsFactory(ToolType.Collect)
                 .MakeTools()
-                .RunToolsAsync(message.Target);
+                .RunToolsAsync(message.Target)
+                .LogOutputsAsync(_logger)
+                .GetSuccessfulAsync();
 
-            var att = _filterFactory(ToolType.Collect)
-                .MakeFilters()
-                .FillAttributes(outputs);
 
             // rs.ToList().ForEach(r => _logger.Trace(r.Output));
 

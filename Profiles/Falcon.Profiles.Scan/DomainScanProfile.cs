@@ -4,6 +4,6 @@ namespace Falcon.Profiles.Scan
 {
     public class DomainScanProfile : ScanProfile 
     {
-        public TargetAttributes TargetData { get; set; }
+        public Dictionary<TargetTag, string> TargetTags { get; set; }
     }
 }
