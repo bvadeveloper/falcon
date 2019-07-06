@@ -52,6 +52,12 @@ namespace Falcon.Hosts.Сollector.Consumers
                 .GetSuccessfulAsync();
 
 
+
+           // var tags = _tagsService.FindTag();
+            
+
+            // find tags
+
             // rs.ToList().ForEach(r => _logger.Trace(r.Output));
 
 //            if (!data.Any())
