@@ -69,14 +69,8 @@ namespace Falcon.Tools
 
         public ToolProcess Init(string toolName, string commandLine)
         {
-            if (toolName == null)
-                throw new ArgumentNullException(nameof(toolName));
-
-            if (commandLine == null)
-                throw new ArgumentNullException(nameof(commandLine));
-
-            ToolName = toolName;
-            CommandLine = commandLine;
+            ToolName = toolName ?? throw new ArgumentNullException(nameof(toolName));
+            CommandLine = commandLine ?? throw new ArgumentNullException(nameof(commandLine));
 
             return this;
         }

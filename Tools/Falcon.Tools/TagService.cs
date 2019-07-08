@@ -61,9 +61,16 @@ namespace Falcon.Tools
             IEnumerable<ReportModel> outputs)
         {
             var output = outputs.Aggregate("", (c, m) => $"{c} {m.Output}");
+            var tags = new Dictionary<TargetTag, string>();
 
-            return ((TargetTag[]) Enum.GetValues(typeof(TargetTag)))
-                .ToDictionary(tag => tag, tag => tagFactory(tag).Find(output));
+            foreach (var value in (TargetTag[]) Enum.GetValues(typeof(TargetTag)))
+            {
+                var tag = tagFactory(value).Find(output);
+                if (tag == null) continue;
+                tags.Add(value, tag);
+            }
+
+            return tags;
         }
     }
 }

@@ -13,6 +13,7 @@ namespace Falcon.Bus.EasyNetQ.Module
 
             builder.RegisterEasyNetQ(c =>
             {
+                // https://github.com/EasyNetQ/EasyNetQ/wiki/Connecting-to-RabbitMQ
                 var config = c.Resolve<BusConfiguration>();
                 var configuration = new ConnectionConfiguration
                 {
@@ -27,7 +28,8 @@ namespace Falcon.Bus.EasyNetQ.Module
                     UserName = config.UserName,
                     Password = config.Password,
                     VirtualHost = config.VirtualHost,
-                    PrefetchCount = (ushort) config.PrefetchCount
+                    PrefetchCount = (ushort) config.PrefetchCount,
+                    Timeout = (ushort) config.Timeout, // sec
                 };
 
                 return configuration;

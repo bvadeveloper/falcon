@@ -21,7 +21,7 @@ namespace Falcon.Tools
 
             var tasks = Toolset.Select(t =>
                 new ToolProcess()
-                    .Init(t.Name, t.MakeCommandLine(t.CommandLine))
+                    .Init(t.Name, t.MakeCommandLine(target))
                     .MakeTask(MakeCancellationToken(t.Timeout)));
 
             var results = await Task.WhenAll(tasks);

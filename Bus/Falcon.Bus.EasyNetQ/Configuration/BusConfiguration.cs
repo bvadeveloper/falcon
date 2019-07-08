@@ -8,5 +8,6 @@ namespace Falcon.Bus.EasyNetQ.Configuration
         public string Password { get; set; }
         public string VirtualHost { get; set; }
         public int PrefetchCount { get; set; }
+        public int Timeout { get; set; }
     }
 }
