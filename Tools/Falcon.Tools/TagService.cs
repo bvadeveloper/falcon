@@ -58,7 +58,7 @@ namespace Falcon.Tools
     public static class TagExtensions
     {
         public static Dictionary<TargetTag, string> FindTags(this TagFactory.Factory tagFactory,
-            IEnumerable<OutputModel> outputs)
+            IEnumerable<ReportModel> outputs)
         {
             var output = outputs.Aggregate("", (c, m) => $"{c} {m.Output}");
 

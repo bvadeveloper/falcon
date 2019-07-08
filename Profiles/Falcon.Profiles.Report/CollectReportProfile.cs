@@ -10,11 +10,4 @@ namespace Falcon.Profiles.Report
         
         public List<ReportModel> ReportModels { get; set; }
     }
-
-    public class ReportModel
-    {
-        public string Output { get; set; }
-
-        public string ToolName { get; set; }
-    }
 }
