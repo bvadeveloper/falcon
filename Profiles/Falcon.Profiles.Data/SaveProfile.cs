@@ -1,9 +1,14 @@
-﻿namespace Falcon.Profiles.Data
+﻿using System;
+using System.Collections.Generic;
+
+namespace Falcon.Profiles.Data
 {
     public class SaveProfile : ISessionContext
     {
-        public string Data { get; set; }
+        public Dictionary<TargetTag, string> Tags { get; set; }
 
         public SessionContext Context { get; set; }
+
+        public DateTime ScanDate { get; set; }
     }
 }

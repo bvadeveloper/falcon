@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Falcon.Bus.EasyNetQ.Module;
+using Falcon.Data.Redis;
 using Falcon.Logging.Scan.Module;
 using Falcon.Tools.Module;
 using Microsoft.Extensions.Configuration;
@@ -27,7 +28,8 @@ namespace Falcon.Hosts
                     builder.RegisterModule<ScanLoggerModule>();
                     builder.RegisterModule<BusSubscriberModule>();
                     builder.RegisterType<HostedService>().As<IHostedService>();
-                    
+                    builder.RegisterType<RedisCacheService>().As<ICacheService>();
+
                     // register all stuff for tools
                     builder.RegisterModule<ToolModule>();
                 })

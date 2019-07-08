@@ -8,21 +8,21 @@ namespace Falcon.Tools
     /// <summary>
     /// Hold tools and prepares tools for using
     /// </summary>
-    public class ToolsHolder
+    public class ToolsFactory
     {
         /// <summary>
         /// Tools holder factory for autofac injections
         /// https://autofaccn.readthedocs.io/en/latest/advanced/delegate-factories.html
         /// </summary>
         /// <param name="toolType"></param>
-        public delegate ToolsHolder Factory(ToolType toolType);
+        public delegate ToolsFactory Factory(ToolType toolType);
 
         private readonly ToolType _toolType;
         internal List<string> OptionalTools;
         private readonly Lazy<ICollectToolsModel> _collectTools;
         private readonly Lazy<IScanToolsModel> _scanTools;
 
-        public ToolsHolder(
+        public ToolsFactory(
             ToolType toolType,
             Lazy<ICollectToolsModel> collectTools,
             Lazy<IScanToolsModel> scanTools)
@@ -50,7 +50,7 @@ namespace Falcon.Tools
         }
     }
 
-    public static class ToolsHolderExtensions
+    public static class ToolsFactoryExtensions
     {
         /// <summary>
         /// Use optional tools from request (by concept only for scanners)
@@ -58,7 +58,7 @@ namespace Falcon.Tools
         /// <param name="holder"></param>
         /// <param name="tools"></param>
         /// <returns></returns>
-        public static ToolsHolder UseOptionalTools(this ToolsHolder holder, List<string> tools)
+        public static ToolsFactory UseOptionalTools(this ToolsFactory holder, List<string> tools)
         {
             holder.OptionalTools = tools;
             return holder;

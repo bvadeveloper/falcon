@@ -8,11 +8,12 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\Bus\Falcon.Bus.EasyNetQ\Falcon.Bus.EasyNetQ.csproj" />
+        <ProjectReference Include="..\..\Data\Falcon.Data.Redis\Falcon.Data.Redis.csproj" />
         <ProjectReference Include="..\..\Logging\Falcon.Logging.Сollector\Falcon.Logging.Сollector.csproj" />
         <ProjectReference Include="..\..\Profiles\Falcon.Profiles.Collect\Falcon.Profiles.Collect.csproj" />
         <ProjectReference Include="..\..\Profiles\Falcon.Profiles.Data\Falcon.Profiles.Data.csproj" />
+        <ProjectReference Include="..\..\Profiles\Falcon.Profiles.Report\Falcon.Profiles.Report.csproj" />
         <ProjectReference Include="..\..\Profiles\Falcon.Profiles.Scan\Falcon.Profiles.Scan.csproj" />
-        <ProjectReference Include="..\..\Reports\Falcon.Reports\Falcon.Reports.csproj" />
         <ProjectReference Include="..\..\Tools\Falcon.Tools\Falcon.Tools.csproj" />
         <ProjectReference Include="..\Falcon.Hosts\Falcon.Hosts.csproj" />
     </ItemGroup>

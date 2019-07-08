@@ -19,7 +19,11 @@ namespace Falcon.Tools
                 }
                 else
                 {
-                    logger.Error("Tool failure", new { model.Output, model.ErrorOutput }, model.ExecutionException);
+                    logger.Error("Tool failure", new
+                        {
+                            model.ToolName, model.Output, model.ErrorOutput
+                        },
+                        model.ExecutionException);
                 }
             }
         }

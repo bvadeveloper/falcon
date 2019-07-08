@@ -2,10 +2,13 @@ using System.Collections.Generic;
 
 namespace Falcon.Profiles
 {
-    public interface IProfile : ISessionContext
+    public interface ITargetProfile : ISessionContext
     {
         string Target { get; set; }
+    }
 
+    public interface IToolProfile : ISessionContext
+    {
         List<string> Tools { get; set; }
     }
 }

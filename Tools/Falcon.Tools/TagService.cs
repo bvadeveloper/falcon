@@ -35,8 +35,8 @@ namespace Falcon.Tools
                 case TargetTag.Server:
                     _tagKeyWords = new List<string> { "linux, windows, ubuntu, fedora, redhat. centos" };
                     break;
-                case TargetTag.Default:
-                    _tagKeyWords = new List<string>();
+                case TargetTag.Alive:
+                    _tagKeyWords = new List<string> { "ok" };
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(tag), tag, null);

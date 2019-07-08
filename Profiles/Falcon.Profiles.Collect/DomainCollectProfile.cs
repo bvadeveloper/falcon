@@ -2,7 +2,8 @@ using System.Collections.Generic;
 
 namespace Falcon.Profiles.Collect
 {
-    public class DomainCollectProfile : IProfile
+    
+    public class DomainCollectProfile : ITargetProfile, IToolProfile
     {
         public string Target { get; set; }
 

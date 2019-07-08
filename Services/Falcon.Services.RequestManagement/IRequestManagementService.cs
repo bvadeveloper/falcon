@@ -16,10 +16,10 @@ namespace Falcon.Services.RequestManagement
         // 443 SSL/TLS(HTTPS)
         // 445 Microsoft(SMB)
         // 3389 Remote(RDP)
-        Task<Result<string>> IpScanAsync(TargetModel model);
+        Task<Result<string>> IpScanAsync(RequestModel model);
 
-        Task<Result<string>> DomainsVulnerabilityScanAsync(TargetModel model);
+        Task<Result<string>> DomainsVulnerabilityScanAsync(RequestModel model);
 
-        Task<Result<string>> MailboxLeakCheckAsync(TargetModel model);
+        Task<Result<string>> MailboxLeakCheckAsync(RequestModel model);
     }
 }

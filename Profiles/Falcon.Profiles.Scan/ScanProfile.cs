@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Falcon.Profiles.Scan
 {
-    public abstract class ScanProfile : IProfile
+    public abstract class ScanProfile : ITargetProfile, IToolProfile
     {
         public string Target { get; set; }
 

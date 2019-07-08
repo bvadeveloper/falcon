@@ -20,8 +20,8 @@ namespace Falcon.Services.RequestManagement
             _context = context;
         }
 
-        protected async Task<Result<string>> Publish<TProfile>(TargetModel targetModel)
-            where TProfile : class, IProfile, new()
+        protected async Task<Result<string>> Publish<TProfile>(RequestModel targetModel)
+            where TProfile : class, ITargetProfile, IToolProfile, new()
         {
             try
             {

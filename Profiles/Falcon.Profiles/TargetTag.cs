@@ -5,11 +5,11 @@ namespace Falcon.Profiles
     /// </summary>
     public enum TargetTag
     {
-        Default,
+        Alive,
         Server,
         Framework,
         WebServer,
         Database,
-        Ports,
+        Ports
     }
 }

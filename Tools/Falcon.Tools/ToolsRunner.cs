@@ -7,7 +7,7 @@ using Falcon.Tools.Interfaces;
 
 namespace Falcon.Tools
 {
-    public class Tools : ICollectToolsModel, IScanToolsModel
+    public class ToolsRunner : ICollectToolsModel, IScanToolsModel
     {
         public List<ToolModel> Toolset { get; set; }
 
@@ -20,7 +20,7 @@ namespace Falcon.Tools
                 throw new ArgumentNullException(nameof(target));
 
             var tasks = Toolset.Select(t =>
-                new ToolRunner()
+                new ToolProcess()
                     .Init(t.Name, t.MakeCommandLine(t.CommandLine))
                     .MakeTask(MakeCancellationToken(t.Timeout)));
 
@@ -32,7 +32,7 @@ namespace Falcon.Tools
         public async Task<List<OutputModel>> RunToolsVersionCommandAsync()
         {
             var tasks = Toolset.Select(t =>
-                new ToolRunner()
+                new ToolProcess()
                     .Init(t.Name, t.VersionCommandLine)
                     .MakeTask(MakeCancellationToken(t.Timeout)));
 

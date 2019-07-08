@@ -6,7 +6,7 @@ using Falcon.Tools.Interfaces;
 
 namespace Falcon.Tools
 {
-    public class ToolRunner : IToolRunner
+    public class ToolProcess : IToolProcess
     {
         private bool Successful { get; set; } = true;
 
@@ -31,7 +31,7 @@ namespace Falcon.Tools
         };
 
 
-        public Task<ToolRunner> MakeTask(CancellationToken token) =>
+        public Task<ToolProcess> MakeTask(CancellationToken token) =>
             Task.Run(() =>
             {
                 try
@@ -67,7 +67,7 @@ namespace Falcon.Tools
                 CreateNoWindow = true,
             };
 
-        public ToolRunner Init(string toolName, string commandLine)
+        public ToolProcess Init(string toolName, string commandLine)
         {
             if (toolName == null)
                 throw new ArgumentNullException(nameof(toolName));

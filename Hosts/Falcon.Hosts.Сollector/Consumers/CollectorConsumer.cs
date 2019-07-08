@@ -1,11 +1,16 @@
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 using EasyNetQ;
 using EasyNetQ.AutoSubscribe;
+using Falcon.Data.Redis;
 using Falcon.Logging;
 using Falcon.Profiles;
 using Falcon.Profiles.Collect;
+using Falcon.Profiles.Data;
+using Falcon.Profiles.Report;
+using Falcon.Profiles.Scan;
 using Falcon.Tools;
-using Falcon.Tools.Interfaces;
 
 namespace Falcon.Hosts.Сollector.Consumers
 {
@@ -13,18 +18,21 @@ namespace Falcon.Hosts.Сollector.Consumers
     {
         private readonly IBus _bus;
         private readonly TagFactory.Factory _tagService;
-        private readonly ToolsHolder.Factory _toolsFactory;
+        private readonly ToolsFactory.Factory _toolsFactory;
+        private readonly ICacheService _cacheService;
         private readonly IJsonLogger _logger;
 
         public CollectorConsumer(
             IBus bus,
-            ToolsHolder.Factory toolsFactory,
+            ToolsFactory.Factory toolsFactory,
             TagFactory.Factory tagService,
+            ICacheService cacheService,
             IJsonLogger<CollectorConsumer> logger)
         {
             _bus = bus;
             _toolsFactory = toolsFactory;
             _tagService = tagService;
+            _cacheService = cacheService;
             _logger = logger;
         }
 
@@ -42,45 +50,58 @@ namespace Falcon.Hosts.Сollector.Consumers
             else
             {
                 // 1. start collect tools, fill target attributes
-                // 2. send scan profile to scanners
-                // 3. send request to save target attributes to DB
-                // 4. save data to Redis- ttl 1 hour
-                // 5. send target attributes to report for sending to clients
+                var outputs = await _toolsFactory(ToolType.Collect)
+                    .MakeTools()
+                    .RunToolsAsync(message.Target);
+
+                _logger.LogOutputs(outputs);
+
+                var successfulOutputs = outputs.GetSuccessful();
+                var tags = _tagService.FindTags(successfulOutputs);
+
+                if (tags.ContainsKey(TargetTag.Alive))
+                {
+                    // 2. send scan profile to scanners
+                    await _bus.PublishAsync(new DomainScanProfile
+                    {
+                        Context = message.Context,
+                        Target = message.Target,
+                        Tags = tags
+                    });
+
+                    // 3. send request to save target attributes to DB
+                    await _bus.PublishAsync(new SaveProfile
+                    {
+                        Context = message.Context,
+                        ScanDate = DateTime.UtcNow,
+                        Tags = tags
+                    });
+
+                    // 4. save data to Redis- ttl 1 hour
+
+                    // 5. send target attributes to report for sending to clients
+                    await _bus.PublishAsync(new CollectReportProfile
+                    {
+                        Context = message.Context,
+                        Target = message.Target,
+                        ReportModels = successfulOutputs.Select(f => new ReportModel
+                            { ToolName = f.ToolName, Output = f.Output }).ToList()
+                    });
+                }
+                else
+                {
+                    // target not available
+                    
+                    // 5. send target attributes to report for sending to clients
+                    await _bus.PublishAsync(new CollectReportProfile
+                    {
+                        Context = message.Context,
+                        Target = message.Target,
+                        ReportModels = successfulOutputs.Select(f => new ReportModel
+                            { ToolName = f.ToolName, Output = f.Output }).ToList()
+                    });
+                }
             }
-
-
-            var outputs = await _toolsFactory(ToolType.Collect)
-                .MakeTools()
-                .RunToolsAsync(message.Target);
-
-            _logger.LogOutputs(outputs);
-
-            var successfulOutputs = outputs.GetSuccessful();
-            var targetTags = _tagService.FindTags(successfulOutputs);
-
-
-            // rs.ToList().ForEach(r => _logger.Trace(r.Output));
-
-//            if (!data.Any())
-//            {
-//                // send report and stop
-//                await _bus.PublishAsync(new CollectReport { Report = $"'{message.Target}' can't be found" });
-//                return;
-//            }
-//
-//            // save collected data to db
-//            await _bus.PublishAsync(new SaveProfile { Data = data.FirstOrDefault() });
-//
-//            // send messages to run scanners
-//            await _bus.PublishAsync(new DomainScanProfile
-//            {
-//                Target = message.Target,
-//                Tools = message.Tools.Any() ? message.Tools : _toolService.PickupTools(data),
-//                TargetData = new Dictionary<TargetAttributes, string>()
-//            });
-//
-//            // send report 
-//            await _bus.PublishAsync(new CollectReport { Report = $"data for target '{data}'" });
         }
     }
 }

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Falcon.Profiles
 {
-    public class TargetModel
+    public class RequestModel
     {
         public List<string> Targets { get; set; }
 

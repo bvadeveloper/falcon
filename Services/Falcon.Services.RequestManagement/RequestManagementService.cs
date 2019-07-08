@@ -13,13 +13,13 @@ namespace Falcon.Services.RequestManagement
         public RequestManagementService(IBus bus, IJsonLogger<RequestManagementService> logger)
             : base(bus, logger, new SessionContext { ClientName = "client", SessionId = Guid.NewGuid() }) { }
 
-        public Task<Result<string>> IpScanAsync(TargetModel model) =>
+        public Task<Result<string>> IpScanAsync(RequestModel model) =>
             Publish<IpScanProfile>(model);
 
-        public Task<Result<string>> DomainsVulnerabilityScanAsync(TargetModel model) =>
+        public Task<Result<string>> DomainsVulnerabilityScanAsync(RequestModel model) =>
             Publish<DomainCollectProfile>(model);
 
-        public Task<Result<string>> MailboxLeakCheckAsync(TargetModel model) =>
+        public Task<Result<string>> MailboxLeakCheckAsync(RequestModel model) =>
             Publish<EmailScanProfile>(model);
     }
 }
