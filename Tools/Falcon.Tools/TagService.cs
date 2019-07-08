@@ -35,8 +35,8 @@ namespace Falcon.Tools
                 case TargetTag.Server:
                     _tagKeyWords = new List<string> { "linux, windows, ubuntu, fedora, redhat. centos" };
                     break;
-                case TargetTag.Alive:
-                    _tagKeyWords = new List<string> { "ok" };
+                case TargetTag.NotAvailable:
+                    _tagKeyWords = new List<string> { "Nmap done: 0 IP addresses (0 hosts up)" };
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(tag), tag, null);

@@ -5,7 +5,7 @@ namespace Falcon.Profiles
     /// </summary>
     public enum TargetTag
     {
-        Alive,
+        NotAvailable,
         Server,
         Framework,
         WebServer,

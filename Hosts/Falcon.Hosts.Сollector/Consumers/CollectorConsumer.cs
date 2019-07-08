@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EasyNetQ;
@@ -22,7 +23,10 @@ namespace Falcon.Hosts.Сollector.Consumers
         private readonly ICacheService _cacheService;
         private readonly IJsonLogger _logger;
 
+        private readonly TimeSpan _ttl = TimeSpan.FromHours(1);
+
         private static string MakeTagKey(string name) => $"tags:{name}";
+
         private static string MakeCollectReportKey(string name) => $"collect:{name}";
 
         public CollectorConsumer(
@@ -44,33 +48,85 @@ namespace Falcon.Hosts.Сollector.Consumers
             if (profile.HasTools())
             {
                 // 1. send scan profile to scanners
-                await _bus.PublishAsync(new DomainScanProfile
-                {
-                    Context = profile.Context,
-                    Target = profile.Target,
-                    Tools = profile.Tools
-                });
+                await PublishScanProfile(profile);
 
-                // 2. check if target attributes already in cache skip steps #3, #4, #5
-                var tagsCache = await _cacheService.GetValueAsync(MakeTagKey(profile.Target));
+                // 2. start collect tools, fill target tags
+                var (collectReports, tags) = await CollectData(profile);
 
-                if (tagsCache == null)
-                {
-                    // 3. start collect tools, fill target attributes
-                    // 4. send request to save target attributes to DB
-                    // 5. save data to Redis - ttl 1 hour 
-                    // 6. send target attributes to report for sending to clients
-                }
-                else
-                {
-                    // 6. send target tags to report for sending to clients
-                }
+                // 3. send request to save target tags to DB
+                await PublishSaveProfile(profile, tags);
+
+                // 4. send target tags to the report host to send to clients
+                await PublishReportProfile(profile, collectReports);
             }
             else
             {
                 // no any tools
 
-                // 1. start collect tools, fill target attributes
+                // 1. start collect tools, fill target tags
+                var (collectReports, tags) = await CollectData(profile);
+
+                if (tags.ContainsKey(TargetTag.NotAvailable))
+                {
+                    // target is NOT available
+
+                    // 4. send target tags to report host for sending to clients
+                    await PublishReportProfile(profile, collectReports);
+                }
+                else
+                {
+                    // target is available
+
+                    // 2. send scan profile to scanners
+                    await PublishScanProfile(profile, tags);
+
+                    // 3. send request to save target tags to DB
+                    await PublishSaveProfile(profile, tags);
+
+                    // 4. send target tags to the report host to send to clients
+                    await PublishReportProfile(profile, collectReports);
+                }
+            }
+        }
+
+        private async Task PublishScanProfile(ITargetProfile profile,
+            Dictionary<TargetTag, string> tags = default)
+        {
+            await _bus.PublishAsync(new DomainScanProfile
+            {
+                Context = profile.Context,
+                Target = profile.Target,
+                Tags = tags
+            });
+        }
+
+        private async Task PublishSaveProfile(ISessionContext profile, Dictionary<TargetTag, string> tags)
+        {
+            await _bus.PublishAsync(new SaveProfile
+            {
+                Context = profile.Context,
+                ScanDate = DateTime.UtcNow,
+                Tags = tags
+            });
+        }
+
+        private async Task PublishReportProfile(ITargetProfile profile, List<ReportModel> collectReports)
+        {
+            await _bus.PublishAsync(new CollectReportProfile
+            {
+                Context = profile.Context,
+                Target = profile.Target,
+                ReportModels = collectReports
+            });
+        }
+
+        private async Task<(List<ReportModel>, Dictionary<TargetTag, string>)> CollectData(ITargetProfile profile)
+        {
+            var collectReportsCache =
+                await _cacheService.GetValueAsync<List<ReportModel>>(MakeCollectReportKey(profile.Target));
+
+            if (collectReportsCache == null)
+            {
                 var outputs = await _toolsFactory(ToolType.Collect)
                     .MakeTools()
                     .RunToolsAsync(profile.Target);
@@ -82,55 +138,22 @@ namespace Falcon.Hosts.Сollector.Consumers
                     .Select(f => new ReportModel { ToolName = f.ToolName, Output = f.Output })
                     .ToList();
 
-                var tags = _tagService.FindTags(collectReports);
+                var tags = await GetTags(profile.Target, collectReports);
 
-                if (tags.ContainsKey(TargetTag.Alive))
-                {
-                    // target is available
+                await _cacheService.SetValueAsync(MakeTagKey(profile.Target), tags, _ttl);
+                await _cacheService.SetValueAsync(MakeCollectReportKey(profile.Target), collectReports, _ttl);
 
-
-                    // 2. send scan profile to scanners
-                    await _bus.PublishAsync(new DomainScanProfile
-                    {
-                        Context = profile.Context,
-                        Target = profile.Target,
-                        Tags = tags
-                    });
-
-                    // 3. send request to save target tags to DB
-                    await _bus.PublishAsync(new SaveProfile
-                    {
-                        Context = profile.Context,
-                        ScanDate = DateTime.UtcNow,
-                        Tags = tags
-                    });
-
-                    // 4. save data to Redis - ttl 1 hour
-                    await _cacheService.SetValueAsync(MakeTagKey(profile.Target), tags, TimeSpan.FromHours(1));
-                    await _cacheService.SetValueAsync(MakeCollectReportKey(profile.Target), collectReports,
-                        TimeSpan.FromHours(1));
-
-                    // 5. send target attributes to report for sending to clients
-                    await _bus.PublishAsync(new CollectReportProfile
-                    {
-                        Context = profile.Context,
-                        Target = profile.Target,
-                        ReportModels = collectReports
-                    });
-                }
-                else
-                {
-                    // target is NOT available
-
-                    // 5. send target tags to report host for sending to clients
-                    await _bus.PublishAsync(new CollectReportProfile
-                    {
-                        Context = profile.Context,
-                        Target = profile.Target,
-                        ReportModels = collectReports
-                    });
-                }
+                return (collectReports, tags);
             }
+
+            return (collectReportsCache, await GetTags(profile.Target, collectReportsCache));
+        }
+
+        private async Task<Dictionary<TargetTag, string>> GetTags(string target,
+            IEnumerable<ReportModel> collectReportsCache)
+        {
+            return await _cacheService.GetValueAsync<Dictionary<TargetTag, string>>(MakeTagKey(target)) ??
+                   _tagService.FindTags(collectReportsCache);
         }
     }
 }

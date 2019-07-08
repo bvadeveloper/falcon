@@ -12,6 +12,11 @@
         "Bus:Password": "rmquser",
         "Bus:VirtualHost": "/",
         "Bus:PrefetchCount": "1",
+
+        "CacheRedis:Endpoint": "localhost:6379",
+        "CacheRedis:Password": "5EZT8ONc",
+        "CacheRedis:ClientName": "RE",
+        "CacheRedis:TimeoutSeconds": "120",
         
         "Logging:LogLevel:Microsoft": "Information",
         "Logging:LogLevel:System": "Information",
