@@ -7,9 +7,9 @@ namespace Falcon.Tools.Interfaces
     {
         List<ToolModel> Toolset { get; set; }
 
-        Task<IEnumerable<OutputModel>> RunToolsAsync(string target);
+        Task<List<OutputModel>> RunToolsAsync(string target);
         
-        Task<IEnumerable<OutputModel>> RunToolsVersionCommandAsync();
+        Task<List<OutputModel>> RunToolsVersionCommandAsync();
     }
 
     public interface IScanToolsModel : IToolsModel

@@ -5,22 +5,26 @@ using Falcon.Logging;
 using Falcon.Profiles;
 using Falcon.Profiles.Collect;
 using Falcon.Tools;
+using Falcon.Tools.Interfaces;
 
 namespace Falcon.Hosts.Сollector.Consumers
 {
     public class CollectorConsumer : IConsumeAsync<DomainCollectProfile>
     {
         private readonly IBus _bus;
+        private readonly TagFactory.Factory _tagService;
         private readonly ToolsHolder.Factory _toolsFactory;
         private readonly IJsonLogger _logger;
 
         public CollectorConsumer(
             IBus bus,
             ToolsHolder.Factory toolsFactory,
+            TagFactory.Factory tagService,
             IJsonLogger<CollectorConsumer> logger)
         {
             _bus = bus;
             _toolsFactory = toolsFactory;
+            _tagService = tagService;
             _logger = logger;
         }
 
@@ -47,16 +51,13 @@ namespace Falcon.Hosts.Сollector.Consumers
 
             var outputs = await _toolsFactory(ToolType.Collect)
                 .MakeTools()
-                .RunToolsAsync(message.Target)
-                .LogOutputsAsync(_logger)
-                .GetSuccessfulAsync();
+                .RunToolsAsync(message.Target);
 
+            _logger.LogOutputs(outputs);
 
+            var successfulOutputs = outputs.GetSuccessful();
+            var targetTags = _tagService.FindTags(successfulOutputs);
 
-           // var tags = _tagsService.FindTag();
-            
-
-            // find tags
 
             // rs.ToList().ForEach(r => _logger.Trace(r.Output));
 

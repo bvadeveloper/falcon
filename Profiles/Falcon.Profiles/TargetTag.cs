@@ -5,8 +5,10 @@ namespace Falcon.Profiles
     /// </summary>
     public enum TargetTag
     {
-        Framework,
+        Default,
         Server,
+        Framework,
+        WebServer,
         Database,
         Ports,
     }

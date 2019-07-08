@@ -14,7 +14,7 @@ namespace Falcon.Tools
         private static CancellationToken MakeCancellationToken(int timeout) =>
             new CancellationTokenSource(timeout).Token;
 
-        public async Task<IEnumerable<OutputModel>> RunToolsAsync(string target)
+        public async Task<List<OutputModel>> RunToolsAsync(string target)
         {
             if (target == null)
                 throw new ArgumentNullException(nameof(target));
@@ -26,10 +26,10 @@ namespace Falcon.Tools
 
             var results = await Task.WhenAll(tasks);
 
-            return results.Select(r => r.MakeOutput());
+            return results.Select(r => r.MakeOutput()).ToList();
         }
 
-        public async Task<IEnumerable<OutputModel>> RunToolsVersionCommandAsync()
+        public async Task<List<OutputModel>> RunToolsVersionCommandAsync()
         {
             var tasks = Toolset.Select(t =>
                 new ToolRunner()
@@ -38,7 +38,7 @@ namespace Falcon.Tools
 
             var results = await Task.WhenAll(tasks);
 
-            return results.Select(r => r.MakeOutput());
+            return results.Select(r => r.MakeOutput()).ToList();
         }
 
         public IScanToolsModel UseOnlyTools(List<string> specificTools)

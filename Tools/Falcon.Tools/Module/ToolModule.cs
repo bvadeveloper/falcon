@@ -11,6 +11,7 @@ namespace Falcon.Tools.Module
             builder.RegisterType<Tools>().As<ICollectToolsModel>().As<IScanToolsModel>().SingleInstance();
             builder.RegisterModelAsInterface<Tools, ICollectToolsModel>("Collect");
             builder.RegisterModelAsInterface<Tools, IScanToolsModel>("Scan");
+            builder.RegisterType<TagFactory>();
             builder.RegisterType<ToolsHolder>();
         }
     }
