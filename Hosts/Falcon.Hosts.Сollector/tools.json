@@ -6,7 +6,7 @@
         "commonTags": "cool tool",
         "hostTags": "any hosts",
         "info": "nmap",
-        "commandLine": "nmap -v -A {0}",
+        "commandLine": "nmap -Pn {0}",
         "versionCommandLine" : "nmap -V",
         "timeout": "10"
       }
