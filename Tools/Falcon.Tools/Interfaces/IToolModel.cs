@@ -10,12 +10,14 @@ namespace Falcon.Tools.Interfaces
         /// <summary>
         /// Tags for tool like 'WordPress, Joomla, PHP, Java, SQL, etc'
         /// </summary>
+        string FrameworkTags { get; set; }
+        
         string CommonTags { get; set; }
 
         /// <summary>
         /// Tags for host like 'Nginx, IIS, Kestrel, etc'
         /// </summary>
-        string HostTags { get; set; }
+        string ServerTags { get; set; }
 
         /// <summary>
         /// Info about tool, refs, helpers, etc

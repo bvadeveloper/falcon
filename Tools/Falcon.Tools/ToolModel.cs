@@ -9,9 +9,11 @@ namespace Falcon.Tools
 
         public string Info { get; set; }
 
+        public string FrameworkTags { get; set; }
+        
         public string CommonTags { get; set; }
 
-        public string HostTags { get; set; }
+        public string ServerTags { get; set; }
 
         public string CommandLine { get; set; }
 

@@ -51,7 +51,7 @@ namespace Falcon.Hosts.Сollector.Consumers
                 await PublishScanProfile(profile);
 
                 // 2. start collect tools, fill target tags
-                var (collectReports, tags) = await CollectDataBy(profile);
+                var (collectReports, tags) = await CollectInfoByProfile(profile);
 
                 // 3. send request to save target tags to DB
                 await PublishSaveProfile(profile, tags);
@@ -62,7 +62,7 @@ namespace Falcon.Hosts.Сollector.Consumers
             else
             {
                 // 1. start collect tools, fill target tags
-                var (collectReports, tags) = await CollectDataBy(profile);
+                var (collectReports, tags) = await CollectInfoByProfile(profile);
 
                 if (tags.ContainsKey(TagType.NotAvailable))
                 {
@@ -99,7 +99,7 @@ namespace Falcon.Hosts.Сollector.Consumers
             });
         }
 
-        private async Task PublishSaveProfile(ISessionContext profile, 
+        private async Task PublishSaveProfile(ISessionContext profile,
             Dictionary<TagType, string> tags)
         {
             await _bus.PublishAsync(new SaveProfile
@@ -120,7 +120,8 @@ namespace Falcon.Hosts.Сollector.Consumers
             });
         }
 
-        private async Task<(List<ReportModel>, Dictionary<TagType, string>)> CollectDataBy(ITargetProfile profile)
+        private async Task<(List<ReportModel>, Dictionary<TagType, string>)> CollectInfoByProfile(
+            ITargetProfile profile)
         {
             var collectReportsCache =
                 await _cacheService.GetValueAsync<List<ReportModel>>(MakeCollectReportKey(profile.Target));
@@ -128,14 +129,15 @@ namespace Falcon.Hosts.Сollector.Consumers
             if (collectReportsCache == null)
             {
                 var outputs = await _toolsFactory(ToolType.Collect)
-                    .MakeTools()
+                    .InitTools()
                     .RunToolsAsync(profile.Target);
 
                 _logger.LogOutputs(outputs);
 
                 var collectReports = outputs
                     .GetSuccessful()
-                    .Select(f => new ReportModel { ToolName = f.ToolName, Output = f.Output })
+                    .Select(f => new ReportModel
+                        { ToolName = f.ToolName, Output = f.Output, ProcessingDate = DateTime.UtcNow })
                     .ToList();
 
                 var tags = await GetTags(profile.Target, collectReports);

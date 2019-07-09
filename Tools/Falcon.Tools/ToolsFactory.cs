@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Falcon.Profiles;
 using Falcon.Tools.Interfaces;
 
 namespace Falcon.Tools
@@ -18,7 +19,7 @@ namespace Falcon.Tools
         public delegate ToolsFactory Factory(ToolType type);
 
         private readonly ToolType _type;
-        internal List<string> OptionalTools;
+        private List<string> _optionalTools;
         private readonly Lazy<ICollectToolsModel> _collectTools;
         private readonly Lazy<IScanToolsModel> _scanTools;
 
@@ -36,37 +37,63 @@ namespace Falcon.Tools
         /// Make tools
         /// </summary>
         /// <returns></returns>
-        public IToolsModel MakeTools()
+        public IToolsModel InitTools()
         {
             switch (_type)
             {
                 case ToolType.Scan:
-                    return _scanTools.Value.UseOnlyTools(OptionalTools);
+                    return _scanTools.Value.UseOnlyTools(_optionalTools);
                 case ToolType.Collect:
                     return _collectTools.Value;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
+
+        /// <summary>
+        /// Use optional tools from request (by concept only for scanners)
+        /// </summary>
+        /// <param name="tools"></param>
+        /// <returns></returns>
+        public ToolsFactory UseOptionalTools(List<string> tools)
+        {
+            _optionalTools = tools;
+            return this;
+        }
+
+        /// <summary>
+        /// Map tools by tags (by concept only for scanners)
+        /// </summary>
+        /// <param name="tags"></param>
+        /// <returns></returns>
+        public ToolsFactory MapToolsByTags(Dictionary<TagType, string> tags)
+        {
+            if (_optionalTools.Any()) return this;
+
+            var mappedTools = new List<string>();
+
+            foreach (var (key, value) in tags)
+            {
+                var mappedTool = _scanTools.Value.Toolset.FirstOrDefault(t => t.FrameworkTags.Contains(value)
+                                                                              || t.ServerTags.Contains(value)
+                                                                              || t.CommonTags.Contains(value))?.Name;
+                if (!string.IsNullOrWhiteSpace(mappedTool))
+                {
+                    mappedTools.Add(mappedTool);
+                }
+            }
+
+            _optionalTools = mappedTools;
+
+            return this;
+        }
     }
 
     public static class ToolsFactoryExtensions
     {
-        /// <summary>
-        /// Use optional tools from request (by concept only for scanners)
-        /// </summary>
-        /// <param name="holder"></param>
-        /// <param name="tools"></param>
-        /// <returns></returns>
-        public static ToolsFactory UseOptionalTools(this ToolsFactory holder, List<string> tools)
+        public static IEnumerable<string> ToolNames(this IToolsModel model)
         {
-            holder.OptionalTools = tools;
-            return holder;
-        }
-
-        public static IEnumerable<string> ToolNames(this IToolsModel toolsModel)
-        {
-            return toolsModel.Toolset.Select(n => n.Name);
+            return model.Toolset.Select(n => n.Name);
         }
     }
 }

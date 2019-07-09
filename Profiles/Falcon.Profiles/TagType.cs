@@ -1,7 +1,7 @@
 namespace Falcon.Profiles
 {
     /// <summary>
-    /// Target tags types
+    /// Tags types used to collect target information for selecting the necessary tools.
     /// </summary>
     public enum TagType
     {
