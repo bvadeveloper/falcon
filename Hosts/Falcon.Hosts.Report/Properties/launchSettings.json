@@ -10,7 +10,8 @@
         "Bus:Password": "rmquser",
         "Bus:VirtualHost": "/",
         "Bus:PrefetchCount": "1",
-        
+        "Bus:Timeout": "60",
+
         "Logging:LogLevel:Microsoft": "Information",
         "Logging:LogLevel:System": "Information",
         "Logging:LogLevel:Default": "Trace",

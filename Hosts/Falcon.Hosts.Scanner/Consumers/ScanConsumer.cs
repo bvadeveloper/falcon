@@ -59,7 +59,7 @@ namespace Falcon.Hosts.Scanner.Consumers
             if (scanReportsCache == null)
             {
                 var outputs = await _toolsFactory(ToolType.Scan)
-                    .UseTools(profile.Tools, profile.Tags) // map tool from tags of empty
+                    .UseTools(profile.Tools, profile.Tags) // map tool from tags if empty or use from profile
                     .RunToolsAsync(profile.Target);
 
                 _logger.LogOutputs(outputs);

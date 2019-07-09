@@ -4,6 +4,6 @@ namespace Falcon.Hosts.Report
 {
     internal static class Program
     {
-        private static async Task Main() => await Host.Init();
+        private static async Task Main() => await Host.InitBasic();
     }
 }

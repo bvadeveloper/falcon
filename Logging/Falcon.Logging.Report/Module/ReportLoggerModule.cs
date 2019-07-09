@@ -10,7 +10,7 @@ namespace Falcon.Logging.Report.Module
             builder.RegisterModule<SerilogModule>();
 
             builder.RegisterGeneric(typeof(ReportLogger<>))
-                .As(typeof(IReportLogger))
+                .As(typeof(IReportLogger<>))
                 .As(typeof(IJsonLogger<>))
                 .InstancePerLifetimeScope();
         }
