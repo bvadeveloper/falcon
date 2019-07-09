@@ -1,9 +1,9 @@
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Falcon.Bus.EasyNetQ.Module;
-using Falcon.Data.Redis;
 using Falcon.Data.Redis.Module;
 using Falcon.Logging.Report.Module;
 using Falcon.Logging.Scan.Module;
@@ -18,8 +18,9 @@ namespace Falcon.Hosts
         /// <summary>
         /// Init scanning hosts
         /// </summary>
+        /// <param name="action"></param>
         /// <returns></returns>
-        public static Task Init()
+        public static Task Init(Action<ContainerBuilder> action = default)
         {
             return new HostBuilder()
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
@@ -35,10 +36,12 @@ namespace Falcon.Hosts
                     builder.RegisterModule<ScanLoggerModule>();
                     builder.RegisterModule<BusSubscriberModule>();
                     builder.RegisterModule<RedisModule>();
-                    builder.RegisterType<HostedService>().As<IHostedService>();
+                    builder.RegisterType<BusHostedService>().As<IHostedService>();
 
                     // register all stuff for tools
                     builder.RegisterModule<ToolModule>();
+
+                    action?.Invoke(builder);
                 })
                 .RunConsoleAsync();
         }
@@ -46,8 +49,9 @@ namespace Falcon.Hosts
         /// <summary>
         /// Init basic hosts
         /// </summary>
+        /// <param name="action"></param>
         /// <returns></returns>
-        public static Task InitBasic()
+        public static Task InitBasic(Action<ContainerBuilder> action = default)
         {
             return new HostBuilder()
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
@@ -59,7 +63,9 @@ namespace Falcon.Hosts
                 {
                     builder.RegisterModule<ReportLoggerModule>();
                     builder.RegisterModule<BusSubscriberModule>();
-                    builder.RegisterType<HostedService>().As<IHostedService>();
+                    builder.RegisterType<BusHostedService>().As<IHostedService>();
+
+                    action?.Invoke(builder);
                 })
                 .RunConsoleAsync();
         }

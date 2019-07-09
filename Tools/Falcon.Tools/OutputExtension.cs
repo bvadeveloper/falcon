@@ -6,8 +6,7 @@ namespace Falcon.Tools
 {
     public static class OutputExtension
     {
-        public static void LogOutputs(
-            this IJsonLogger logger, IEnumerable<OutputModel> models)
+        public static void LogOutputs(this IJsonLogger logger, IEnumerable<OutputModel> models)
         {
             var outputModels = models.ToList();
 

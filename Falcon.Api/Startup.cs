@@ -5,15 +5,18 @@ using Falcon.Api.Utils;
 using Falcon.Bus.EasyNetQ.Module;
 using Falcon.Logging.Api.Module;
 using Falcon.Services.RequestManagement;
+using Falcon.Services.Telegram;
 using Falcon.Utils.Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace Falcon.Api
 {
@@ -58,6 +61,7 @@ namespace Falcon.Api
                     builder.RegisterModule<ApiLoggerModule>();
                     builder.RegisterModule<BusModule>();
                     builder.RegisterType<RequestManagementService>().As<IRequestManagementService>();
+                    builder.RegisterType<TelegramRequestHostedService>().As<IHostedService>();
                 })
                 .MakeProvider();
         }

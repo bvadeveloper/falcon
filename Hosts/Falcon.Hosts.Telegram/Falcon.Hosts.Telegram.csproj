@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Services\Falcon.Services.Telegram\Falcon.Services.Telegram.csproj" />
+      <ProjectReference Include="..\Falcon.Hosts\Falcon.Hosts.csproj" />
+    </ItemGroup>
+
+</Project>

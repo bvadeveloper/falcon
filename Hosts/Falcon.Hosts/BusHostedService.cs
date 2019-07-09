@@ -7,13 +7,13 @@ using Microsoft.Extensions.Hosting;
 
 namespace Falcon.Hosts
 {
-    public class HostedService : IHostedService
+    public class BusHostedService : IHostedService
     {
         private readonly IJsonLogger _logger;
         private readonly IBusSubscriber _busSubscriber;
 
-        public HostedService(
-            IJsonLogger<HostedService> logger,
+        public BusHostedService(
+            IJsonLogger<BusHostedService> logger,
             IBusSubscriber busSubscriber)
         {
             _logger = logger;
@@ -23,7 +23,6 @@ namespace Falcon.Hosts
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _logger.Information($"Host start '{Assembly.GetEntryAssembly()?.GetName().Name}'");
-
             _busSubscriber.Subscribe();
 
             return Task.CompletedTask;
