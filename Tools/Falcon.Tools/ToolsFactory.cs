@@ -18,93 +18,61 @@ namespace Falcon.Tools
         /// <param name="type"></param>
         public delegate ToolsFactory Factory(ToolType type);
 
-        private readonly ToolType _type;
-        private List<string> _optionalTools;
-        private readonly Lazy<ICollectToolsModel> _collectTools;
-        private readonly Lazy<IScanToolsModel> _scanTools;
+        private readonly IToolsModel _toolsModel;
 
         public ToolsFactory(
             ToolType type,
             Lazy<ICollectToolsModel> collectTools,
             Lazy<IScanToolsModel> scanTools)
         {
-            _type = type;
-            _collectTools = collectTools;
-            _scanTools = scanTools;
-        }
-
-        /// <summary>
-        /// Make tools
-        /// </summary>
-        /// <returns></returns>
-        public IToolsModel InitTools()
-        {
-            switch (_type)
+            switch (type)
             {
                 case ToolType.Scan:
-                    return _scanTools.Value.UseOnlyTools(_optionalTools);
+                    _toolsModel = scanTools.Value;
+                    break;
                 case ToolType.Collect:
-                    return _collectTools.Value;
+                    _toolsModel = collectTools.Value;
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
         /// <summary>
-        /// Use optional tools from request (by concept only for scanners)
+        /// Use optional tools from request
         /// </summary>
-        /// <param name="tools"></param>
+        /// <param name="profileTags"></param>
+        /// <param name="optionalTools"></param>
         /// <returns></returns>
-        public ToolsFactory UseOptionalTools(List<string> tools)
+        public IToolsModel UseTools(List<string> optionalTools, Dictionary<TagType, string> profileTags = default)
         {
-            _optionalTools = tools;
-            return this;
-        }
-
-        /// <summary>
-        /// Map tools by tags (by concept only for scanners)
-        /// </summary>
-        /// <param name="tags"></param>
-        /// <returns></returns>
-        public ToolsFactory MapToolsByTags(Dictionary<TagType, string> tags)
-        {
-            if (_optionalTools != null && _optionalTools.Any())
+            // use optional tools from request
+            if (optionalTools != default && optionalTools.Any())
             {
-                return this;
+                return _toolsModel.UseOnlyTools(optionalTools);
             }
 
-            if (tags.Any())
+            // try to map tools from tags
+            if (profileTags != default && profileTags.Any())
             {
                 var mappedTools = new List<string>();
 
-                foreach (var (_, value) in tags)
+                foreach (var (_, value) in profileTags)
                 {
-                    var mappedTool = _scanTools.Value.Toolset.FirstOrDefault(t => t.FrameworkTags.Contains(value)
-                                                                                  || t.ServerTags.Contains(value)
-                                                                                  || t.CommonTags.Contains(value))
-                        ?.Name;
+                    var mappedTool = _toolsModel.Toolset.FirstOrDefault(t => t.FrameworkTags.Contains(value)
+                                                                             || t.ServerTags.Contains(value)
+                                                                             || t.CommonTags.Contains(value))?.Name;
                     if (!string.IsNullOrWhiteSpace(mappedTool))
                     {
                         mappedTools.Add(mappedTool);
                     }
                 }
 
-                _optionalTools = mappedTools;
-            }
-            else
-            {
-                _optionalTools = new List<string> { "nmap" };
+                return _toolsModel.UseOnlyTools(mappedTools);
             }
 
-            return this;
-        }
-    }
-
-    public static class ToolsFactoryExtensions
-    {
-        public static IEnumerable<string> ToolNames(this IToolsModel model)
-        {
-            return model.Toolset.Select(n => n.Name);
+            // use default tool
+            return _toolsModel.UseOnlyTools(new List<string> { "nmap" }); // for debug
         }
     }
 }

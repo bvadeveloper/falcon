@@ -41,11 +41,11 @@ namespace Falcon.Tools
             return results.Select(r => r.MakeOutput()).ToList();
         }
 
-        public IScanToolsModel UseOnlyTools(List<string> specificTools)
+        public IScanToolsModel UseOnlyTools(List<string> optionalTools)
         {
-            if (specificTools != null && specificTools.Any())
+            if (optionalTools != null && optionalTools.Any())
             {
-                this.Toolset = this.Toolset.Where(m => specificTools.Contains(m.Name)).ToList();
+                this.Toolset = this.Toolset.Where(m => optionalTools.Contains(m.Name)).ToList();
             }
 
             return this;

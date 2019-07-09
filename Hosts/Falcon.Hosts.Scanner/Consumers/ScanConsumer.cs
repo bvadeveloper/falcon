@@ -53,14 +53,13 @@ namespace Falcon.Hosts.Scanner.Consumers
 
         private async Task<List<ReportModel>> ScanTargetByProfile(DomainScanProfile profile)
         {
-            var scanReportsCache = await _cacheService.GetValueAsync<List<ReportModel>>(MakeScanReportKey(profile.Target));
+            var scanReportsCache =
+                await _cacheService.GetValueAsync<List<ReportModel>>(MakeScanReportKey(profile.Target));
 
             if (scanReportsCache == null)
             {
                 var outputs = await _toolsFactory(ToolType.Scan)
-                    .UseOptionalTools(profile.Tools) // use tools from client request
-                    .MapToolsByTags(profile.Tags) // if tools are empty map tools by tags
-                    .InitTools()
+                    .UseTools(profile.Tools, profile.Tags) // map tool from tags of empty
                     .RunToolsAsync(profile.Target);
 
                 _logger.LogOutputs(outputs);

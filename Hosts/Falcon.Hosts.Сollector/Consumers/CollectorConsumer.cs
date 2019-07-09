@@ -121,7 +121,7 @@ namespace Falcon.Hosts.Сollector.Consumers
         }
 
         private async Task<(List<ReportModel>, Dictionary<TagType, string>)> CollectInfoByProfile(
-            ITargetProfile profile)
+            DomainCollectProfile profile)
         {
             var collectReportsCache =
                 await _cacheService.GetValueAsync<List<ReportModel>>(MakeCollectReportKey(profile.Target));
@@ -129,7 +129,7 @@ namespace Falcon.Hosts.Сollector.Consumers
             if (collectReportsCache == null)
             {
                 var outputs = await _toolsFactory(ToolType.Collect)
-                    .InitTools()
+                    .UseTools(profile.Tools)
                     .RunToolsAsync(profile.Target);
 
                 _logger.LogOutputs(outputs);
