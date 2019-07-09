@@ -5,7 +5,7 @@ namespace Falcon.Profiles.Data
 {
     public class SaveProfile : ISessionContext
     {
-        public Dictionary<TargetTag, string> Tags { get; set; }
+        public Dictionary<TagType, string> Tags { get; set; }
 
         public SessionContext Context { get; set; }
 

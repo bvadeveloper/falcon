@@ -1,18 +1,93 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EasyNetQ;
 using EasyNetQ.AutoSubscribe;
+using Falcon.Data.Redis;
+using Falcon.Logging;
+using Falcon.Profiles;
+using Falcon.Profiles.Report;
 using Falcon.Profiles.Scan;
+using Falcon.Tools;
 
 namespace Falcon.Hosts.Scanner.Consumers
 {
     public class ScanConsumer : IConsumeAsync<DomainScanProfile>
     {
-        public Task ConsumeAsync(DomainScanProfile message)
-        {
-            Console.WriteLine(message.Target.FirstOrDefault());
+        private readonly IBus _bus;
+        private readonly ToolsFactory.Factory _toolsFactory;
+        private readonly ICacheService _cacheService;
+        private readonly IJsonLogger _logger;
 
-            return Task.CompletedTask;
+        private readonly TimeSpan _ttl = TimeSpan.FromHours(1);
+
+        private static string MakeScanReportKey(string name) => $"scan:{name}";
+
+        public ScanConsumer(IBus bus,
+            ToolsFactory.Factory toolsFactory,
+            ICacheService cacheService,
+            IJsonLogger<ScanConsumer> logger)
+        {
+            _bus = bus;
+            _toolsFactory = toolsFactory;
+            _cacheService = cacheService;
+            _logger = logger;
+        }
+
+        public async Task ConsumeAsync(DomainScanProfile profile)
+        {
+            if (profile.HasTools())
+            {
+                var scanReports = await ScanTargetBy(profile);
+
+                await PublishReportProfile(profile, scanReports);
+            }
+            else
+            {
+                profile.Tools = _toolsFactory.MapTools(profile.Tags);
+
+                var scanReports = await ScanTargetBy(profile);
+
+                await PublishReportProfile(profile, scanReports);
+            }
+        }
+
+        private async Task PublishReportProfile(ITargetProfile profile, List<ReportModel> scanReports)
+        {
+            await _bus.PublishAsync(new ReportProfile
+            {
+                Context = profile.Context,
+                Target = profile.Target,
+                Reports = scanReports
+            });
+        }
+
+        private async Task<List<ReportModel>> ScanTargetBy(ScanProfile profile)
+        {
+            var scanReportsCache =
+                await _cacheService.GetValueAsync<List<ReportModel>>(MakeScanReportKey(profile.Target));
+
+            if (scanReportsCache == null)
+            {
+                var outputs = await _toolsFactory(ToolType.Scan)
+                    .UseOptionalTools(profile.Tools)
+                    .MakeTools()
+                    .RunToolsAsync(profile.Target);
+
+                _logger.LogOutputs(outputs);
+
+                var scanReports = outputs
+                    .GetSuccessful()
+                    .Select(f => new ReportModel { ToolName = f.ToolName, Output = f.Output })
+                    .ToList();
+
+                await _cacheService.SetValueAsync(MakeScanReportKey(profile.Target), scanReports, _ttl);
+
+                return scanReports;
+            }
+
+            return scanReportsCache;
         }
     }
 }

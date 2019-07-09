@@ -51,7 +51,7 @@ namespace Falcon.Hosts.Сollector.Consumers
                 await PublishScanProfile(profile);
 
                 // 2. start collect tools, fill target tags
-                var (collectReports, tags) = await CollectData(profile);
+                var (collectReports, tags) = await CollectDataBy(profile);
 
                 // 3. send request to save target tags to DB
                 await PublishSaveProfile(profile, tags);
@@ -61,12 +61,10 @@ namespace Falcon.Hosts.Сollector.Consumers
             }
             else
             {
-                // no any tools
-
                 // 1. start collect tools, fill target tags
-                var (collectReports, tags) = await CollectData(profile);
+                var (collectReports, tags) = await CollectDataBy(profile);
 
-                if (tags.ContainsKey(TargetTag.NotAvailable))
+                if (tags.ContainsKey(TagType.NotAvailable))
                 {
                     // target is NOT available
 
@@ -89,18 +87,20 @@ namespace Falcon.Hosts.Сollector.Consumers
             }
         }
 
-        private async Task PublishScanProfile(ITargetProfile profile,
-            Dictionary<TargetTag, string> tags = default)
+        private async Task PublishScanProfile(DomainCollectProfile profile,
+            Dictionary<TagType, string> tags = default)
         {
             await _bus.PublishAsync(new DomainScanProfile
             {
                 Context = profile.Context,
                 Target = profile.Target,
+                Tools = profile.Tools,
                 Tags = tags
             });
         }
 
-        private async Task PublishSaveProfile(ISessionContext profile, Dictionary<TargetTag, string> tags)
+        private async Task PublishSaveProfile(ISessionContext profile, 
+            Dictionary<TagType, string> tags)
         {
             await _bus.PublishAsync(new SaveProfile
             {
@@ -112,15 +112,15 @@ namespace Falcon.Hosts.Сollector.Consumers
 
         private async Task PublishReportProfile(ITargetProfile profile, List<ReportModel> collectReports)
         {
-            await _bus.PublishAsync(new CollectReportProfile
+            await _bus.PublishAsync(new ReportProfile
             {
                 Context = profile.Context,
                 Target = profile.Target,
-                ReportModels = collectReports
+                Reports = collectReports
             });
         }
 
-        private async Task<(List<ReportModel>, Dictionary<TargetTag, string>)> CollectData(ITargetProfile profile)
+        private async Task<(List<ReportModel>, Dictionary<TagType, string>)> CollectDataBy(ITargetProfile profile)
         {
             var collectReportsCache =
                 await _cacheService.GetValueAsync<List<ReportModel>>(MakeCollectReportKey(profile.Target));
@@ -149,10 +149,10 @@ namespace Falcon.Hosts.Сollector.Consumers
             return (collectReportsCache, await GetTags(profile.Target, collectReportsCache));
         }
 
-        private async Task<Dictionary<TargetTag, string>> GetTags(string target,
+        private async Task<Dictionary<TagType, string>> GetTags(string target,
             IEnumerable<ReportModel> collectReportsCache)
         {
-            return await _cacheService.GetValueAsync<Dictionary<TargetTag, string>>(MakeTagKey(target)) ??
+            return await _cacheService.GetValueAsync<Dictionary<TagType, string>>(MakeTagKey(target)) ??
                    _tagService.FindTags(collectReportsCache);
         }
     }

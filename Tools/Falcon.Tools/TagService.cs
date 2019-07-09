@@ -14,28 +14,28 @@ namespace Falcon.Tools
         /// https://autofaccn.readthedocs.io/en/latest/advanced/delegate-factories.html
         /// </summary>
         /// <param name="tag"></param>
-        public delegate TagFactory Factory(TargetTag tag);
+        public delegate TagFactory Factory(TagType tag);
 
-        public TagFactory(TargetTag tag)
+        public TagFactory(TagType tag)
         {
             switch (tag)
             {
-                case TargetTag.Framework:
+                case TagType.Framework:
                     _tagKeyWords = new List<string> { "joomla, wordpress" };
                     break;
-                case TargetTag.WebServer:
+                case TagType.WebServer:
                     _tagKeyWords = new List<string> { "nginx, iis, kestrel, tomkat" };
                     break;
-                case TargetTag.Database:
+                case TagType.Database:
                     _tagKeyWords = new List<string> { "mysql, mssql, postgres" };
                     break;
-                case TargetTag.Ports:
+                case TagType.Ports:
                     _tagKeyWords = new List<string> { "80, 443, 15672, 5672, 6379" };
                     break;
-                case TargetTag.Server:
+                case TagType.Server:
                     _tagKeyWords = new List<string> { "linux, windows, ubuntu, fedora, redhat. centos" };
                     break;
-                case TargetTag.NotAvailable:
+                case TagType.NotAvailable:
                     _tagKeyWords = new List<string> { "Nmap done: 0 IP addresses (0 hosts up)" };
                     break;
                 default:
@@ -57,17 +57,17 @@ namespace Falcon.Tools
 
     public static class TagExtensions
     {
-        public static Dictionary<TargetTag, string> FindTags(this TagFactory.Factory tagFactory,
+        public static Dictionary<TagType, string> FindTags(this TagFactory.Factory tagFactory,
             IEnumerable<ReportModel> outputs)
         {
             var output = outputs.Aggregate("", (c, m) => $"{c} {m.Output}");
-            var tags = new Dictionary<TargetTag, string>();
+            var tags = new Dictionary<TagType, string>();
 
-            foreach (var value in (TargetTag[]) Enum.GetValues(typeof(TargetTag)))
+            foreach (var tagType in (TagType[]) Enum.GetValues(typeof(TagType)))
             {
-                var tag = tagFactory(value).Find(output);
+                var tag = tagFactory(tagType).Find(output);
                 if (tag == null) continue;
-                tags.Add(value, tag);
+                tags.Add(tagType, tag);
             }
 
             return tags;

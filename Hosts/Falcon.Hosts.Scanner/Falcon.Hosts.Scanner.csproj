@@ -9,8 +9,15 @@
     <ItemGroup>
         <ProjectReference Include="..\..\Bus\Falcon.Bus.EasyNetQ\Falcon.Bus.EasyNetQ.csproj" />
         <ProjectReference Include="..\..\Logging\Falcon.Logging.Scan\Falcon.Logging.Scan.csproj" />
+        <ProjectReference Include="..\..\Profiles\Falcon.Profiles.Report\Falcon.Profiles.Report.csproj" />
         <ProjectReference Include="..\..\Profiles\Falcon.Profiles.Scan\Falcon.Profiles.Scan.csproj" />
         <ProjectReference Include="..\Falcon.Hosts\Falcon.Hosts.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="tools.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

@@ -14,20 +14,20 @@ namespace Falcon.Tools
         /// Tools holder factory for autofac injections
         /// https://autofaccn.readthedocs.io/en/latest/advanced/delegate-factories.html
         /// </summary>
-        /// <param name="toolType"></param>
-        public delegate ToolsFactory Factory(ToolType toolType);
+        /// <param name="type"></param>
+        public delegate ToolsFactory Factory(ToolType type);
 
-        private readonly ToolType _toolType;
+        private readonly ToolType _type;
         internal List<string> OptionalTools;
         private readonly Lazy<ICollectToolsModel> _collectTools;
         private readonly Lazy<IScanToolsModel> _scanTools;
 
         public ToolsFactory(
-            ToolType toolType,
+            ToolType type,
             Lazy<ICollectToolsModel> collectTools,
             Lazy<IScanToolsModel> scanTools)
         {
-            _toolType = toolType;
+            _type = type;
             _collectTools = collectTools;
             _scanTools = scanTools;
         }
@@ -38,7 +38,7 @@ namespace Falcon.Tools
         /// <returns></returns>
         public IToolsModel MakeTools()
         {
-            switch (_toolType)
+            switch (_type)
             {
                 case ToolType.Scan:
                     return _scanTools.Value.UseOnlyTools(OptionalTools);
