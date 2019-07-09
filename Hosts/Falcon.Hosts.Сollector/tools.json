@@ -3,8 +3,9 @@
     "Toolset": [
       {
         "name": "nmap",
-        "commonTags": "cool tool",
-        "hostTags": "any hosts",
+        "commonTags": "nginx, iis",
+        "frameworkTags": "joomla, wordpress",
+        "hostTags": "windows, linux, ubuntu, centos",
         "info": "nmap",
         "commandLine": "nmap -Pn {0}",
         "versionCommandLine" : "nmap -V",
@@ -15,29 +16,12 @@
   "Scan": {
     "Toolset": [
       {
-        "name": "test1Scan",
-        "commonTags": "testTag1",
-        "hostTags": "testHostTag1",
-        "info": "testInfo1",
-        "commandLine": "testCommandLine1",
-        "versionCommandLine" : "nmap -V",
-        "timeout": "10"
-      },
-      {
-        "name": "test2Scan",
-        "commonTags": "testTag2",
-        "hostTags": "testHostTag2",
-        "info": "testInfo1",
-        "commandLine": "testCommandLine2",
-        "versionCommandLine" : "nmap -V",
-        "timeout": "10"
-      },
-      {
-        "name": "test3Scan",
-        "commonTags": "testTag3",
-        "hostTags": "testHostTag3",
-        "info": "testInfo3",
-        "commandLine": "testCommandLine3",
+        "name": "nmap",
+        "commonTags": "nginx, iis",
+        "frameworkTags": "joomla, wordpress",
+        "hostTags": "windows, linux, ubuntu, centos",
+        "info": "nmap",
+        "commandLine": "nmap -v -A {0}",
         "versionCommandLine" : "nmap -V",
         "timeout": "10"
       }

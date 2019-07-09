@@ -68,22 +68,33 @@ namespace Falcon.Tools
         /// <returns></returns>
         public ToolsFactory MapToolsByTags(Dictionary<TagType, string> tags)
         {
-            if (_optionalTools.Any()) return this;
-
-            var mappedTools = new List<string>();
-
-            foreach (var (key, value) in tags)
+            if (_optionalTools != null && _optionalTools.Any())
             {
-                var mappedTool = _scanTools.Value.Toolset.FirstOrDefault(t => t.FrameworkTags.Contains(value)
-                                                                              || t.ServerTags.Contains(value)
-                                                                              || t.CommonTags.Contains(value))?.Name;
-                if (!string.IsNullOrWhiteSpace(mappedTool))
-                {
-                    mappedTools.Add(mappedTool);
-                }
+                return this;
             }
 
-            _optionalTools = mappedTools;
+            if (tags.Any())
+            {
+                var mappedTools = new List<string>();
+
+                foreach (var (_, value) in tags)
+                {
+                    var mappedTool = _scanTools.Value.Toolset.FirstOrDefault(t => t.FrameworkTags.Contains(value)
+                                                                                  || t.ServerTags.Contains(value)
+                                                                                  || t.CommonTags.Contains(value))
+                        ?.Name;
+                    if (!string.IsNullOrWhiteSpace(mappedTool))
+                    {
+                        mappedTools.Add(mappedTool);
+                    }
+                }
+
+                _optionalTools = mappedTools;
+            }
+            else
+            {
+                _optionalTools = new List<string> { "nmap" };
+            }
 
             return this;
         }
