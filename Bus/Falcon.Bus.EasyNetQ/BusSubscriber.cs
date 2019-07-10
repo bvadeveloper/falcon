@@ -7,6 +7,8 @@ namespace Falcon.Bus.EasyNetQ
     public interface IBusSubscriber
     {
         void Subscribe();
+
+        void Unsubscribe();
     }
 
     public class BusSubscriber : IBusSubscriber
@@ -30,6 +32,11 @@ namespace Falcon.Bus.EasyNetQ
             };
 
             subscriber.SubscribeAsync(Assembly.GetEntryAssembly());
+        }
+
+        public void Unsubscribe()
+        {
+            _bus.Dispose();
         }
     }
 }

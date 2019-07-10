@@ -22,15 +22,16 @@ namespace Falcon.Hosts
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _logger.Information($"Host start '{Assembly.GetEntryAssembly()?.GetName().Name}'");
             _busSubscriber.Subscribe();
+            _logger.Information($"Host started '{Assembly.GetEntryAssembly()?.GetName().Name}'");
 
             return Task.CompletedTask;
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            _logger.Information($"Host stop '{Assembly.GetEntryAssembly()?.GetName().Name}'");
+            _busSubscriber.Unsubscribe();
+            _logger.Information($"Host stopped '{Assembly.GetEntryAssembly()?.GetName().Name}'");
 
             return Task.CompletedTask;
         }

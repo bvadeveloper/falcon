@@ -63,7 +63,7 @@ namespace Falcon.Api
                     builder.RegisterModule<TelegramModule>();
                     builder.RegisterModule<BusModule>();
                     builder.RegisterType<RequestManagementService>().As<IRequestManagementService>();
-                    builder.RegisterType<MessengersHostedService>().As<IHostedService>();
+                    builder.RegisterType<TelegramHostedService>().As<IHostedService>();
                 })
                 .MakeProvider();
         }
