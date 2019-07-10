@@ -1,11 +1,12 @@
 ﻿using System;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Falcon.Api.HostedServices;
 using Falcon.Api.Utils;
 using Falcon.Bus.EasyNetQ.Module;
 using Falcon.Logging.Api.Module;
+using Falcon.Messengers.Telegram.Module;
 using Falcon.Services.RequestManagement;
-using Falcon.Services.Telegram;
 using Falcon.Utils.Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -59,9 +60,10 @@ namespace Falcon.Api
                 {
                     builder.Populate(services);
                     builder.RegisterModule<ApiLoggerModule>();
+                    builder.RegisterModule<TelegramModule>();
                     builder.RegisterModule<BusModule>();
                     builder.RegisterType<RequestManagementService>().As<IRequestManagementService>();
-                    builder.RegisterType<TelegramRequestHostedService>().As<IHostedService>();
+                    builder.RegisterType<MessengersHostedService>().As<IHostedService>();
                 })
                 .MakeProvider();
         }

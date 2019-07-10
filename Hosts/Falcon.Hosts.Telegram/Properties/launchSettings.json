@@ -1,15 +1,16 @@
 {
   "profiles": {
-    "Falcon.Hosts.Data": {
+    "Falcon.Hosts.Telegram": {
       "commandName": "Project",
       "environmentVariables": {
-
         "Bus:Host": "localhost",
         "Bus:Port": "5672",
         "Bus:UserName": "rmquser",
         "Bus:Password": "rmquser",
         "Bus:VirtualHost": "/",
         "Bus:PrefetchCount": "1",
+        
+        "Telegram:ApiKey": "837398039:AAG0puU5FJGP48wV22EkBxSyaVtw6ccXQUE",
         
         "Logging:LogLevel:Microsoft": "Information",
         "Logging:LogLevel:System": "Information",

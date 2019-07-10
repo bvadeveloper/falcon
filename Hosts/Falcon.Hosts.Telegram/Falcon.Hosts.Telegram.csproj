@@ -7,7 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Services\Falcon.Services.Telegram\Falcon.Services.Telegram.csproj" />
       <ProjectReference Include="..\Falcon.Hosts\Falcon.Hosts.csproj" />
     </ItemGroup>
 

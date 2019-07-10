@@ -17,8 +17,8 @@
     <ItemGroup>
       <ProjectReference Include="..\Bus\Falcon.Bus.EasyNetQ\Falcon.Bus.EasyNetQ.csproj" />
       <ProjectReference Include="..\Logging\Falcon.Logging.Api\Falcon.Logging.Api.csproj" />
+      <ProjectReference Include="..\Messengers\Falcon.Messengers.Telegram\Falcon.Messengers.Telegram.csproj" />
       <ProjectReference Include="..\Services\Falcon.Services.RequestManagement\Falcon.Services.RequestManagement.csproj" />
-      <ProjectReference Include="..\Services\Falcon.Services.Telegram\Falcon.Services.Telegram.csproj" />
     </ItemGroup>
 
 </Project>
