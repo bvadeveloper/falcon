@@ -80,6 +80,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Messengers", "Messengers", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Messengers.Telegram", "Messengers\Falcon.Messengers.Telegram\Falcon.Messengers.Telegram.csproj", "{A4906CF8-5264-4DCB-B2EA-EC7998996BF4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Falcon.Profiles.Telegram", "Profiles\Falcon.Profiles.Telegram\Falcon.Profiles.Telegram.csproj", "{7E2167D3-6BF8-4312-B1C3-6C3093ADF5DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -202,6 +204,10 @@ Global
 		{A4906CF8-5264-4DCB-B2EA-EC7998996BF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4906CF8-5264-4DCB-B2EA-EC7998996BF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4906CF8-5264-4DCB-B2EA-EC7998996BF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E2167D3-6BF8-4312-B1C3-6C3093ADF5DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E2167D3-6BF8-4312-B1C3-6C3093ADF5DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E2167D3-6BF8-4312-B1C3-6C3093ADF5DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E2167D3-6BF8-4312-B1C3-6C3093ADF5DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B5CDEE56-AA03-4161-A3D1-EFCAA6AF31A9} = {46AECE87-DBF7-4E62-96B5-91DC61D75641}
@@ -233,5 +239,6 @@ Global
 		{D9AE3512-D6CB-43BB-B6B6-179679F27E8E} = {C9536D0A-71C2-4DE3-B0A7-0AE2ABBF358A}
 		{37D9B55B-3CCA-4EB8-923A-91EEC780ECDC} = {F4DFB76C-B2A4-4F1F-9178-88D66B614F63}
 		{A4906CF8-5264-4DCB-B2EA-EC7998996BF4} = {D157C107-B260-4567-A8A1-464B7DB6DA0E}
+		{7E2167D3-6BF8-4312-B1C3-6C3093ADF5DE} = {C9536D0A-71C2-4DE3-B0A7-0AE2ABBF358A}
 	EndGlobalSection
 EndGlobal

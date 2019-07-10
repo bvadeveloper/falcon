@@ -10,6 +10,7 @@
         <ProjectReference Include="..\..\Bus\Falcon.Bus.EasyNetQ\Falcon.Bus.EasyNetQ.csproj" />
         <ProjectReference Include="..\..\Logging\Falcon.Logging.Report\Falcon.Logging.Report.csproj" />
         <ProjectReference Include="..\..\Profiles\Falcon.Profiles.Report\Falcon.Profiles.Report.csproj" />
+        <ProjectReference Include="..\..\Profiles\Falcon.Profiles.Telegram\Falcon.Profiles.Telegram.csproj" />
         <ProjectReference Include="..\..\Reports\Falcon.Reports\Falcon.Reports.csproj" />
         <ProjectReference Include="..\Falcon.Hosts\Falcon.Hosts.csproj" />
     </ItemGroup>
