@@ -2,7 +2,7 @@
 
 namespace Falcon.Profiles.Report
 {
-    public class ReportProfile : ITargetProfile
+    public class ReportProfile : IReportProfile
     {
         public SessionContext Context { get; set; }
         

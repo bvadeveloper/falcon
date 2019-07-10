@@ -11,4 +11,9 @@ namespace Falcon.Profiles
     {
         List<string> Tools { get; set; }
     }
+
+    public interface IReportProfile : ITargetProfile
+    {
+        List<ReportModel> Reports { get; set; }
+    }
 }

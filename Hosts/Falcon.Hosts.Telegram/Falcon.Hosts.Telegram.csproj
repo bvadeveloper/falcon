@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Messengers\Falcon.Messengers.Telegram\Falcon.Messengers.Telegram.csproj" />
+      <ProjectReference Include="..\..\Profiles\Falcon.Profiles.Telegram\Falcon.Profiles.Telegram.csproj" />
       <ProjectReference Include="..\Falcon.Hosts\Falcon.Hosts.csproj" />
     </ItemGroup>
 
