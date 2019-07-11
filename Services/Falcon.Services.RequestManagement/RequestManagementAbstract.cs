@@ -10,10 +10,9 @@ namespace Falcon.Services.RequestManagement
     {
         private readonly IBus _bus;
         private readonly IJsonLogger _logger;
-        private readonly SessionContext _context;
+        private readonly IContext _context;
 
-        protected RequestManagementAbstract(IBus bus, IJsonLogger<RequestManagementAbstract> logger,
-            SessionContext context)
+        protected RequestManagementAbstract(IBus bus, IJsonLogger<RequestManagementAbstract> logger, IContext context)
         {
             _bus = bus;
             _logger = logger;

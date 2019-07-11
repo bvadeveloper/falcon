@@ -4,7 +4,7 @@ namespace Falcon.Profiles.Report
 {
     public class ReportProfile : IReportProfile
     {
-        public SessionContext Context { get; set; }
+        public IContext Context { get; set; }
         
         public string Target { get; set; }
         

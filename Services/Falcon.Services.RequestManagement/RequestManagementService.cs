@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using EasyNetQ;
 using Falcon.Logging;
 using Falcon.Profiles;
@@ -10,8 +9,11 @@ namespace Falcon.Services.RequestManagement
 {
     public class RequestManagementService : RequestManagementAbstract, IRequestManagementService
     {
-        public RequestManagementService(IBus bus, IJsonLogger<RequestManagementService> logger)
-            : base(bus, logger, new SessionContext { ClientName = "client", SessionId = Guid.NewGuid() }) { }
+        public RequestManagementService(
+            IBus bus,
+            IJsonLogger<RequestManagementService> logger,
+            IContext sessionContext)
+            : base(bus, logger, sessionContext) { }
 
         public Task<Result<string>> IpScanAsync(RequestModel model) =>
             Publish<IpScanProfile>(model);

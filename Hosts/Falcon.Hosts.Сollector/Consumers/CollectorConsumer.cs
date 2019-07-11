@@ -99,7 +99,7 @@ namespace Falcon.Hosts.Сollector.Consumers
             });
         }
 
-        private async Task PublishSaveProfile(ISessionContext profile,
+        private async Task PublishSaveProfile(ISession profile,
             Dictionary<TagType, string> tags)
         {
             await _bus.PublishAsync(new SaveProfile

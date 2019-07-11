@@ -9,6 +9,6 @@ namespace Falcon.Profiles.Collect
 
         public List<string> Tools { get; set; }
 
-        public SessionContext Context { get; set; }
+        public IContext Context { get; set; }
     }
 }

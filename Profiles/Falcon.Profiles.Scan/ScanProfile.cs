@@ -8,6 +8,6 @@ namespace Falcon.Profiles.Scan
 
         public List<string> Tools { get; set; }
 
-        public SessionContext Context { get; set; }
+        public IContext Context { get; set; }
     }
 }

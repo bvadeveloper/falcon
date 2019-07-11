@@ -6,6 +6,7 @@ using Falcon.Api.Utils;
 using Falcon.Bus.EasyNetQ.Module;
 using Falcon.Logging.Api.Module;
 using Falcon.Messengers.Telegram.Module;
+using Falcon.Profiles;
 using Falcon.Services.RequestManagement;
 using Falcon.Utils.Autofac;
 using Microsoft.AspNetCore.Builder;
@@ -64,6 +65,17 @@ namespace Falcon.Api
                     builder.RegisterModule<BusModule>();
                     builder.RegisterType<RequestManagementService>().As<IRequestManagementService>();
                     builder.RegisterType<TelegramHostedService>().As<IHostedService>();
+                    builder.RegisterType<ApiContext>().As<IApiContext>().As<IContext>().OnActivating(args =>
+                    {
+                        args.Instance.ClientName = "noname";
+                        args.Instance.SessionId = Guid.NewGuid();
+                    }).InstancePerLifetimeScope();
+                    builder.RegisterType<MessengerContext>().As<IContext>().As<IMessengerContext>().OnActivating(args =>
+                    {
+                        args.Instance.ClientName = "noname";
+                        args.Instance.SessionId = Guid.NewGuid();
+                        args.Instance.ChatId = default;
+                    }).InstancePerLifetimeScope();
                 })
                 .MakeProvider();
         }

@@ -45,7 +45,7 @@ namespace Falcon.Services.RequestManagement
             return this;
         }
 
-        public Result<TValue> Context(SessionContext context)
+        public Result<TValue> Context(IContext context)
         {
             Session = context.SessionId;
             return this;

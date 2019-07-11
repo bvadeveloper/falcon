@@ -1,9 +1,9 @@
 namespace Falcon.Profiles.Data
 {
-    public class ReadProfile : ISessionContext
+    public class ReadProfile : ISession
     {
         public string Request { get; set; }
 
-        public SessionContext Context { get; set; }
+        public IContext Context { get; set; }
     }
 }

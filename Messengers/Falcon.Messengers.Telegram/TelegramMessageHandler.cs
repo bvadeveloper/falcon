@@ -12,15 +12,18 @@ namespace Falcon.Messengers.Telegram
     {
         private readonly IRequestManagementService _processingService;
         private readonly ITelegramBotClient _botClient;
+        private readonly IMessengerContext _sessionContext;
         private readonly IJsonLogger _logger;
 
         public TelegramMessageHandler(
             IRequestManagementService processingService,
             ITelegramBotClient botClient,
-            IJsonLogger<TelegramMessageHandler> logger)
+            IJsonLogger<TelegramMessageHandler> logger,
+            IMessengerContext sessionContext)
         {
             _processingService = processingService;
             _botClient = botClient;
+            _sessionContext = sessionContext;
             _logger = logger;
         }
 
@@ -46,8 +49,11 @@ namespace Falcon.Messengers.Telegram
 
             await _botClient.SendChatActionAsync(message.Chat.Id, ChatAction.Typing);
 
+            _sessionContext.ChatId = message.Chat.Id;
+            _sessionContext.ClientName = message.Chat.Username;
+
             var result = await _processingService.DomainsVulnerabilityScanAsync(new RequestModel
-                { Targets = new List<string> { "message" } });
+                { Targets = new List<string> { message.Text.Trim() } });
 
             await _botClient.SendTextMessageAsync(message.Chat.Id, result.Value);
         }
