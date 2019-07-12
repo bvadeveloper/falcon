@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EasyNetQ.AutoSubscribe;
@@ -22,7 +24,31 @@ namespace Falcon.Hosts.Telegram.Consumers
             var prof = profile.Context as MessengerContext;
 
             await _botClient.SendChatActionAsync(prof.ChatId, ChatAction.Typing);
-            await _botClient.SendTextMessageAsync(prof.ChatId, profile.Reports.FirstOrDefault().Output);
+
+            foreach (var report in profile.Reports)
+            {
+                foreach (var spl in report.Output.SplitBy(4095))
+                {
+                    await _botClient.SendTextMessageAsync(prof.ChatId, spl);
+                }
+            }
+        }
+    }
+
+    public static class EnumerableEx
+    {
+        public static IEnumerable<string> SplitBy(this string str, int chunkLength)
+        {
+            if (string.IsNullOrEmpty(str)) throw new ArgumentException();
+            if (chunkLength < 1) throw new ArgumentException();
+
+            for (int i = 0; i < str.Length; i += chunkLength)
+            {
+                if (chunkLength + i > str.Length)
+                    chunkLength = str.Length - i;
+
+                yield return str.Substring(i, chunkLength);
+            }
         }
     }
 }

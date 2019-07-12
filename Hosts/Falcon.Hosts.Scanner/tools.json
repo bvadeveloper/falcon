@@ -7,9 +7,9 @@
         "frameworkTags": "joomla, wordpress",
         "hostTags": "windows, linux, ubuntu, centos",
         "info": "nmap",
-        "commandLine": "nmap -Pn {0}",
+        "commandLine": "nmap -sV -A -F {0}",
         "versionCommandLine" : "nmap -V",
-        "timeout": "10"
+        "timeout": "10000"
       }
     ]
   },
@@ -21,9 +21,9 @@
         "frameworkTags": "joomla, wordpress",
         "hostTags": "windows, linux, ubuntu, centos",
         "info": "nmap",
-        "commandLine": "nmap -v -A {0}",
+        "commandLine": "nmap -v -sV -A -Pn -F {0}",
         "versionCommandLine" : "nmap -V",
-        "timeout": "10"
+        "timeout": "10000"
       }
     ]
   }
