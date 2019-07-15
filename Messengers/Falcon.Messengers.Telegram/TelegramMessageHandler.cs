@@ -1,10 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Falcon.Logging;
 using Falcon.Profiles;
 using Falcon.Services.RequestManagement;
 using Telegram.Bot;
 using Telegram.Bot.Args;
+using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace Falcon.Messengers.Telegram
 {
@@ -38,6 +42,18 @@ namespace Falcon.Messengers.Telegram
             botClient.OnReceiveError += Error;
         }
 
+        private InlineKeyboardMarkup MakeReportButtons()
+        {
+            return new InlineKeyboardMarkup(new[]
+            {
+                new[] // first row
+                {
+                    new InlineKeyboardButton { Text = "txt", CallbackData = "txt" },
+                    new InlineKeyboardButton { Text = "pdf", CallbackData = "pdf" },
+                },
+            });
+        }
+
         public async void Message(object sender, MessageEventArgs e)
         {
             var message = e.Message;
@@ -47,15 +63,39 @@ namespace Falcon.Messengers.Telegram
                 return;
             }
 
-            await _botClient.SendChatActionAsync(message.Chat.Id, ChatAction.Typing);
+            var text = message.Text.Trim().Split(' ').First();
 
-            _sessionContext.ChatId = message.Chat.Id;
-            _sessionContext.ClientName = message.Chat.Username;
+            switch (text)
+            {
+                case "/inline":
+                    await _botClient.SendTextMessageAsync(
+                        message.Chat.Id,
+                        "report format",
+                        replyMarkup: MakeReportButtons());
+                    break;
+                default:
+                    await ProcessRequest(text, message.Chat.Id, message.Chat.Username);
+                    break;
+            }
+        }
+
+        private async Task ProcessRequest(string text, long chatId, string userName)
+        {
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                await _botClient.SendTextMessageAsync(chatId, "input not recognized");
+                return;
+            }
+
+            await _botClient.SendChatActionAsync(chatId, ChatAction.Typing);
+
+            _sessionContext.ChatId = chatId;
+            _sessionContext.ClientName = userName;
 
             var result = await _processingService.DomainsVulnerabilityScanAsync(new RequestModel
-                { Targets = new List<string> { message.Text.Trim() } });
+                { Targets = new List<string> { text } });
 
-            await _botClient.SendTextMessageAsync(message.Chat.Id, result.Value);
+            await _botClient.SendTextMessageAsync(chatId, result.Value);
         }
 
         public void Error(object sender, ReceiveErrorEventArgs e)

@@ -45,7 +45,7 @@ namespace Falcon.Tools
         {
             if (optionalTools != null && optionalTools.Any())
             {
-                this.Toolset = this.Toolset.Where(m => optionalTools.Contains(m.Name)).ToList();
+                Toolset = Toolset.Where(m => optionalTools.Contains(m.Name)).ToList();
             }
 
             return this;
