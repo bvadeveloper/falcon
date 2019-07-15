@@ -44,11 +44,11 @@ namespace Falcon.Messengers.Telegram
 
         private InlineKeyboardMarkup MakeReportButtons()
         {
-            return new InlineKeyboardMarkup(new[]
+            return new InlineKeyboardMarkup(new InlineKeyboardButton[][]
             {
                 new[] // first row
                 {
-                    new InlineKeyboardButton { Text = "txt", CallbackData = "txt" },
+                    new InlineKeyboardButton { Text = "text", CallbackData = "text" },
                     new InlineKeyboardButton { Text = "pdf", CallbackData = "pdf" },
                 },
             });
@@ -63,14 +63,14 @@ namespace Falcon.Messengers.Telegram
                 return;
             }
 
-            var text = message.Text.Trim().Split(' ').First();
+            var text = message.Text.Trim().Split(' ').FirstOrDefault();
 
             switch (text)
             {
                 case "/inline":
                     await _botClient.SendTextMessageAsync(
                         message.Chat.Id,
-                        "report format",
+                        "report format?",
                         replyMarkup: MakeReportButtons());
                     break;
                 default:
@@ -105,27 +105,27 @@ namespace Falcon.Messengers.Telegram
 
         public void Edit(object sender, MessageEventArgs e)
         {
-            _logger.Information($"Received: {e.Message.Caption}");
+            _logger.Information($"Received: Edit");
         }
 
         public void Callback(object sender, CallbackQueryEventArgs e)
         {
-            _logger.Information($"Received: {e.CallbackQuery.Message.Caption}");
+            _logger.Information($"Received: Callback");
         }
 
         public void Inline(object sender, InlineQueryEventArgs e)
         {
-            _logger.Information($"Received: {e.InlineQuery.Query}");
+            _logger.Information($"Received: Inline");
         }
 
         public void InlineResult(object sender, ChosenInlineResultEventArgs e)
         {
-            _logger.Information($"Received: {e.ChosenInlineResult.Query}");
+            _logger.Information($"Received: InlineResult");
         }
 
         public void Update(object sender, UpdateEventArgs e)
         {
-            _logger.Information($"Received: {e.Update.Message.Caption}");
+            _logger.Information($"Received: Update");
         }
     }
 }
