@@ -5,7 +5,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Tools\Falcon.Tools\Falcon.Tools.csproj" />
       <ProjectReference Include="..\Falcon.Profiles\Falcon.Profiles.csproj" />
     </ItemGroup>
 

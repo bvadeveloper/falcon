@@ -1,5 +1,4 @@
 using System;
-using Falcon.Reports;
 
 namespace Falcon.Profiles
 {

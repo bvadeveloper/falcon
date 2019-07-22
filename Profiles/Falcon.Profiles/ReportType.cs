@@ -1,4 +1,4 @@
-namespace Falcon.Reports
+namespace Falcon.Profiles
 {
     public enum ReportType
     {
