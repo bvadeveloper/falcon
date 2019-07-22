@@ -4,4 +4,8 @@
         <TargetFramework>netcoreapp2.2</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\Reports\Falcon.Reports\Falcon.Reports.csproj" />
+    </ItemGroup>
+
 </Project>

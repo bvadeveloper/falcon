@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Falcon.Data.Redis;
 using Falcon.Logging;
 using Falcon.Profiles;
+using Falcon.Reports;
 using Falcon.Services.RequestManagement;
 using Telegram.Bot;
 using Telegram.Bot.Args;
@@ -17,17 +20,23 @@ namespace Falcon.Messengers.Telegram
         private readonly IRequestManagementService _processingService;
         private readonly ITelegramBotClient _botClient;
         private readonly IMessengerContext _sessionContext;
+        private readonly ICacheService _cacheService;
         private readonly IJsonLogger _logger;
+
+        private readonly TimeSpan _ttl = TimeSpan.FromHours(24);
+        private static string MakeTelegramReportKey(long key) => $"telegram:report:{key}";
 
         public TelegramMessageHandler(
             IRequestManagementService processingService,
             ITelegramBotClient botClient,
             IJsonLogger<TelegramMessageHandler> logger,
-            IMessengerContext sessionContext)
+            IMessengerContext sessionContext,
+            ICacheService cacheService)
         {
             _processingService = processingService;
             _botClient = botClient;
             _sessionContext = sessionContext;
+            _cacheService = cacheService;
             _logger = logger;
         }
 
@@ -63,7 +72,10 @@ namespace Falcon.Messengers.Telegram
                 return;
             }
 
-            var text = message.Text.Trim().Split(' ').FirstOrDefault();
+
+            var commands = message.Text.Trim().Split(' ');
+            var reportType = await GetReportType(commands, message);
+            var text = commands.FirstOrDefault();
 
             switch (text)
             {
@@ -74,12 +86,28 @@ namespace Falcon.Messengers.Telegram
                         replyMarkup: MakeReportButtons());
                     break;
                 default:
-                    await ProcessRequest(text, message.Chat.Id, message.Chat.Username);
+                    await ProcessRequest(text, message.Chat.Id, message.Chat.Username, reportType);
                     break;
             }
         }
 
-        private async Task ProcessRequest(string text, long chatId, string userName)
+        private async Task<ReportType> GetReportType(IReadOnlyList<string> commands, Message message)
+        {
+            ReportType reportType;
+
+            if (commands.Count == 2)
+            {
+                Enum.TryParse(commands[1], true, out reportType);
+            }
+            else
+            {
+                reportType = await _cacheService.GetValueAsync<ReportType>(MakeTelegramReportKey(message.Chat.Id));
+            }
+
+            return reportType;
+        }
+
+        private async Task ProcessRequest(string text, long chatId, string userName, ReportType reportType)
         {
             if (string.IsNullOrWhiteSpace(text))
             {
@@ -91,6 +119,7 @@ namespace Falcon.Messengers.Telegram
 
             _sessionContext.ChatId = chatId;
             _sessionContext.ClientName = userName;
+            _sessionContext.ReportType = reportType;
 
             var result = await _processingService.DomainsVulnerabilityScanAsync(new RequestModel
                 { Targets = new List<string> { text } });
@@ -108,8 +137,15 @@ namespace Falcon.Messengers.Telegram
             _logger.Information($"Received: Edit");
         }
 
-        public void Callback(object sender, CallbackQueryEventArgs e)
+        public async void Callback(object sender, CallbackQueryEventArgs e)
         {
+            if (Enum.TryParse<ReportType>(e.CallbackQuery.Data, true, out var reportType))
+            {
+                await _cacheService.SetValueAsync(MakeTelegramReportKey(e.CallbackQuery.Message.Chat.Id),
+                    reportType,
+                    _ttl);
+            }
+
             _logger.Information($"Received: Callback");
         }
 

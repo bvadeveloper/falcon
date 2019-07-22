@@ -5,7 +5,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\Data\Falcon.Data.Redis\Falcon.Data.Redis.csproj" />
         <ProjectReference Include="..\..\Logging\Falcon.Logging\Falcon.Logging.csproj" />
+        <ProjectReference Include="..\..\Reports\Falcon.Reports\Falcon.Reports.csproj" />
         <ProjectReference Include="..\..\Services\Falcon.Services.RequestManagement\Falcon.Services.RequestManagement.csproj" />
         <ProjectReference Include="..\..\Utils\Falcon.Utils.Autofac\Falcon.Utils.Autofac.csproj" />
     </ItemGroup>

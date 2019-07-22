@@ -1,4 +1,5 @@
 using System;
+using Falcon.Reports;
 
 namespace Falcon.Profiles
 {
@@ -26,11 +27,15 @@ namespace Falcon.Profiles
     public interface IMessengerContext : IContext
     {
         long ChatId { get; set; }
+
+        ReportType ReportType { get; set; }
     }
 
     public class MessengerContext : IMessengerContext
     {
         public long ChatId { get; set; }
+
+        public ReportType ReportType { get; set; }
 
         public Guid SessionId { get; set; }
 
