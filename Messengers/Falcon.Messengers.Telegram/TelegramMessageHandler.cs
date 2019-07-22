@@ -72,7 +72,6 @@ namespace Falcon.Messengers.Telegram
                 return;
             }
 
-
             var commands = message.Text.Trim().Split(' ');
             var reportType = await GetReportType(commands, message);
             var text = commands.FirstOrDefault();
@@ -144,6 +143,8 @@ namespace Falcon.Messengers.Telegram
                 await _cacheService.SetValueAsync(MakeTelegramReportKey(e.CallbackQuery.Message.Chat.Id),
                     reportType,
                     _ttl);
+                
+                await _botClient.SendTextMessageAsync(e.CallbackQuery.Message.Chat.Id, "done");
             }
 
             _logger.Information($"Received: Callback");
