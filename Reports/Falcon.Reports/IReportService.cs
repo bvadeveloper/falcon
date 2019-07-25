@@ -6,6 +6,8 @@ namespace Falcon.Reports
 {
     public interface IReportService
     {
-        Task<byte[]> MakeReportAsync(ReportType type, string fileName, List<ReportModel> reportModels);
+        Task<(string, byte[])> MakeFileReportAsync(string target, List<ReportModel> models);
+
+        Task<string> MakeTextReportAsync(string target, List<ReportModel> models);
     }
 }

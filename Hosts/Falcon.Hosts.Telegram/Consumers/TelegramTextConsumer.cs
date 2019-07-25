@@ -5,7 +5,6 @@ using EasyNetQ.AutoSubscribe;
 using Falcon.Logging;
 using Falcon.Profiles;
 using Falcon.Profiles.Telegram;
-using Falcon.Reports;
 using Telegram.Bot;
 using Telegram.Bot.Types.Enums;
 
@@ -40,25 +39,22 @@ namespace Falcon.Hosts.Telegram.Consumers
             }
 
             await _botClient.SendChatActionAsync(context.ChatId, ChatAction.Typing);
-            await SendTextAsync(context.ChatId, profile.Reports);
+            await SendTextAsync(context.ChatId, profile.ReportText);
         }
 
         /// <summary>
         /// Send text to chat
         /// </summary>
-        private async Task SendTextAsync(long chatId, IEnumerable<ReportModel> reports)
+        private async Task SendTextAsync(long chatId, string report)
         {
-            foreach (var report in reports)
+            foreach (var spl in report.SplitBy(MessageLength))
             {
-                foreach (var spl in report.Output.SplitBy(MessageLength))
-                {
-                    await _botClient.SendTextMessageAsync(chatId, spl);
-                }
+                await _botClient.SendTextMessageAsync(chatId, spl);
             }
         }
     }
 
-    public static class EnumerableExtension
+    public static class StringExtension
     {
         /// <summary>
         /// Split string by chunk length

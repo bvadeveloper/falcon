@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using EasyNetQ;
 using EasyNetQ.AutoSubscribe;
@@ -29,46 +28,42 @@ namespace Falcon.Hosts.Report.Consumers
 
         public async Task ConsumeAsync(ReportProfile profile)
         {
-            _logger.Trace("Process report profile", profile);
-
             switch (profile.Context)
             {
                 case ApiContext apiContext:
                     throw new NotImplementedException(nameof(profile.Context));
                     break;
+
                 case MessengerContext messengerContext:
                     await PublishTelegramProfile(profile, messengerContext);
                     break;
+
                 default:
                     throw new ArgumentException(nameof(profile.Context));
             }
         }
 
-        private async Task PublishTelegramProfile(ReportProfile profile, MessengerContext context)
+        private async Task PublishTelegramProfile(IReportProfile profile, IMessengerContext context)
         {
             switch (context.ReportType)
             {
                 case ReportType.Text:
-                    await SendTextReportAsync(profile);
+                    var reportText = await _reportService.MakeTextReportAsync(profile.Target, profile.Reports);
+                    await SendTextReportAsync(profile, reportText);
                     break;
-                case ReportType.Pdf:
-                    var (fileName, reportBytes) = await MakePdfFileAsync(profile.Target, profile.Reports);
-                    await SendPdfReportAsync(profile, fileName, reportBytes);
+
+                case ReportType.File:
+                    var (fileName, reportBytes) =
+                        await _reportService.MakeFileReportAsync(profile.Target, profile.Reports);
+                    await SendFileReportAsync(profile, fileName, reportBytes);
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-        private async Task<(string, byte[])> MakePdfFileAsync(string target, List<ReportModel> models)
-        {
-            var fileName = $"{target}_report_{DateTime.UtcNow:yyMMddHHmm}.pdf";
-            var report = await _reportService.MakeReportAsync(ReportType.Pdf, fileName, models);
-
-            return (fileName, report);
-        }
-
-        private async Task SendPdfReportAsync(ReportProfile profile, string fileName, byte[] reportBytes)
+        private async Task SendFileReportAsync(ITargetProfile profile, string fileName, byte[] reportBytes)
         {
             await _bus.PublishAsync(new TelegramFileProfile
             {
@@ -79,13 +74,13 @@ namespace Falcon.Hosts.Report.Consumers
             });
         }
 
-        private async Task SendTextReportAsync(IReportProfile profile)
+        private async Task SendTextReportAsync(ITargetProfile profile, string reportText)
         {
             await _bus.PublishAsync(new TelegramTextProfile
             {
                 Context = profile.Context,
                 Target = profile.Target,
-                Reports = profile.Reports,
+                ReportText = reportText
             });
         }
     }

@@ -58,7 +58,7 @@ namespace Falcon.Messengers.Telegram
                 new[] // first row
                 {
                     new InlineKeyboardButton { Text = "text", CallbackData = "text" },
-                    new InlineKeyboardButton { Text = "pdf", CallbackData = "pdf" },
+                    new InlineKeyboardButton { Text = "file", CallbackData = "file" },
                 },
             });
         }

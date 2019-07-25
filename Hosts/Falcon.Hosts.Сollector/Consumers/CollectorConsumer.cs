@@ -57,7 +57,7 @@ namespace Falcon.Hosts.Сollector.Consumers
                 await PublishSaveProfile(profile, tags);
 
                 // 4. send target tags to the report host to send to clients
-                await PublishReportProfile(profile, collectReports);
+              //  await PublishReportProfile(profile, collectReports);
             }
             else
             {
@@ -82,7 +82,7 @@ namespace Falcon.Hosts.Сollector.Consumers
                     await PublishSaveProfile(profile, tags);
 
                     // 4. send target tags to the report host to send to clients
-                    await PublishReportProfile(profile, collectReports);
+                  //  await PublishReportProfile(profile, collectReports);
                 }
             }
         }

@@ -11,7 +11,10 @@ namespace Falcon.Profiles.Telegram
         public List<ReportModel> Reports { get; set; }
     }
 
-    public class TelegramTextProfile : TelegramProfile { }
+    public class TelegramTextProfile : TelegramProfile
+    {
+        public string ReportText { get; set; }
+    }
 
     public class TelegramFileProfile : TelegramProfile
     {
