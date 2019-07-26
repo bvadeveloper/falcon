@@ -20,7 +20,7 @@
         "CacheRedis:ClientName": "RE",
         "CacheRedis:TimeoutSeconds": "120",
 
-        "Telegram:ApiKey": "837398039:AAG0puU5FJGP48wV22EkBxSyaVtw6ccXQUE"
+        "Telegram:ApiKey": "1234567890"
       },
       "applicationUrl": "http://localhost:7890"
     }

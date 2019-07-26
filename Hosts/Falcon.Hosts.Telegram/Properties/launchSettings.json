@@ -10,7 +10,7 @@
         "Bus:VirtualHost": "/",
         "Bus:PrefetchCount": "1",
         
-        "Telegram:ApiKey": "837398039:AAG0puU5FJGP48wV22EkBxSyaVtw6ccXQUE",
+        "Telegram:ApiKey": "1234567890",
         
         "Logging:LogLevel:Microsoft": "Information",
         "Logging:LogLevel:System": "Information",
