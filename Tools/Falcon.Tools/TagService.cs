@@ -21,19 +21,19 @@ namespace Falcon.Tools
             switch (tag)
             {
                 case TagType.Framework:
-                    _tagKeyWords = new List<string> { "joomla, wordpress" };
+                    _tagKeyWords = new List<string> { "joomla", "wordpress" };
                     break;
                 case TagType.WebServer:
-                    _tagKeyWords = new List<string> { "nginx, iis, kestrel, tomkat" };
+                    _tagKeyWords = new List<string> { "nginx", "iis", "kestrel", "tomcat", "apache" };
                     break;
                 case TagType.Database:
-                    _tagKeyWords = new List<string> { "mysql, mssql, postgres" };
+                    _tagKeyWords = new List<string> { "mysql", "mssql", "postgres" };
                     break;
                 case TagType.Ports:
-                    _tagKeyWords = new List<string> { "80, 443, 15672, 5672, 6379" };
+                    _tagKeyWords = new List<string> { "80", "443", "15672", "5672", "6379", "3306" };
                     break;
                 case TagType.Server:
-                    _tagKeyWords = new List<string> { "linux, windows, ubuntu, fedora, redhat. centos" };
+                    _tagKeyWords = new List<string> { "linux", "windows", "ubuntu", "fedora", "redhat", "centos", "redhat" };
                     break;
                 case TagType.NotAvailable:
                     _tagKeyWords = new List<string> { "Nmap done: 0 IP addresses (0 hosts up)" };

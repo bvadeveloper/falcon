@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
@@ -26,7 +27,8 @@ namespace Falcon.Hosts
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureAppConfiguration((context, configurationBuilder) =>
                 {
-                    configurationBuilder.SetBasePath(Directory.GetCurrentDirectory())
+                    configurationBuilder
+                        .SetBasePath(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName)
                         .AddJsonFile("tools.json", optional: false, reloadOnChange: true);
 
                     configurationBuilder.AddEnvironmentVariables();

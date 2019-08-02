@@ -71,8 +71,7 @@ namespace Falcon.Tools
                 return _toolsModel.UseOnlyTools(mappedTools);
             }
 
-            // use default tool
-            return _toolsModel.UseOnlyTools(new List<string> { "nmap" }); // for debug
+            return _toolsModel;
         }
     }
 }
