@@ -22,9 +22,10 @@ namespace Falcon.Hosts.Scanner.Consumers
 
         private readonly TimeSpan _ttl = TimeSpan.FromHours(1);
 
-        private static string MakeScanReportKey(string name) => $"scan:{name}";
+        private static string MakeReportKey(string name) => $"scan:{name}";
 
-        public ScanConsumer(IBus bus,
+        public ScanConsumer(
+            IBus bus,
             ToolsFactory.Factory toolsFactory,
             ICacheService cacheService,
             IJsonLogger<ScanConsumer> logger)
@@ -37,8 +38,8 @@ namespace Falcon.Hosts.Scanner.Consumers
 
         public async Task ConsumeAsync(DomainScanProfile profile)
         {
-            var reports = await ScanTargetByProfile(profile);
-            await PublishReportProfile(profile, reports);
+            var result = await ScanTargetAsync(profile);
+            await PublishReportProfile(profile, result);
         }
 
         private async Task PublishReportProfile(ITargetProfile profile, List<ReportModel> scanReports)
@@ -51,31 +52,30 @@ namespace Falcon.Hosts.Scanner.Consumers
             });
         }
 
-        private async Task<List<ReportModel>> ScanTargetByProfile(DomainScanProfile profile)
+        private async Task<List<ReportModel>> ScanTargetAsync(DomainScanProfile profile)
         {
-            var scanReportsCache =
-                await _cacheService.GetValueAsync<List<ReportModel>>(MakeScanReportKey(profile.Target));
+            var reports = await _cacheService.GetValueAsync<List<ReportModel>>(MakeReportKey(profile.Target));
 
-            if (scanReportsCache == null)
+            if (reports == null)
             {
                 var outputs = await _toolsFactory(ToolType.Scan)
-                    .UseTools(profile.Tools, profile.Tags) // map tool from tags if empty or use from profile
+                    .UseToolsByTags(profile.Tags) // map tool from tags if empty or use from profile
                     .RunToolsAsync(profile.Target);
 
                 _logger.LogOutputs(outputs);
 
-                var scanReports = outputs
-                    .GetSuccessful()
+                reports = outputs
+                    .SelectSuccessful()
                     .Select(f => new ReportModel
-                        { ToolName = f.ToolName, Output = f.Output, ProcessingDate = DateTime.UtcNow })
+                        {ToolName = f.ToolName, Output = f.Output, ProcessingDate = DateTime.UtcNow})
                     .ToList();
 
-                await _cacheService.SetValueAsync(MakeScanReportKey(profile.Target), scanReports, _ttl);
+                await _cacheService.SetValueAsync(MakeReportKey(profile.Target), reports, _ttl);
 
-                return scanReports;
+                return reports;
             }
 
-            return scanReportsCache;
+            return reports;
         }
     }
 }

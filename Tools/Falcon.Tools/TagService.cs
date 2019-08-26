@@ -51,7 +51,7 @@ namespace Falcon.Tools
                     return keyWord;
             }
 
-            return null;
+            return default;
         }
     }
 
@@ -66,7 +66,7 @@ namespace Falcon.Tools
             foreach (var tagType in (TagType[]) Enum.GetValues(typeof(TagType)))
             {
                 var tag = tagFactory(tagType).Find(output);
-                if (tag == null) continue;
+                if (tag == default) continue;
                 tags.Add(tagType, tag);
             }
 

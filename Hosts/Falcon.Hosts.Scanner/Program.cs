@@ -9,6 +9,6 @@ namespace Falcon.Hosts.Scanner
 {
     internal static class Program
     {
-        private static async Task Main() => await Host.Init();
+        private static Task Main() => Host.Init();
     }
 }

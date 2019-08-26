@@ -38,20 +38,30 @@ namespace Falcon.Tools
             }
         }
 
+        public IToolsModel UseTools() => _toolsModel;
+
         /// <summary>
         /// Use optional tools from request
         /// </summary>
-        /// <param name="profileTags"></param>
         /// <param name="optionalTools"></param>
         /// <returns></returns>
-        public IToolsModel UseTools(List<string> optionalTools, Dictionary<TagType, string> profileTags = default)
+        public IToolsModel UseOptionalTools(List<string> optionalTools)
         {
-            // use optional tools from request
             if (optionalTools != default && optionalTools.Any())
             {
-                return _toolsModel.UseOnlyTools(optionalTools);
+                return _toolsModel.UseOnly(optionalTools);
             }
 
+            return default;
+        }
+
+        /// <summary>
+        /// Use tools by target tags
+        /// </summary>
+        /// <param name="profileTags"></param>
+        /// <returns></returns>
+        public IToolsModel UseToolsByTags(Dictionary<TagType, string> profileTags = default)
+        {
             // try to map tools from tags
             if (profileTags != default && profileTags.Any())
             {
@@ -68,7 +78,7 @@ namespace Falcon.Tools
                     }
                 }
 
-                return _toolsModel.UseOnlyTools(mappedTools);
+                return _toolsModel.UseOnly(mappedTools);
             }
 
             return _toolsModel;

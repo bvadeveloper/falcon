@@ -2,7 +2,7 @@ namespace Falcon.Profiles
 {
     public enum ReportType
     {
-        Text,
-        File
+        File,
+        Text
     }
 }

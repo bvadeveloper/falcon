@@ -4,8 +4,6 @@ using Autofac.Extensions.DependencyInjection;
 using Falcon.Api.HostedServices;
 using Falcon.Api.Utils;
 using Falcon.Bus.EasyNetQ.Module;
-using Falcon.Data.Redis;
-using Falcon.Data.Redis.Module;
 using Falcon.Logging.Api.Module;
 using Falcon.Messengers.Telegram.Module;
 using Falcon.Profiles;
@@ -65,7 +63,6 @@ namespace Falcon.Api
                     builder.RegisterModule<ApiLoggerModule>();
                     builder.RegisterModule<TelegramModule>();
                     builder.RegisterModule<BusModule>();
-                    builder.RegisterModule<RedisModule>();
                     builder.RegisterType<RequestManagementService>().As<IRequestManagementService>();
                     builder.RegisterType<TelegramHostedService>().As<IHostedService>();
                     builder.RegisterType<ApiContext>().As<IApiContext>().As<IContext>().OnActivating(args =>

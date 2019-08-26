@@ -8,9 +8,7 @@ namespace Falcon.Tools
     {
         public static void LogOutputs(this IJsonLogger logger, IEnumerable<OutputModel> models)
         {
-            var outputModels = models.ToList();
-
-            foreach (var model in outputModels)
+            foreach (var model in models)
             {
                 if (model.Successful)
                 {
@@ -32,13 +30,10 @@ namespace Falcon.Tools
         /// </summary>
         /// <param name="models"></param>
         /// <returns></returns>
-        public static List<OutputModel> GetSuccessful(
-            this IEnumerable<OutputModel> models)
-        {
-            return models
+        public static IEnumerable<OutputModel> SelectSuccessful(
+            this IEnumerable<OutputModel> models) =>
+            models
                 .AsParallel()
-                .Where(f => f.Successful)
-                .ToList();
-        }
+                .Where(f => f.Successful);
     }
 }

@@ -28,7 +28,7 @@ namespace Falcon.Api.HostedServices
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _telegramMessageHandler.SubscribeOnBot(_botClient);
+            _telegramMessageHandler.Subscribe(_botClient);
             _botClient.StartReceiving(Array.Empty<UpdateType>(), cancellationToken);
             _logger.Information($"Messenger host started");
 

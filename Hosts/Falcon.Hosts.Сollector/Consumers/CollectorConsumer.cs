@@ -25,9 +25,7 @@ namespace Falcon.Hosts.Сollector.Consumers
 
         private readonly TimeSpan _ttl = TimeSpan.FromHours(1);
 
-        private static string MakeTagKey(string name) => $"tags:{name}";
-
-        private static string MakeCollectReportKey(string name) => $"collect:{name}";
+        private static string MakeReportKey(string name) => $"collect:{name}";
 
         public CollectorConsumer(
             IBus bus,
@@ -49,20 +47,11 @@ namespace Falcon.Hosts.Сollector.Consumers
             {
                 // 1. send scan profile to scanners
                 await PublishScanProfile(profile);
-
-                // 2. start collect tools, fill target tags
-                var (collectReports, tags) = await CollectInfoByProfile(profile);
-
-                // 3. send request to save target tags to DB
-                await PublishSaveProfile(profile, tags);
-
-                // 4. send target tags to the report host to send to clients
-              //  await PublishReportProfile(profile, collectReports);
             }
             else
             {
                 // 1. start collect tools, fill target tags
-                var (collectReports, tags) = await CollectInfoByProfile(profile);
+                var (collectReports, tags) = await CollectTagsAsync(profile);
 
                 if (tags.ContainsKey(TagType.NotAvailable))
                 {
@@ -79,10 +68,7 @@ namespace Falcon.Hosts.Сollector.Consumers
                     await PublishScanProfile(profile, tags);
 
                     // 3. send request to save target tags to DB
-                    await PublishSaveProfile(profile, tags);
-
-                    // 4. send target tags to the report host to send to clients
-                  //  await PublishReportProfile(profile, collectReports);
+                    // await PublishSaveProfile(profile, tags);
                 }
             }
         }
@@ -120,42 +106,28 @@ namespace Falcon.Hosts.Сollector.Consumers
             });
         }
 
-        private async Task<(List<ReportModel>, Dictionary<TagType, string>)> CollectInfoByProfile(
-            DomainCollectProfile profile)
+        private async Task<(List<ReportModel>, Dictionary<TagType, string>)> CollectTagsAsync(DomainCollectProfile profile)
         {
-            var collectReportsCache =
-                await _cacheService.GetValueAsync<List<ReportModel>>(MakeCollectReportKey(profile.Target));
+            var reports = await _cacheService.GetValueAsync<List<ReportModel>>(MakeReportKey(profile.Target));
 
-            if (collectReportsCache == null)
+            if (reports == null)
             {
                 var outputs = await _toolsFactory(ToolType.Collect)
-                    .UseTools(profile.Tools)
+                    .UseTools()
                     .RunToolsAsync(profile.Target);
 
                 _logger.LogOutputs(outputs);
 
-                var collectReports = outputs
-                    .GetSuccessful()
-                    .Select(f => new ReportModel
-                        { ToolName = f.ToolName, Output = f.Output, ProcessingDate = DateTime.UtcNow })
+                reports = outputs.SelectSuccessful()
+                    .Select(f => new ReportModel {ToolName = f.ToolName, Output = f.Output, ProcessingDate = DateTime.UtcNow})
                     .ToList();
 
-                var tags = await GetTags(profile.Target, collectReports);
+                await _cacheService.SetValueAsync(MakeReportKey(profile.Target), reports, _ttl);
 
-                await _cacheService.SetValueAsync(MakeTagKey(profile.Target), tags, _ttl);
-                await _cacheService.SetValueAsync(MakeCollectReportKey(profile.Target), collectReports, _ttl);
-
-                return (collectReports, tags);
+                return (reports, _tagService.FindTags(reports));
             }
 
-            return (collectReportsCache, await GetTags(profile.Target, collectReportsCache));
-        }
-
-        private async Task<Dictionary<TagType, string>> GetTags(string target,
-            IEnumerable<ReportModel> collectReportsCache)
-        {
-            return await _cacheService.GetValueAsync<Dictionary<TagType, string>>(MakeTagKey(target)) ??
-                   _tagService.FindTags(collectReportsCache);
+            return (reports, _tagService.FindTags(reports));
         }
     }
 }

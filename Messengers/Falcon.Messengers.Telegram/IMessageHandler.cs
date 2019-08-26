@@ -5,7 +5,7 @@ namespace Falcon.Messengers.Telegram
 {
     public interface IMessageHandler
     {
-        void SubscribeOnBot(ITelegramBotClient botClient);
+        void Subscribe(ITelegramBotClient botClient);
 
         void Message(object sender, MessageEventArgs e);
 

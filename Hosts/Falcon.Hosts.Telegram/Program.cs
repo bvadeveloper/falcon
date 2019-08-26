@@ -6,9 +6,6 @@ namespace Falcon.Hosts.Telegram
 {
     internal static class Program
     {
-        private static async Task Main() => await Host.InitBasic(builder =>
-        {
-            builder.RegisterModule<TelegramModule>();
-        });
+        private static Task Main() => Host.InitBasic(builder => builder.RegisterModule<TelegramModule>());
     }
 }

@@ -21,24 +21,21 @@ namespace Falcon.Api.Controllers
         [HttpPost("ip")]
         [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
         [ProducesResponseType((int) HttpStatusCode.InternalServerError)]
-        public async Task<Result<string>> ScanIp([FromBody] RequestModel model) =>
-            await _processingService.IpScanAsync(model);
+        public Task<Result<string>> ScanIp([FromBody] RequestModel model) =>
+            _processingService.IpScanAsync(model);
 
         // POST api/scan/domains
         [HttpPost("domains")]
         [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
         [ProducesResponseType((int) HttpStatusCode.InternalServerError)]
-        public async Task<Result<string>> ScanDomains([FromBody] RequestModel model) =>
-            await _processingService.DomainsVulnerabilityScanAsync(model);
+        public Task<Result<string>> ScanDomains([FromBody] RequestModel model) =>
+            _processingService.DomainsVulnerabilityScanAsync(model);
 
         // POST api/scan/emails
         [HttpPost("emails")]
         [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
         [ProducesResponseType((int) HttpStatusCode.InternalServerError)]
-        public async Task<Result<string>> ScanEmails([FromBody] RequestModel model) =>
-            await _processingService.MailboxLeakCheckAsync(model);
-
-        
-        
+        public Task<Result<string>> ScanEmails([FromBody] RequestModel model) =>
+            _processingService.MailboxLeakCheckAsync(model);
     }
 }

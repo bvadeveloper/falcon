@@ -41,7 +41,7 @@ namespace Falcon.Tools
             return results.Select(r => r.MakeOutput()).ToList();
         }
 
-        public IScanToolsModel UseOnlyTools(List<string> optionalTools)
+        public IScanToolsModel UseOnly(List<string> optionalTools)
         {
             if (optionalTools != null && optionalTools.Any())
             {

@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Falcon.Data.Redis;
 using Falcon.Logging;
 using Falcon.Profiles;
-using Falcon.Reports;
 using Falcon.Services.RequestManagement;
 using Telegram.Bot;
 using Telegram.Bot.Args;
-using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
-using Telegram.Bot.Types.ReplyMarkups;
 
 namespace Falcon.Messengers.Telegram
 {
@@ -20,27 +14,22 @@ namespace Falcon.Messengers.Telegram
         private readonly IRequestManagementService _processingService;
         private readonly ITelegramBotClient _botClient;
         private readonly IMessengerContext _sessionContext;
-        private readonly ICacheService _cacheService;
         private readonly IJsonLogger _logger;
 
-        private readonly TimeSpan _ttl = TimeSpan.FromHours(24);
-        private static string MakeTelegramReportKey(long key) => $"telegram:report:{key}";
 
         public TelegramMessageHandler(
             IRequestManagementService processingService,
             ITelegramBotClient botClient,
             IJsonLogger<TelegramMessageHandler> logger,
-            IMessengerContext sessionContext,
-            ICacheService cacheService)
+            IMessengerContext sessionContext)
         {
             _processingService = processingService;
             _botClient = botClient;
             _sessionContext = sessionContext;
-            _cacheService = cacheService;
             _logger = logger;
         }
 
-        public void SubscribeOnBot(ITelegramBotClient botClient)
+        public void Subscribe(ITelegramBotClient botClient)
         {
             botClient.OnMessage += Message;
             botClient.OnUpdate += Update;
@@ -51,79 +40,36 @@ namespace Falcon.Messengers.Telegram
             botClient.OnReceiveError += Error;
         }
 
-        private InlineKeyboardMarkup MakeReportButtons()
-        {
-            return new InlineKeyboardMarkup(new InlineKeyboardButton[][]
-            {
-                new[] // first row
-                {
-                    new InlineKeyboardButton { Text = "text", CallbackData = "text" },
-                    new InlineKeyboardButton { Text = "file", CallbackData = "file" },
-                },
-            });
-        }
-
         public async void Message(object sender, MessageEventArgs e)
         {
             var message = e.Message;
 
-            if (message == null || message.Type != MessageType.Text)
+            if (message.Type == MessageType.Text)
             {
-                return;
-            }
+                var targets = message.Text.Trim().Split(Environment.NewLine).Where(d => !string.IsNullOrWhiteSpace(d)).ToList();
 
-            var commands = message.Text.Trim().Split(' ');
-            var reportType = await GetReportType(commands, message);
-            var text = commands.FirstOrDefault();
-
-            switch (text)
-            {
-                case "/inline":
-                    await _botClient.SendTextMessageAsync(
-                        message.Chat.Id,
-                        "report format?",
-                        replyMarkup: MakeReportButtons());
-                    break;
-                default:
-                    await ProcessRequest(text, message.Chat.Id, message.Chat.Username, reportType);
-                    break;
-            }
-        }
-
-        private async Task<ReportType> GetReportType(IReadOnlyList<string> commands, Message message)
-        {
-            ReportType reportType;
-
-            if (commands.Count == 2)
-            {
-                Enum.TryParse(commands[1], true, out reportType);
+                if (targets.Any())
+                {
+                    SetSessionContext(message.Chat.Id, message.Chat.Username);
+                    var confirmation = await _processingService.DomainsVulnerabilityScanAsync(new RequestModel {Targets = targets});
+                    await _botClient.SendTextMessageAsync(message.Chat.Id, confirmation.Value);
+                }
+                else
+                {
+                    await _botClient.SendTextMessageAsync(message.Chat.Id, "input not recognized");
+                }
             }
             else
             {
-                reportType = await _cacheService.GetValueAsync<ReportType>(MakeTelegramReportKey(message.Chat.Id));
+                await _botClient.SendTextMessageAsync(message.Chat.Id, "text only dude");
             }
-
-            return reportType;
         }
 
-        private async Task ProcessRequest(string text, long chatId, string userName, ReportType reportType)
+        private void SetSessionContext(long chatId, string chatUsername)
         {
-            if (string.IsNullOrWhiteSpace(text))
-            {
-                await _botClient.SendTextMessageAsync(chatId, "input not recognized");
-                return;
-            }
-
-            await _botClient.SendChatActionAsync(chatId, ChatAction.Typing);
-
             _sessionContext.ChatId = chatId;
-            _sessionContext.ClientName = userName;
-            _sessionContext.ReportType = reportType;
-
-            var result = await _processingService.DomainsVulnerabilityScanAsync(new RequestModel
-                { Targets = new List<string> { text } });
-
-            await _botClient.SendTextMessageAsync(chatId, result.Value);
+            _sessionContext.ClientName = chatUsername;
+            _sessionContext.ReportType = ReportType.File;
         }
 
         public void Error(object sender, ReceiveErrorEventArgs e)
@@ -136,17 +82,8 @@ namespace Falcon.Messengers.Telegram
             _logger.Information($"Received: Edit");
         }
 
-        public async void Callback(object sender, CallbackQueryEventArgs e)
+        public void Callback(object sender, CallbackQueryEventArgs e)
         {
-            if (Enum.TryParse<ReportType>(e.CallbackQuery.Data, true, out var reportType))
-            {
-                await _cacheService.SetValueAsync(MakeTelegramReportKey(e.CallbackQuery.Message.Chat.Id),
-                    reportType,
-                    _ttl);
-                
-                await _botClient.SendTextMessageAsync(e.CallbackQuery.Message.Chat.Id, "done");
-            }
-
             _logger.Information($"Received: Callback");
         }
 

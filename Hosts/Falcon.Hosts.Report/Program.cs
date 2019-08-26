@@ -6,7 +6,6 @@ namespace Falcon.Hosts.Report
 {
     internal static class Program
     {
-        private static async Task Main() =>
-            await Host.InitBasic(builder => builder.RegisterType<ReportService>().As<IReportService>());
+        private static Task Main() => Host.InitBasic(builder => builder.RegisterType<ReportService>().As<IReportService>());
     }
 }

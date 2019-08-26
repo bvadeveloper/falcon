@@ -16,7 +16,7 @@ namespace Falcon.Tools.Interfaces
         /// </summary>
         /// <param name="tools"></param>
         /// <returns></returns>
-        IScanToolsModel UseOnlyTools(List<string> tools);
+        IScanToolsModel UseOnly(List<string> tools);
     }
 
     public interface IScanToolsModel : IToolsModel { }

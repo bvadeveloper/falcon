@@ -53,8 +53,7 @@ namespace Falcon.Hosts.Report.Consumers
                     break;
 
                 case ReportType.File:
-                    var (fileName, reportBytes) =
-                        await _reportService.MakeFileReportAsync(profile.Target, profile.Reports);
+                    var (fileName, reportBytes) = await _reportService.MakeFileReportAsync(profile.Target, profile.Reports);
                     await SendFileReportAsync(profile, fileName, reportBytes);
                     break;
 
