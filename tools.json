@@ -3,13 +3,8 @@
     "Toolset": [
       {
         "name": "nmap",
-        "commonTags": "nginx, iis",
-        "frameworkTags": "joomla, wordpress",
-        "hostTags": "windows, linux, ubuntu, centos",
-        "serverTags": "windows, linux, ubuntu, centos",
-        "info": "nmap",
-        "commandLine": "nmap --open -F {0}",
-        "versionCommandLine" : "nmap -V",
+        "commandLine": "nmap --open -F -Pn {0}",
+        "versionCommandLine": "nmap -V",
         "timeout": "10000"
       }
     ]
@@ -18,13 +13,21 @@
     "Toolset": [
       {
         "name": "nmap",
-        "commonTags": "nginx, iis",
-        "frameworkTags": "joomla, wordpress",
-        "hostTags": "windows, linux, ubuntu, centos",
-        "serverTags": "windows, linux, ubuntu, centos",
-        "info": "nmap",
+        "serviceTags": ["ftp", "ssh", "jabber", "vnc"],
+        "portTags": [ 21, 22, 80, 443, 8080, 8081 ],
+        "frameworkTags": "",
+        "hostTags": [ "windows", "linux", "ubuntu", "centos" ],
+        "serverTags": ["nginx", "iis", "apache"],
         "commandLine": "nmap --script nmap-vulners -sV -Pn {0}",
-        "versionCommandLine" : "nmap -V",
+        "versionCommandLine": "nmap -V",
+        "timeout": "10000"
+      },
+      {
+        "name": "wpscan",
+        "portTags": [ 80, 443, 8080, 8081 ],
+        "frameworkTags": ["wordpress", "wp"],
+        "commandLine": "wpscan --detection-mode aggressive --url {0}",
+        "versionCommandLine": "wpscan --version",
         "timeout": "10000"
       }
     ]

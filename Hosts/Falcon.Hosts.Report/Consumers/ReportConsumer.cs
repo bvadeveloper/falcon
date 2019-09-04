@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using EasyNetQ;
 using EasyNetQ.AutoSubscribe;
@@ -35,12 +36,20 @@ namespace Falcon.Hosts.Report.Consumers
                     break;
 
                 case MessengerContext messengerContext:
+                    await SaveFile(profile, messengerContext);
                     await PublishTelegramProfile(profile, messengerContext);
                     break;
 
                 default:
                     throw new ArgumentException(nameof(profile.Context));
             }
+        }
+
+        private async Task SaveFile(ReportProfile profile, MessengerContext messengerContext)
+        {
+            Directory.CreateDirectory("Report");
+            var (fileName, reportBytes) = await _reportService.MakeFileReportAsync(profile.Target, profile.Reports);
+            await File.WriteAllBytesAsync(Path.Combine("Report", fileName), reportBytes);
         }
 
         private async Task PublishTelegramProfile(IReportProfile profile, IMessengerContext context)

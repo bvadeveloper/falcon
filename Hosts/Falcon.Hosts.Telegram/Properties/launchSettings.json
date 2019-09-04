@@ -3,15 +3,17 @@
     "Falcon.Hosts.Telegram": {
       "commandName": "Project",
       "environmentVariables": {
+        "CLR_OPENSSL_VERSION_OVERRIDE": "1.1",
+
         "Bus:Host": "localhost",
         "Bus:Port": "5672",
         "Bus:UserName": "rmquser",
         "Bus:Password": "rmquser",
         "Bus:VirtualHost": "/",
-        "Bus:PrefetchCount": "1",
-        
-        "Telegram:ApiKey": "1234567890",
-        
+        "Bus:PrefetchCount": "10",
+
+        "Telegram:ApiKey": "123456789",
+
         "Logging:LogLevel:Microsoft": "Information",
         "Logging:LogLevel:System": "Information",
         "Logging:LogLevel:Default": "Trace",

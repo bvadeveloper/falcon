@@ -10,7 +10,7 @@ using Telegram.Bot.Types.Enums;
 
 namespace Falcon.Hosts.Telegram.Consumers
 {
-    public class TelegramTextConsumer : IConsumeAsync<TelegramTextProfile>
+    public class TelegramMessageConsumer : IConsumeAsync<TelegramTextProfile>
     {
         private readonly ITelegramBotClient _botClient;
         private readonly IJsonLogger _logger;
@@ -20,7 +20,7 @@ namespace Falcon.Hosts.Telegram.Consumers
         /// </summary>
         private const int MessageLength = 4095;
 
-        public TelegramTextConsumer(
+        public TelegramMessageConsumer(
             ITelegramBotClient botClient,
             IJsonLogger<TelegramFileConsumer> logger)
         {

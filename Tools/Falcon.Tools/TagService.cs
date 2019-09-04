@@ -21,53 +21,59 @@ namespace Falcon.Tools
             switch (tag)
             {
                 case TagType.Framework:
-                    _tagKeyWords = new List<string> { "joomla", "wordpress" };
+                    _tagKeyWords = new List<string> {"joomla", "wordpress"};
                     break;
                 case TagType.WebServer:
-                    _tagKeyWords = new List<string> { "nginx", "iis", "kestrel", "tomcat", "apache" };
+                    _tagKeyWords = new List<string> {"nginx", "iis", "kestrel", "tomcat", "apache"};
                     break;
                 case TagType.Database:
-                    _tagKeyWords = new List<string> { "mysql", "mssql", "postgres" };
+                    _tagKeyWords = new List<string> {"mysql", "maria", "mssql", "postgres"};
                     break;
                 case TagType.Ports:
-                    _tagKeyWords = new List<string> { "80", "443", "15672", "5672", "6379", "3306" };
+                    _tagKeyWords = new List<string>
+                        {"21", "22", "80", "443", "8080", "8081", "15672", "5672", "6379", "3306"};
                     break;
                 case TagType.Server:
-                    _tagKeyWords = new List<string> { "linux", "windows", "ubuntu", "fedora", "redhat", "centos", "redhat" };
+                    _tagKeyWords = new List<string>
+                        {"linux", "windows", "ubuntu", "fedora", "redhat", "centos", "redhat"};
                     break;
                 case TagType.NotAvailable:
-                    _tagKeyWords = new List<string> { "Nmap done: 0 IP addresses (0 hosts up)" };
+                    _tagKeyWords = new List<string> {"Nmap done: 0 IP addresses (0 hosts up)"};
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(tag), tag, null);
             }
         }
 
-        public string Find(string text)
+        public List<string> Find(string text)
         {
+            var keys = new List<string>();
+
             foreach (var keyWord in _tagKeyWords)
             {
                 if (text.Contains(keyWord, StringComparison.InvariantCultureIgnoreCase))
-                    return keyWord;
+                    keys.Add(keyWord);
             }
 
-            return default;
+            return keys;
         }
     }
 
     public static class TagExtensions
     {
-        public static Dictionary<TagType, string> FindTags(this TagFactory.Factory tagFactory,
+        public static Dictionary<TagType, List<string>> FindTags(this TagFactory.Factory tagFactory,
             IEnumerable<ReportModel> outputs)
         {
             var output = outputs.Aggregate("", (c, m) => $"{c} {m.Output}");
-            var tags = new Dictionary<TagType, string>();
+            var tags = new Dictionary<TagType, List<string>>();
 
             foreach (var tagType in (TagType[]) Enum.GetValues(typeof(TagType)))
             {
-                var tag = tagFactory(tagType).Find(output);
-                if (tag == default) continue;
-                tags.Add(tagType, tag);
+                var marks = tagFactory(tagType).Find(output);
+                if (marks.Any())
+                {
+                    tags.Add(tagType, marks);
+                }
             }
 
             return tags;

@@ -58,23 +58,26 @@ namespace Falcon.Tools
         /// <summary>
         /// Use tools by target tags
         /// </summary>
-        /// <param name="profileTags"></param>
+        /// <param name="tags"></param>
         /// <returns></returns>
-        public IToolsModel UseToolsByTags(Dictionary<TagType, string> profileTags = default)
+        public IToolsModel UseToolsByTags(Dictionary<TagType, List<string>> tags)
         {
-            // try to map tools from tags
-            if (profileTags != default && profileTags.Any())
+            // map tools from tags
+            if (tags != default && tags.Any())
             {
                 var mappedTools = new List<string>();
 
-                foreach (var (_, value) in profileTags)
+                foreach (var (_, value) in tags)
                 {
-                    var mappedTool = _toolsModel.Toolset.FirstOrDefault(t => t.FrameworkTags.Contains(value)
-                                                                             || t.ServerTags.Contains(value)
-                                                                             || t.CommonTags.Contains(value))?.Name;
-                    if (!string.IsNullOrWhiteSpace(mappedTool))
+                    var mappedTool = _toolsModel.Toolset
+                        .Where(t => value.Any(mark => t.FrameworkTags.Contains(mark))
+                                    || value.Any(mark => t.HostTags.Contains(mark))
+                                    || value.Any(mark => t.PortTags.Contains(mark))
+                                    || value.Any(mark => t.ServiceTags.Contains(mark))).ToList();
+
+                    if (mappedTool.Any())
                     {
-                        mappedTools.Add(mappedTool);
+                        mappedTools.AddRange(mappedTool.Select(_ => _.Name));
                     }
                 }
 

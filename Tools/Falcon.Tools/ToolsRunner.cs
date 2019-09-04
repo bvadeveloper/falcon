@@ -29,7 +29,7 @@ namespace Falcon.Tools
             return results.Select(r => r.MakeOutput()).ToList();
         }
 
-        public async Task<List<OutputModel>> RunToolsVersionCommandAsync()
+        public async Task<List<OutputModel>> RunToolsVersionAsync()
         {
             var tasks = Toolset.Select(t =>
                 new ToolProcess()
@@ -41,7 +41,7 @@ namespace Falcon.Tools
             return results.Select(r => r.MakeOutput()).ToList();
         }
 
-        public IScanToolsModel UseOnly(List<string> optionalTools)
+        public IToolsModel UseOnly(List<string> optionalTools)
         {
             if (optionalTools != null && optionalTools.Any())
             {

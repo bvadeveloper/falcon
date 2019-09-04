@@ -9,17 +9,8 @@ namespace Falcon.Tools.Interfaces
 
         Task<List<OutputModel>> RunToolsAsync(string target);
 
-        Task<List<OutputModel>> RunToolsVersionCommandAsync();
+        Task<List<OutputModel>> RunToolsVersionAsync();
 
-        /// <summary>
-        /// Set specific tools to toolset
-        /// </summary>
-        /// <param name="tools"></param>
-        /// <returns></returns>
-        IScanToolsModel UseOnly(List<string> tools);
+        IToolsModel UseOnly(List<string> tools);
     }
-
-    public interface IScanToolsModel : IToolsModel { }
-
-    public interface ICollectToolsModel : IToolsModel { }
 }

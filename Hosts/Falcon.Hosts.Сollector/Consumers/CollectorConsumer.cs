@@ -74,7 +74,7 @@ namespace Falcon.Hosts.Сollector.Consumers
         }
 
         private async Task PublishScanProfile(DomainCollectProfile profile,
-            Dictionary<TagType, string> tags = default)
+            Dictionary<TagType, List<string>> tags = default)
         {
             await _bus.PublishAsync(new DomainScanProfile
             {
@@ -86,7 +86,7 @@ namespace Falcon.Hosts.Сollector.Consumers
         }
 
         private async Task PublishSaveProfile(ISession profile,
-            Dictionary<TagType, string> tags)
+            Dictionary<TagType, List<string>> tags)
         {
             await _bus.PublishAsync(new SaveProfile
             {
@@ -106,7 +106,7 @@ namespace Falcon.Hosts.Сollector.Consumers
             });
         }
 
-        private async Task<(List<ReportModel>, Dictionary<TagType, string>)> CollectTagsAsync(DomainCollectProfile profile)
+        private async Task<(List<ReportModel>, Dictionary<TagType, List<string>>)> CollectTagsAsync(ITargetProfile profile)
         {
             var reports = await _cacheService.GetValueAsync<List<ReportModel>>(MakeReportKey(profile.Target));
 

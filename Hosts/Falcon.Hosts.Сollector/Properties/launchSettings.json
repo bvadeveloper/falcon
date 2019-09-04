@@ -11,7 +11,7 @@
         "Bus:UserName": "rmquser",
         "Bus:Password": "rmquser",
         "Bus:VirtualHost": "/",
-        "Bus:PrefetchCount": "1",
+        "Bus:PrefetchCount": "5",
         "Bus:Timeout": "60",
 
         "CacheRedis:Endpoint": "localhost:6379",
