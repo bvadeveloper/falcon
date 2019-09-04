@@ -36,8 +36,8 @@ namespace Falcon.Hosts.Report.Consumers
                     break;
 
                 case MessengerContext messengerContext:
-                    await SaveFile(profile, messengerContext);
-                    await PublishTelegramProfile(profile, messengerContext);
+                    await SaveFileAsync(profile, messengerContext);
+                    await PublishTelegramProfileAsync(profile, messengerContext);
                     break;
 
                 default:
@@ -45,25 +45,25 @@ namespace Falcon.Hosts.Report.Consumers
             }
         }
 
-        private async Task SaveFile(ReportProfile profile, MessengerContext messengerContext)
+        private async Task SaveFileAsync(IReportProfile profile, MessengerContext messengerContext)
         {
             Directory.CreateDirectory("Report");
             var (fileName, reportBytes) = await _reportService.MakeFileReportAsync(profile.Target, profile.Reports);
             await File.WriteAllBytesAsync(Path.Combine("Report", fileName), reportBytes);
         }
 
-        private async Task PublishTelegramProfile(IReportProfile profile, IMessengerContext context)
+        private async Task PublishTelegramProfileAsync(IReportProfile profile, IMessengerContext context)
         {
             switch (context.ReportType)
             {
                 case ReportType.Text:
-                    var reportText = await _reportService.MakeTextReportAsync(profile.Target, profile.Reports);
-                    await SendTextReportAsync(profile, reportText);
+                    var message = await _reportService.MakeTextReportAsync(profile.Target, profile.Reports);
+                    await SendTextReportAsync(profile, message);
                     break;
 
                 case ReportType.File:
-                    var (fileName, reportBytes) = await _reportService.MakeFileReportAsync(profile.Target, profile.Reports);
-                    await SendFileReportAsync(profile, fileName, reportBytes);
+                    var (fileName, file) = await _reportService.MakeFileReportAsync(profile.Target, profile.Reports);
+                    await SendFileReportAsync(profile, fileName, file);
                     break;
 
                 default:
@@ -71,24 +71,24 @@ namespace Falcon.Hosts.Report.Consumers
             }
         }
 
-        private async Task SendFileReportAsync(ITargetProfile profile, string fileName, byte[] reportBytes)
+        private async Task SendFileReportAsync(ITargetProfile profile, string fileName, byte[] file)
         {
             await _bus.PublishAsync(new TelegramFileProfile
             {
                 Context = profile.Context,
                 Target = profile.Target,
-                ReportBytes = reportBytes,
+                File = file,
                 FileName = fileName
             });
         }
 
-        private async Task SendTextReportAsync(ITargetProfile profile, string reportText)
+        private async Task SendTextReportAsync(ITargetProfile profile, string message)
         {
-            await _bus.PublishAsync(new TelegramTextProfile
+            await _bus.PublishAsync(new TelegramMessageProfile
             {
                 Context = profile.Context,
                 Target = profile.Target,
-                ReportText = reportText
+                Message = message
             });
         }
     }

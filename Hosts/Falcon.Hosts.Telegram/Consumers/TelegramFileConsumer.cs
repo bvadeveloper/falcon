@@ -39,7 +39,7 @@ namespace Falcon.Hosts.Telegram.Consumers
             }
 
             await _botClient.SendChatActionAsync(context.ChatId, ChatAction.Typing);
-            await SendFileAsync(context.ChatId, profile.ReportBytes, profile.FileName);
+            await SendFileAsync(context.ChatId, profile.File, profile.FileName);
         }
 
         /// <summary>

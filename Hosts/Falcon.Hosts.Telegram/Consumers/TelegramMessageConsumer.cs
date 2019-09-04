@@ -10,7 +10,7 @@ using Telegram.Bot.Types.Enums;
 
 namespace Falcon.Hosts.Telegram.Consumers
 {
-    public class TelegramMessageConsumer : IConsumeAsync<TelegramTextProfile>
+    public class TelegramMessageConsumer : IConsumeAsync<TelegramMessageProfile>
     {
         private readonly ITelegramBotClient _botClient;
         private readonly IJsonLogger _logger;
@@ -28,7 +28,7 @@ namespace Falcon.Hosts.Telegram.Consumers
             _logger = logger;
         }
 
-        public async Task ConsumeAsync(TelegramTextProfile profile)
+        public async Task ConsumeAsync(TelegramMessageProfile profile)
         {
             var context = profile.Context as MessengerContext;
 
@@ -38,14 +38,13 @@ namespace Falcon.Hosts.Telegram.Consumers
                 return;
             }
 
-            await _botClient.SendChatActionAsync(context.ChatId, ChatAction.Typing);
-            await SendTextAsync(context.ChatId, profile.ReportText);
+            await SendMessageAsync(context.ChatId, profile.Message);
         }
 
         /// <summary>
         /// Send text to chat
         /// </summary>
-        private async Task SendTextAsync(long chatId, string report)
+        private async Task SendMessageAsync(long chatId, string report)
         {
             foreach (var spl in report.SplitBy(MessageLength))
             {
@@ -63,12 +62,12 @@ namespace Falcon.Hosts.Telegram.Consumers
         {
             if (string.IsNullOrEmpty(@string))
             {
-                throw new ArgumentException($"Param '{nameof(@string)}' can't be null or empty");
+                throw new ArgumentException($"'{nameof(@string)}' can't be null or empty");
             }
 
             if (chunkLength < 1)
             {
-                throw new ArgumentException($"Param '{nameof(chunkLength)}' can't be less than 1");
+                throw new ArgumentException($"'{nameof(chunkLength)}' can't be less than 1");
             }
 
             for (var i = 0; i < @string.Length; i += chunkLength)
