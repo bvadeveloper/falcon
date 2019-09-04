@@ -65,23 +65,27 @@ namespace Falcon.Tools
             // map tools from tags
             if (tags != default && tags.Any())
             {
+                Func<string, bool> Func(List<string> t)
+                {
+                    return m => t?.Contains(m) ?? false;
+                }
+
                 var mappedTools = new List<string>();
 
                 foreach (var (_, value) in tags)
                 {
-                    var mappedTool = _toolsModel.Toolset
-                        .Where(t => value.Any(mark => t.FrameworkTags.Contains(mark))
-                                    || value.Any(mark => t.HostTags.Contains(mark))
-                                    || value.Any(mark => t.PortTags.Contains(mark))
-                                    || value.Any(mark => t.ServiceTags.Contains(mark))).ToList();
+                    var tools = _toolsModel.Toolset
+                        .AsParallel()
+                        .Where(t => value.Any(Func(t.FrameworkTags))
+                                    || value.Any(Func(t.HostTags))
+                                    || value.Any(Func(t.PortTags))
+                                    || value.Any(Func(t.ServiceTags)))
+                        .Select(_ => _.Name);
 
-                    if (mappedTool.Any())
-                    {
-                        mappedTools.AddRange(mappedTool.Select(_ => _.Name));
-                    }
+                    mappedTools.AddRange(tools);
                 }
 
-                return _toolsModel.UseOnly(mappedTools);
+                return _toolsModel.UseOnly(mappedTools.Distinct().ToList());
             }
 
             return _toolsModel;
